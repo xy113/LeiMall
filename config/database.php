@@ -50,7 +50,7 @@ return [
             'charset' => 'utf8',
             'collation' => 'utf8_bin',
             'prefix' => 'pre_',
-            'strict' => true,
+            'strict' => false,
             'engine' => null,
         ],
 

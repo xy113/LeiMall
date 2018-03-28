@@ -58,35 +58,6 @@ Route::group(['namespace' => 'Post'], function (){
     });
 });
 
-Route::group(['namespace'=>'Recruit', 'prefix'=>'recruit'], function (){
-    Route::get('/', 'IndexController@index');
-});
-
-Route::group(['namespace'=>'Job', 'prefix'=>'job'], function (){
-    Route::get('/', 'IndexController@index');
-    Route::get('/detail/{id}.html', 'DetailController@index');
-});
-
-Route::group(['namespace'=>'Join', 'prefix'=>'join', 'middleware'=>'member.auth'], function (){
-    Route::get('/', 'IndexController@index');
-    Route::any('/enroll', 'IndexController@enroll');
-});
-
-Route::group(['namespace'=>'Company', 'prefix'=>'company'], function (){
-    Route::any('/', 'IndexController@index');
-    Route::get('/login', 'LoginController@index');
-    Route::post('/login/check', 'LoginController@check');
-    Route::post('/logout', 'LoginController@logout');
-    Route::get('/register', 'RegisterController@index');
-    Route::post('/register/save', 'RegisterController@save');
-    Route::post('/register/check', 'RegisterController@check');
-
-    Route::any('/security', 'SecurityController@index');
-    Route::any('/job', 'JobController@index');
-    Route::any('/job/publish', 'JobController@publish');
-    Route::any('/resume', 'ResumeController@index');
-});
-
 //后台管理
 Route::group(['namespace' => 'Admin','prefix'=>'admin'], function(){
     Route::get('login', 'LoginController@index');
@@ -101,6 +72,7 @@ Route::group(['namespace' => 'Admin','prefix'=>'admin'], function(){
         Route::post('/settings/save', 'SettingsController@save');
         //应用管理
         Route::any('/app', 'AppController@index');
+        Route::any('/app/edit', 'AppController@edit');
         //用户管理
         Route::get('/member', 'MemberController@index');
         Route::post('member/delete', 'MemberController@delete');

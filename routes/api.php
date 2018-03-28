@@ -22,4 +22,9 @@ Route::group(['namespace'=>'Api'], function (){
     Route::any('district/{action}', function (DistrictController $controller, $action){
         return $controller->$action();
     });
+
+    Route::get('/token', 'TokenController@index');
+
+    Route::post('/account/signin', 'AccountController@signin');
+    Route::post('/account/signup', 'AccountController@signup');
 });
