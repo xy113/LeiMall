@@ -31,12 +31,12 @@
                     <tr>
                         <td><input title="" type="checkbox" class="checkbox checkmark itemCheckBox" name="items[]" value="{{$item['id']}}"></td>
                         <td>{{$item['id']}}</td>
-                        <td>{{$item['app_name']}}</td>
-                        <td>{{$item['app_id']}}</td>
-                        <td>{{$item['app_secret']}}</td>
-                        <td>{{$item['app_version']}}</td>
-                        <td>{{$item['app_url']}}</td>
-                        <td>@if($item['app_status']==='enable')正常@else已停用@endif</td>
+                        <td>{{$item['name']}}</td>
+                        <td>{{$item['appid']}}</td>
+                        <td>{{$item['secret']}}</td>
+                        <td>{{$item['version']}}</td>
+                        <td>{{$item['url']}}</td>
+                        <td>@if($item['status']==='enable')正常@else已停用@endif</td>
                         <td><a href="{{url('/admin/app/edit?id='.$item['id'])}}">编辑</a></td>
                     </tr>
                 @endforeach
@@ -73,15 +73,15 @@
                         },success:function (response) {
                             setTimeout(function () {
                                 spinner.close();
-                                if (response.errcode === 0){
-                                    DSXUtil.reFresh();
-                                }else {
+                                if (response.errcode) {
                                     DSXUI.error(response.errmsg);
+                                } else {
+                                    DSXUtil.reFresh();
                                 }
                             }, 500);
                         }
                     })
-                }
+                };
                 $("#J_eventType").val(eventType);
                 if (eventType === 'delete'){
                     DSXUI.showConfirm('删除确认', '确认要删除所选应用吗?', submitForm);

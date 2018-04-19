@@ -180,3 +180,7 @@ Route::group(['namespace'=>'Mobile', 'prefix'=>'mobile'], function (){
     Route::get('/favorite', 'FavoriteController@index')->middleware(['mobile.auth']);
     Route::any('/feedback', 'FeedbackController@index')->middleware(['mobile.auth']);
 });
+
+Route::group(['namespace'=>'App', 'prefix'=>'app'], function (){
+    Route::get('/post/detail/{aid}.html', 'PostController@detail');
+});

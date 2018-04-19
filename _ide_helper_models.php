@@ -306,3 +306,23 @@ namespace App\Models{
 	class PostLog extends \Eloquent {}
 }
 
+namespace App\Models{
+    /**
+     * App\Models\Order
+     *
+     */
+    class Order extends \Eloquent {}
+    /**
+     * App\Models\OrderItem
+     *
+     */
+    class OrderItem extends \Eloquent {}
+    /**
+     * App\Models\OrderShipping
+     *
+     */
+    class OrderShipping extends \Eloquent {}
+
+    class Shop extends \Eloquent{}
+    class ShopDesc extends \Eloquent{}
+}

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\App;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class TokenController extends Controller
@@ -26,5 +25,10 @@ class TokenController extends Controller
         }else {
             return ajaxError(1, 'appid not exists');
         }
+    }
+
+    public function check(){
+
+        return ajaxReturn($this->request->input());
     }
 }

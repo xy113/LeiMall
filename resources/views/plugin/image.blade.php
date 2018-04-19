@@ -3,10 +3,10 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>图片选择器</title>
-    <link rel="icon" href="/images/common/favicon.png">
-    <link rel="stylesheet" type="text/css" href="/css/image_plugin.css">
-    <script src="/js/jquery.js" type="text/javascript"></script>
-    <script src="/js/common.js" type="text/javascript"></script>
+    <link href="{{asset('images/common/favicon.png')}}" rel="icon">
+    <link href="{{asset('css/image_plugin.css')}}" rel="stylesheet" type="text/css">
+    <script src="{{asset('js/jquery.js')}}" type="text/javascript"></script>
+    <script src="{{asset('js/common.js')}}" type="text/javascript"></script>
 </head>
 <body>
 <!--<div class="side-bar">-->
@@ -37,16 +37,15 @@
     <div class="modal"></div>
     <span class="animation"></span>
 </div>
-<link rel="stylesheet" type="text/css" href="/webuploader/webuploader.css">
-<script src="/webuploader/webuploader.min.js" type="text/javascript"></script>
+<link href="{{asset('webuploader/webuploader.css')}}" rel="stylesheet" type="text/css">
+<script src="{{asset('webuploader/webuploader.min.js')}}" type="text/javascript"></script>
 <script type="text/javascript">
-    var spinner = null;
     // 初始化Web Uploader
     var uploader = WebUploader.create({
         // 选完文件后，是否自动上传。
         auto: true,
         // swf文件路径
-        swf: '/webuploder/Uploader.swf',
+        swf: '{{asset('webuploder/Uploader.swf')}}',
         // 文件接收服务端。
         server: "{{url('/service/upload/image')}}",
         // 选择文件的按钮。可选。
@@ -65,21 +64,15 @@
 
     // 文件上传过程中创建进度条实时显示。
     uploader.on( 'uploadStart', function( file, percentage ) {
-        if (!spinner) spinner = DSXUI.showSpinner();
+        DSXUI.showSpinner();
     });
 
     // 文件上传成功，给item添加成功class, 用样式标记上传成功。
     uploader.on( 'uploadSuccess', function( file , response) {
         setTimeout(function () {
-            spinner.close();
+            DSXUI.hideSpinner();
             if (window.parent.onPickedImage){
-                window.parent.onPickedImage({
-                    "id":response.data.id,
-                    "image":response.data.image,
-                    "thumb":response.data.thumb,
-                    "imageurl":response.data.imageurl,
-                    "thumburl":response.data.thumburl
-                });
+                window.parent.onPickedImage(response.image);
             }
         }, 500);
     });

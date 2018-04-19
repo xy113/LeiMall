@@ -130,10 +130,10 @@
                     success: function(json){
                         setTimeout(function () {
                             spinner.close();
-                            if (response.errcode === 0){
-                                DSXUI.success('菜单应用成功');
-                            }else {
+                            if (response.errcode){
                                 DSXUI.error('菜单应用失败');
+                            }else {
+                                DSXUI.success('菜单应用成功');
                             }
                         }, 500);
                     }
@@ -152,10 +152,10 @@
                     },success:function () {
                         setTimeout(function () {
                             spinner.close();
-                            if (response.errcode === 0){
-                                DSXUI.success('菜单删除成功');
-                            }else {
+                            if (response.errcode){
                                 DSXUI.error(response.errmsg);
+                            }else {
+                                DSXUI.success('菜单删除成功');
                             }
                         }, 500);
                     }

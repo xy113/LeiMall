@@ -15,27 +15,27 @@
                 <tbody>
                 <tr>
                     <td width="80">应用名称</td>
-                    <td width="320"><input title="" type="text" class="input-text w300" name="app[app_name]" value="{{$app['app_name']}}" id="app_name"></td>
+                    <td width="320"><input title="" type="text" class="input-text w300" name="app[name]" value="{{$app['name']}}" id="app_name"></td>
                     <td class="tips">应用名称</td>
                 </tr>
                 <tr>
                     <td>AppId</td>
-                    <td><input title="" type="text" class="input-text w300" name="app[app_id]" value="{{$app['app_id']}}" id="app_id"></td>
+                    <td><input title="" type="text" class="input-text w300" name="app[appid]" value="{{$app['appid']}}" id="appid"></td>
                     <td class="tips">应用ID</td>
                 </tr>
                 <tr>
                     <td>AppSecret</td>
-                    <td><input title="" type="text" class="input-text w300" name="app[app_secret]" value="{{$app['app_secret']}}" id="app_secret"></td>
+                    <td><input title="" type="text" class="input-text w300" name="app[secret]" value="{{$app['secret']}}" id="secret"></td>
                     <td class="tips">应用秘钥</td>
                 </tr>
                 <tr>
                     <td>版本号</td>
-                    <td><input title="" type="text" class="input-text w300" name="app[app_version]" value="{{$app['app_version']}}" id="app_version"></td>
+                    <td><input title="" type="text" class="input-text w300" name="app[version]" value="{{$app['version']}}" id="version"></td>
                     <td class="tips">应用版本号</td>
                 </tr>
                 <tr>
                     <td>应用网址</td>
-                    <td><input title="" type="text" class="input-text w300" name="app[app_url]" value="{{$app['app_url']}}" id="app_url"></td>
+                    <td><input title="" type="text" class="input-text w300" name="app[url]" value="{{$app['url']}}" id="url"></td>
                     <td class="tips">应用网址</td>
                 </tr>
                 </tbody>

@@ -40,6 +40,7 @@ class Kernel extends HttpKernel
         'api' => [
             'throttle:60,1',
             'bindings',
+            \App\Http\Middleware\ApiCheck::class,
         ],
     ];
 
@@ -61,6 +62,7 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'admin.auth' => \App\Http\Middleware\AdminAuth::class,
         'member.auth' => \App\Http\Middleware\MemberAuth::class,
-        'mobile.auth' => \App\Http\Middleware\MobileMemberAuth::class
+        'mobile.auth' => \App\Http\Middleware\MobileMemberAuth::class,
+        'api.auth' => \App\Http\Middleware\ApiAuth::class
     ];
 }

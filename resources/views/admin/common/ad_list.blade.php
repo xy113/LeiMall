@@ -71,15 +71,15 @@
                         },success:function (response) {
                             setTimeout(function () {
                                 spinner.close();
-                                if (response.errcode === 0){
-                                    DSXUtil.reFresh();
-                                }else {
+                                if (response.errcode){
                                     DSXUI.error(response.errmsg);
+                                }else {
+                                    DSXUtil.reFresh();
                                 }
                             }, 500);
                         }
                     })
-                }
+                };
                 $("#J_eventType").val(eventType);
                 if (eventType === 'delete'){
                     DSXUI.showConfirm('删除广告', '确认要删除所选广告吗?', submitForm);

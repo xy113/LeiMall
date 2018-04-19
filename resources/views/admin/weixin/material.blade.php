@@ -110,9 +110,9 @@
                         success: function(response){
                             loading.close();
                             if(response.errcode === 0){
-                                DSXUtil.reFresh();
-                            }else {
                                 DSXUI.error('素材添加失败');
+                            }else {
+                                DSXUtil.reFresh();
                             }
                         }
                     });
@@ -137,10 +137,10 @@
                         },success:function (response) {
                             setTimeout(function () {
                                 spinner.close();
-                                if (response.errcode === 0){
-                                    DSXUtil.reFresh();
-                                }else  {
+                                if (response.errcode){
                                     DSXUI.error(response.errmsg);
+                                }else  {
+                                    DSXUtil.reFresh();
                                 }
                             }, 500);
                         }

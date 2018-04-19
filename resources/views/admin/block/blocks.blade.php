@@ -82,7 +82,7 @@
                         $("#J_Frmblock").ajaxSubmit({
                             dataType:'json',
                             success:function (response) {
-                                if (response.errcode === 0){
+                                if (!response.errcode){
                                     dlg.close();
                                     window.location.href = "{{url('/admin/block')}}?sp="+Math.random();
                                 }
@@ -114,7 +114,7 @@
                                 $("#J_Frmblock").ajaxSubmit({
                                     dataType:'json',
                                     success:function (response) {
-                                        if (response.errcode === 0){
+                                        if (!response.errcode){
                                             dlg.close();
                                             window.location.href = "{{url('/admin/block')}}?sp="+Math.random();
                                         }
@@ -141,9 +141,9 @@
                             setTimeout(function () {
                                 spinner.close();
                                 if (response.errcode === 0){
-                                    DSXUtil.reFresh();
-                                }else {
                                     DSXUI.error(response.errmsg);
+                                }else {
+                                    DSXUtil.reFresh();
                                 }
                             }, 500);
                         }

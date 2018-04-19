@@ -58,9 +58,9 @@
     <script type="text/javascript">
         function selectMenu(type){
             if(!type) type = 'view';
-            if(type == 'view') {
+            if(type === 'view') {
                 $("#menu-action").html($("#menu_tpl_1").html());
-            }else if(type == 'media_id' || type == 'view_limited'){
+            }else if(type === 'media_id' || type === 'view_limited'){
                 $("#menu-action").html($("#menu_tpl_2").html());
             }else {
                 $("#menu-action").html($("#menu_tpl_3").html());
@@ -81,12 +81,12 @@
                 $("#menuForm").ajaxSubmit({
                     dataType:'json',
                     success:function (response) {
-                        if (response.errcode === 0){
+                        if (response.errcode){
+                            DSXUI.error(response.errmsg);
+                        }else {
                             if (window.parent.afterMenuSave){
                                 window.parent.afterMenuSave(response);
                             }
-                        }else {
-                            DSXUI.error(response.errmsg);
                         }
                     }
                 });

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\Member;
 use App\Models\MemberLog;
+use App\Models\MemberSession;
 use App\Models\MemberStatus;
 
 class AccountController extends BaseController
@@ -28,16 +29,33 @@ class AccountController extends BaseController
             MemberLog::insert([
                 'uid'=>$member->uid,
                 'ip'=>$this->request->getClientIp(),
-                'oprate'=>'login',
+                'operate'=>'login',
                 'created_at'=>time()
             ]);
 
-            return ajaxReturn([
+            $userinfo = [
                 'uid'=>$member->uid,
                 'username'=>$member->username,
                 'email'=>$member->email,
                 'mobile'=>$member->mobile
-            ]);
+            ];
+            $session_id = md5(time().rand(100, 999));
+            if (!MemberSession::where('uid', $member->uid)->update([
+                'session_id'=>$session_id,
+                'session_value'=>serialize($userinfo),
+                'expires_in'=>time()
+            ])){
+                MemberSession::insert([
+                    'uid'=>$member->uid,
+                    'session_id'=>$session_id,
+                    'session_value'=>serialize($userinfo),
+                    'expires_in'=>time()
+                ]);
+            }
+            $userinfo['avatar'] = avatar($member->uid);
+            $userinfo['session_id'] = $session_id;
+
+            return ajaxReturn(['userinfo'=>$userinfo]);
         }else {
             return ajaxError(1, trans('member.account does not exist'));
         }

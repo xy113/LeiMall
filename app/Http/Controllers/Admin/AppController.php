@@ -23,13 +23,13 @@ class AppController extends BaseController
 
             if ($eventType === 'enable') {
                 foreach ($items as $id) {
-                    App::where('id', $id)->update(['app_status'=>'enable']);
+                    App::where('id', $id)->update(['status'=>'enable']);
                 }
             }
 
             if ($eventType === 'disable') {
                 foreach ($items as $id) {
-                    App::where('id', $id)->update(['app_status'=>'disable']);
+                    App::where('id', $id)->update(['status'=>'disable']);
                 }
             }
             return ajaxReturn();
@@ -64,12 +64,12 @@ class AppController extends BaseController
             $this->assign([
                 'id'=>$id,
                 'app'=>[
-                    'app_id'=>md5_16(random(10)),
-                    'app_secret'=>md5(random(10)),
-                    'app_name'=>'',
-                    'app_version'=>'',
-                    'app_url'=>'',
-                    'app_status'=>'enable'
+                    'appid'=>md5_16(random(10)),
+                    'secret'=>md5(random(10)),
+                    'name'=>'',
+                    'version'=>'',
+                    'url'=>'',
+                    'status'=>'enable'
                 ]
             ]);
 

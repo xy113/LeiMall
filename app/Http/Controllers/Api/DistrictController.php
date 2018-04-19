@@ -12,7 +12,7 @@ class DistrictController extends Controller
      */
     public function get(){
         $id = intval($this->request->input('id'));
-        $data = District::where('id', $id)->first()->toArray();
+        $data = District::where('id', $id)->first();
         return ajaxReturn($data);
     }
 
@@ -21,10 +21,7 @@ class DistrictController extends Controller
      */
     public function batchget(){
         $fid = intval($this->request->input('fid'));
-        $itemlist = [];
-        foreach (District::where('fid', $fid)->orderBy('displayorder','ASC')->get() as $d){
-            $itemlist[] = $d->toArray();
-        }
+        $itemlist = District::where('fid', $fid)->orderBy('displayorder')->get();
         return ajaxReturn($itemlist);
     }
 }

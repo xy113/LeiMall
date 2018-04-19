@@ -448,23 +448,26 @@ function rejectNullValues($array){
  * @param null $data
  * @return \Illuminate\Http\JsonResponse
  */
-function ajaxReturn($data = null){
-    $return = array('errcode'=>0,'errmsg'=>'success');
-    if (!is_null($data)) $return['data'] = $data;
-    //return response(json_encode($return, JSON_UNESCAPED_UNICODE))->header('Content-type', 'application/json');
-    return response()->json($return);
+function ajaxReturn($data = []){
+    if ($data) {
+        return response()->json($data);
+    }else {
+        return response()->json([]);
+    }
 }
 
 /**
- * @param $errcode
- * @param $errmsg
- * @param null $data
+ * @param int $errcode
+ * @param string $errmsg
+ * @param mixed $data
  * @return \Illuminate\Http\JsonResponse
  */
-function ajaxError($errcode, $errmsg, $data=null){
-    $return = array('errcode'=>$errcode,'errmsg'=>$errmsg);
+function ajaxError($errcode, $errmsg, $data = []){
+    $return = [
+        'errcode'=>$errcode,
+        'errmsg'=>$errmsg
+    ];
     if (!is_null($data)) $return['data'] = $data;
-    //return response(json_encode($return, JSON_UNESCAPED_UNICODE))->header('Content-type', 'application/json');
     return response()->json($return);
 }
 

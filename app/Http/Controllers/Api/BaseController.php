@@ -14,9 +14,24 @@ class BaseController extends Controller
     function __construct(Request $request)
     {
         parent::__construct($request);
+
+        $this->uid = 0;
+        $this->username = '';
+        $this->data = [
+            'uid'=>0,
+            'username'=>''
+        ];
+
         $this->middleware(function (Request $req, $next){
-            $uid = $req->input('uid');
-            if ($uid) $this->uid = $uid;
+            $session = $req->input('__session');
+            if (is_array($session)) {
+                $this->uid = $session['uid'];
+                $this->username = $session['username'];
+                $this->assign([
+                    'uid'=>$this->uid,
+                    'username'=>$this->username
+                ]);
+            }
 
             return $next($req);
         });

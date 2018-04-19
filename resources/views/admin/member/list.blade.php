@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('scripts')
-    <script src="/DatePicker/WdatePicker.js" type="text/javascript"></script>
+    <script src="{{asset('DatePicker/WdatePicker.js')}}" type="text/javascript"></script>
 @stop
 
 @section('content')
@@ -87,7 +87,7 @@
                     <td>{{$member->email}}</td>
                     <td>{{$member->grouptitle}}</td>
                     <td><a href="http://ip.taobao.com/?ip={{$member->regip}}" target="_blank">{{date('Y-m-d H:i:s', $member->regdate)}}</a></td>
-                    <td><a href="http://ip.taobao.com/?ip={{$member->lastvisitip}}" target="_blank">{{date('Y-m-d H:i:s', $member->lastvisit)}}</a></td>
+                    <td><a href="http://ip.taobao.com/?ip={{$member->lastvisitip}}" target="_blank">{{@date('Y-m-d H:i:s', $member->lastvisit)}}</a></td>
                     <td>{{$status_name or ''}}</td>
                 </tr>
                 @endforeach
@@ -125,9 +125,9 @@
                             setTimeout(function () {
                                 spinner.close();
                                 if (response.errcode === 0){
-                                    DSXUtil.reFresh();
-                                }else {
                                     DSXUI.error(response.errmsg);
+                                }else {
+                                    DSXUtil.reFresh();
                                 }
                             }, 500);
                         }
