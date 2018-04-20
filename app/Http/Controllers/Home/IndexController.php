@@ -14,14 +14,6 @@ class IndexController extends Controller
      */
     public function index(){
 
-        $uids = [];
-        Material::groupBy('uid')->get()->map(function ($item) use (&$uids){
-            $uids[] = $item->uid;
-        });
-
-        Member::whereIn('uid', $uids)->get()->map(function ($m){
-            Material::where('uid', $m->uid)->update(['username'=>$m->username]);
-        });
-        //return $this->view('home.index');
+        return $this->view('home.index');
     }
 }

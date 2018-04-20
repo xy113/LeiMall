@@ -492,6 +492,9 @@ function storage_public_path($path = ''){
  * @return string
  */
 function image_url($path){
+    if (preg_match("/([http|https|ftp]\:\/\/)(.*?)/is", $path)){
+        return $path;
+    }
     if (is_file(storage_public_path($path))) {
         return storage_url($path);
     }else {
@@ -618,10 +621,35 @@ function mutipage($curPage, $pageSize, $totalCount, $params = array(), $showTota
     return   $multipage.'</ul>';
 }
 
+
 /**
- * @param $job_id
  * @return string
  */
-function job_url($job_id){
-    return action('Job\DetailController@index', ['job_id'=>$job_id]);
+function createItemSn(){
+    return time().rand(100,999).rand(100,999);
+}
+
+/**
+ * 生成交易流水号
+ * @return string
+ */
+function createTradeNo(){
+    return date('YmdHis').rand(100,999).rand(100,999);
+}
+
+/**
+ * 生成订单号
+ * @param $uid
+ * @param string $type
+ * @return string
+ */
+function createOrderNo($uid, $type='6'){
+    return $type.time().substr($uid, -5);
+}
+
+/**
+ * @return string
+ */
+function createReundNo(){
+    return '4'.time().rand(100,999);
 }

@@ -29,9 +29,11 @@ Route::group(['namespace'=>'Api'], function (){
     //item
     Route::any('/item/get', 'ItemController@get');
     Route::any('/item/batchget', 'ItemController@batchget');
-    Route::any('/item/update', 'ItemController@update');
+    Route::any('/item/save', 'ItemController@save');
     Route::any('/item/delete', 'ItemController@delete');
     Route::any('/item/get_my_items', 'ItemController@get_my_items');
+    Route::any('/item/get_catlog', 'ItemController@get_catlog');
+    Route::any('/item/batchget_catlog', 'ItemController@batchget_catlog');
 
     //post
     Route::any('/post/batchget_item', 'PostController@batchget_item');
@@ -54,4 +56,14 @@ Route::group(['namespace'=>'Api'], function (){
 
     //material
     Route::any('/material/upload_img', 'MaterialController@upload_img');
+
+    //security
+    Route::any('/security/editpass', 'SecurityController@editpass');
+    Route::any('/security/bindmobile', 'SecurityController@bindmobile');
+    Route::any('/security/bindemail', 'SecurityController@bindemail');
+
+    //version
+    Route::any('/version', function (){
+        return ajaxReturn(['version'=>1.0]);
+    });
 });
