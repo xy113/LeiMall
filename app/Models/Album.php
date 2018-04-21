@@ -22,6 +22,12 @@ namespace App\Models;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Album whereUid($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Album whereViewNum($value)
  * @mixin \Eloquent
+ * @property int $views
+ * @property string $created_at
+ * @property string $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Album whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Album whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Album whereViews($value)
  */
 class Album extends BaseModel
 {

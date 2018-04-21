@@ -36,6 +36,16 @@ namespace App\Models;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ShopAuth whereUid($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ShopAuth whereUpdateTime($value)
  * @mixin \Eloquent
+ * @property string $other_pic 其它证件照片
+ * @property string $scope 经营范围
+ * @property string $status
+ * @property int $created_at
+ * @property int $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ShopAuth whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ShopAuth whereOtherPic($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ShopAuth whereScope($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ShopAuth whereStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ShopAuth whereUpdatedAt($value)
  */
 class ShopAuth extends BaseModel
 {

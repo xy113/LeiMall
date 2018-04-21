@@ -18,6 +18,24 @@ namespace App\Models;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\PostMedia whereSource($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\PostMedia whereUid($value)
  * @mixin \Eloquent
+ * @property string $media_id
+ * @property string $media_from
+ * @property string $media_title
+ * @property string $media_thumb
+ * @property string $media_player
+ * @property string $media_link
+ * @property string $media_tags
+ * @property string $media_description
+ * @property string $media_source
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\PostMedia whereMediaDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\PostMedia whereMediaFrom($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\PostMedia whereMediaId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\PostMedia whereMediaLink($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\PostMedia whereMediaPlayer($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\PostMedia whereMediaSource($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\PostMedia whereMediaTags($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\PostMedia whereMediaThumb($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\PostMedia whereMediaTitle($value)
  */
 class PostMedia extends BaseModel
 {

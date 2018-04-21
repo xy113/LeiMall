@@ -36,10 +36,11 @@ namespace App\Models;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\PostComment whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\PostComment whereUsername($value)
  * @mixin \Eloquent
+ * @property int $cid
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\PostComment whereCid($value)
  */
 class PostComment extends BaseModel
 {
     protected $table = 'post_comment';
-    protected $primaryKey = 'commid';
-    public $timestamps = false;
+    protected $primaryKey = 'cid';
 }

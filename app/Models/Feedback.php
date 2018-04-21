@@ -18,6 +18,10 @@ namespace App\Models;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Feedback whereUid($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Feedback whereUsername($value)
  * @mixin \Eloquent
+ * @property int $created_at
+ * @property int $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Feedback whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Feedback whereUpdatedAt($value)
  */
 class Feedback extends BaseModel
 {

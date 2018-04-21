@@ -36,6 +36,12 @@ namespace App\Models;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Trade whereTradeTime($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Trade whereTradeType($value)
  * @mixin \Eloquent
+ * @property int $pay_at 付款时间
+ * @property int $created_at 交易时间
+ * @property int $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Trade whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Trade wherePayAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Trade whereUpdatedAt($value)
  */
 class Trade extends BaseModel
 {

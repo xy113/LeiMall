@@ -21,6 +21,10 @@ namespace App\Models;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Collection whereTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Collection whereUid($value)
  * @mixin \Eloquent
+ * @property int $created_at
+ * @property int $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Collection whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Collection whereUpdatedAt($value)
  */
 class Collection extends BaseModel
 {

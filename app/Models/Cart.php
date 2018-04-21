@@ -32,6 +32,10 @@ namespace App\Models;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Cart whereTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Cart whereUid($value)
  * @mixin \Eloquent
+ * @property string $created_at
+ * @property string $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Cart whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Cart whereUpdatedAt($value)
  */
 class Cart extends BaseModel
 {

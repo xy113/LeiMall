@@ -38,6 +38,12 @@ namespace App\Models;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Material whereViewNum($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Material whereWidth($value)
  * @mixin \Eloquent
+ * @property string $source 存储路径
+ * @property int $views
+ * @property int $downloads
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Material whereDownloads($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Material whereSource($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Material whereViews($value)
  */
 class Material extends BaseModel
 {

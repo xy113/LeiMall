@@ -22,6 +22,8 @@ namespace App\Models;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\OrderShipping whereShippingType($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\OrderShipping whereUid($value)
  * @mixin \Eloquent
+ * @property int $shipping_at 发货时间
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\OrderShipping whereShippingAt($value)
  */
 class OrderShipping extends BaseModel
 {

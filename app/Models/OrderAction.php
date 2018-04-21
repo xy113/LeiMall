@@ -18,9 +18,11 @@ namespace App\Models;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\OrderAction whereUid($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\OrderAction whereUsername($value)
  * @mixin \Eloquent
+ * @property int $id
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\OrderAction whereId($value)
  */
 class OrderAction extends BaseModel
 {
     protected $table = 'order_action';
-    protected $primaryKey = 'action_id';
+    protected $primaryKey = 'id';
 }

@@ -26,6 +26,8 @@ namespace App\Models;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Address whereStreet($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Address whereUid($value)
  * @mixin \Eloquent
+ * @property string $district
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Address whereDistrict($value)
  */
 class Address extends BaseModel
 {

@@ -16,9 +16,15 @@ namespace App\Models;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ItemPush wherePushId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ItemPush whereUid($value)
  * @mixin \Eloquent
+ * @property int $id
+ * @property int $created_at
+ * @property int $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ItemPush whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ItemPush whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ItemPush whereUpdatedAt($value)
  */
 class ItemPush extends BaseModel
 {
     protected $table = 'item_push';
-    protected $primaryKey = 'push_id';
+    protected $primaryKey = 'id';
 }

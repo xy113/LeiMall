@@ -16,6 +16,8 @@ namespace App\Models;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\OrderClosed whereOrderId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\OrderClosed whereUid($value)
  * @mixin \Eloquent
+ * @property int $closed_at 关闭时间
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\OrderClosed whereClosedAt($value)
  */
 class OrderClosed extends BaseModel
 {

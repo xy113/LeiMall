@@ -16,6 +16,8 @@ namespace App\Models;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ItemImage whereThumb($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ItemImage whereUid($value)
  * @mixin \Eloquent
+ * @property int $displayorder
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ItemImage whereDisplayorder($value)
  */
 class ItemImage extends BaseModel
 {

@@ -38,9 +38,13 @@ namespace App\Models;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\OrderRefund whereSellerUid($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\OrderRefund whereShopId($value)
  * @mixin \Eloquent
+ * @property int $refund_at
+ * @property string $seller_accept_at
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\OrderRefund whereRefundAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\OrderRefund whereSellerAcceptAt($value)
  */
 class OrderRefund extends BaseModel
 {
     protected $table = 'order_refund';
-    protected $primaryKey = 'refund_id';
+    protected $primaryKey = 'id';
 }

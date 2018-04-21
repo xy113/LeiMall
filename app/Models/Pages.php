@@ -30,11 +30,11 @@ namespace App\Models;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Pages whereType($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Pages whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property string $content
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Pages whereContent($value)
  */
 class Pages extends BaseModel
 {
     protected $table = 'pages';
     protected $primaryKey = 'pageid';
-    public $timestamps = true;
-
 }

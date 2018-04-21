@@ -52,6 +52,18 @@ namespace App\Models;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Item whereUpdateTime($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Item whereViewNum($value)
  * @mixin \Eloquent
+ * @property string $sn 商品编号
+ * @property int $views 浏览量
+ * @property int $collections 收藏数量
+ * @property int $reviews 评论数
+ * @property int $created_at
+ * @property int $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Item whereCollections($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Item whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Item whereReviews($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Item whereSn($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Item whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Item whereViews($value)
  */
 class Item extends BaseModel
 {

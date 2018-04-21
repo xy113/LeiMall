@@ -60,6 +60,24 @@ namespace App\Models;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Shop whereUsername($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Shop whereViewNum($value)
  * @mixin \Eloquent
+ * @property string $logo
+ * @property int $type 店铺类型，1=个人店铺，2=企业店铺
+ * @property string $district 所在县
+ * @property int $created_at 开店时间
+ * @property int $updated_at
+ * @property int $views 浏览次数
+ * @property int $collections 收藏数量
+ * @property int $subscribes 关注量
+ * @property string $description 店铺简介
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Shop whereCollections($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Shop whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Shop whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Shop whereDistrict($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Shop whereLogo($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Shop whereSubscribes($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Shop whereType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Shop whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Shop whereViews($value)
  */
 class Shop extends BaseModel
 {

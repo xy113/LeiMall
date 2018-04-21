@@ -18,6 +18,12 @@ namespace App\Models;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Verify whereSeccode($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Verify whereUsed($value)
  * @mixin \Eloquent
+ * @property string $code 验证码
+ * @property int $created_at 发送时间
+ * @property int $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Verify whereCode($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Verify whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Verify whereUpdatedAt($value)
  */
 class Verify extends BaseModel
 {

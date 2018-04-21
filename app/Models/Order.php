@@ -68,6 +68,20 @@ namespace App\Models;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Order whereTotalFee($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Order whereTradeNo($value)
  * @mixin \Eloquent
+ * @property int $pay_at 付款时间
+ * @property int $shipping_at 发货时间
+ * @property int $created_at 创建时间
+ * @property int $updated_at
+ * @property int $deal_at 成交时间
+ * @property int $buyer_deleted 买家已删除
+ * @property int $seller_deleted 卖家已删除
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Order whereBuyerDeleted($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Order whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Order whereDealAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Order wherePayAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Order whereSellerDeleted($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Order whereShippingAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Order whereUpdatedAt($value)
  */
 class Order extends BaseModel
 {

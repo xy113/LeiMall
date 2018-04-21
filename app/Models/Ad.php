@@ -24,6 +24,8 @@ namespace App\Models;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Ad whereType($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Ad whereUid($value)
  * @mixin \Eloquent
+ * @property int $clicks
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Ad whereClicks($value)
  */
 class Ad extends BaseModel
 {

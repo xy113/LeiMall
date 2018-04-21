@@ -70,12 +70,19 @@ namespace App\Models;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\PostItem whereUsername($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\PostItem whereViewNum($value)
  * @mixin \Eloquent
+ * @property int $collections 被收藏数
+ * @property int $comments 评论数
+ * @property int $views 浏览数
+ * @property int $likes 点赞数
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\PostItem whereCollections($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\PostItem whereComments($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\PostItem whereLikes($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\PostItem whereViews($value)
  */
 class PostItem extends BaseModel
 {
     protected $table = 'post_item';
     protected $primaryKey = 'aid';
-    public $timestamps = false;
 
     /**
      * @param $aid
