@@ -78,7 +78,7 @@ class Item extends BaseModel
         $condition = ['itemid'=>$itemid];
         Item::where($condition)->delete();
         ItemImage::where($condition)->delete();
-        ItemDesc::where($condition)->delete();
+        ItemContent::where($condition)->delete();
         ItemPush::where($condition)->delete();
         Collection::where(['datatype'=>'item', 'dataid'=>$itemid])->delete();
     }

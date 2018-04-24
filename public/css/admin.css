@@ -31,11 +31,11 @@
 .sysmessage .links a{margin:0 3px;}
 
 /*===顶部===*/
-.mcenter-header{color:#fff; height:40px; display:block; position: relative;}
-.mcenter-header .header{display: block; position: fixed; width: 100%; height: 40px; background-color:#0098CE; z-index: 200;}
-.mcenter-header .logo{font-size:20px; line-height:40px; float:left; margin-right:40px; margin-left:26px;}
-.mcenter-header .right-menu{font-size:12px; overflow:hidden; padding-left:2px; float: right;}
-.mcenter-header .right-menu a{display:inline-block; padding:0 20px; float:left; font-size:14px; color:#fff; height:40px; line-height:40px; border-left:1px #008fbf solid; border-right:1px #008fbf solid; margin-left:-1px;}
+.admin-header{color:#fff; height:40px; display:block; position: relative;}
+.admin-header .header{display: block; position: fixed; width: 100%; height: 40px; background-color:#0098CE; z-index: 200;}
+.admin-header .logo{font-size:20px; line-height:40px; float:left; margin-right:40px; margin-left:26px;}
+.admin-header .right-menu{font-size:12px; overflow:hidden; padding-left:2px; float: right;}
+.admin-header .right-menu a{display:inline-block; padding:0 20px; float:left; font-size:14px; color:#fff; height:40px; line-height:40px; border-left:1px #008fbf solid; border-right:1px #008fbf solid; margin-left:-1px;}
 /*===侧边栏===*/
 .sidebar{width:160px; background:#EAEDF1; position:fixed; left:0; top:40px; bottom:0;}
 .sidebar .sidebar-content{display:block; position: relative; padding: 0; height: 100%; overflow: hidden;}

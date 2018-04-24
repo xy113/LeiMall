@@ -87,4 +87,59 @@ class Order extends BaseModel
 {
     protected $table = 'order';
     protected $primaryKey = 'order_id';
+
+    /**
+     * @return int
+     */
+    public function getTradeStatus(){
+        $trade_status = 0;
+        if ($this->pay_type == 2){
+            if ($this->is_commited == 1 && $this->is_accepted == 0){
+                return 8;
+            }else {
+                return 9;
+            }
+        }
+        if ($this->is_closed == 1 && $this->refund_status == 0) {
+            //交易关闭
+            return 0;
+        }elseif ($this->refund_status == 1) {
+            //退款中
+            return 6;
+        }elseif ($this->refund_status == 2) {
+            //退款完成
+            return 7;
+        }else {
+            if ($this->pay_status == 0 && $this->shipping_status == 0){
+                //已下单未支付
+                $trade_status = 1;
+            }elseif ($this->pay_status == 1 && $this->shipping_status == 0){
+                //已付款,未发货
+                $trade_status = 2;
+                /**
+                 * @author panjone
+                 * @date 2017-12-01
+                 *
+                 * 原逻辑为订单支付状态为pay_status=1,且发货状态为已放货shipping_status=1
+                 * 修复逻辑错误
+                 * 订单支付状态为pay_status=1
+                 * 且发货状态为已放货shipping_status=1
+                 * 且收货状态为receive_status=0
+                 *
+                 */
+            }elseif ($this->pay_status == 1 && $this->shipping_status == 1 && $this->receive_status == 0){
+                //已发货,待收货
+                $trade_status = 3;
+            }elseif ($this->pay_status == 1 && $this->shipping_status == 1
+                && $this->receive_status == 1 && $this->review_status == 0){
+                //已收货,未评价
+                $trade_status = 4;
+            }elseif ($this->pay_status == 1 && $this->shipping_status == 1
+                && $this->receive_status == 1 && $this->receive_status == 1){
+                //已收货,已评价
+                $trade_status = 5;
+            }
+        }
+        return $trade_status;
+    }
 }

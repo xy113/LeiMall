@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\User;
 use Cookie;
-use App\Models\Member;
-use Illuminate\Http\Request;
 
 class LoginController extends BaseController
 {
@@ -28,20 +27,23 @@ class LoginController extends BaseController
         $account  = $this->request->post('account');
         $password = $this->request->post('password');
 
-        $member = Member::where('username',$account)->orWhere('mobile',$account)->orWhere('email',$account)->first();
-        if (!$member->admincp){
+        $user = User::where('username', $account)
+            ->orWhere('mobile', $account)
+            ->orWhere('email', $account)
+            ->first();
+        if (!$user->admincp){
             return ajaxError(1, trans('member.you are not an administrator'));
         }
 
-        if ($member->password !== encrypt_password($password)){
+        if ($user->password !== encrypt_password($password)){
             return ajaxError(2, trans('member.password incorrect'));
         }
 
-        $uidCookie = Cookie::make('uid', $member->uid);
-        $adminidCookie = Cookie::make('adminid', $member->uid);
-        $usernameCookie = Cookie::make('username', $member->username);
+        $uidCookie = Cookie::make('uid', $user->uid);
+        $adminidCookie = Cookie::make('adminid', $user->uid);
+        $usernameCookie = Cookie::make('username', $user->username);
 
-        return ajaxReturn(['uid'=>$member->uid, 'username'=>$member->username])
+        return ajaxReturn(['uid'=>$user->uid, 'username'=>$user->username])
             ->cookie($uidCookie)->cookie($adminidCookie)->cookie($usernameCookie);
     }
 

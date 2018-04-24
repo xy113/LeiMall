@@ -13,49 +13,63 @@
 
 Route::group(['namespace' => 'Home'], function () {
     Route::get('/', 'IndexController@index');
+    Route::get('/youxuan', 'YouxuanController@index');
 });
 
-Route::group(['namespace' => 'Member', 'middleware' => 'member.auth', 'prefix' => 'member'], function () {
+Route::group(['namespace' => 'Shop', 'prefix'=>'shop'], function (){
     Route::get('/', 'IndexController@index');
+    Route::get('/{shopid}.html', 'ViewShopController@index');
+});
+
+Route::group(['namespace' => 'Item', 'prefix'=>'item'], function (){
+    Route::get('/search', 'SearchController@index');
+    Route::get('/detail/{itemid}.html', 'DetailController@index');
+    Route::get('/list/{catid}.html', 'ListController@index');
+    Route::any('/service/update_visit', 'Shop\ServiceController@update_visit');
+    Route::any('/catlog', 'CatlogController@index');
+});
+
+Route::group(['namespace'=>'User', 'prefix'=>'user'], function (){
+    Route::get('/', 'IndexController@index');
+    //Settings
     Route::any('/settings/userinfo', 'SettingsController@userinfo');
     Route::any('/settings/security', 'SettingsController@security');
-    Route::any('/settings/verify', 'SettingsController@verify');
-    Route::any('/settings/set_avatar', 'SettingsController@set_avatar');
-
+    Route::any('/settings/avatar', 'SettingsController@avatar');
+    //Order
+    Route::any('/order', 'OrderController@index');
+    //Wallet
     Route::any('/wallet', 'WalletController@index');
+    //address
     Route::any('/address', 'AddressController@index');
     Route::any('/address/setdefault', 'AddressController@setdefault');
     Route::any('/address/delete', 'AddressController@delete');
+    //collection
+    Route::any('/collection', 'CollectionController@index');
     Route::any('/collection/delete', 'CollectionController@delete');
-    Route::any('/collection/{type}', 'CollectionController@index');
-    Route::any('/comment', 'CommentController@index');
 });
 
-Route::get('/avatar/{code}', 'Plugin\AvatarController@index');
-Route::group(['namespace'=>'Plugin', 'prefix'=>'plugin'], function (){
-    Route::get('/image', 'ImageController@index');
+Route::group(['namespace'=>'Seller', 'prefix'=>'seller'], function (){
+    Route::get('/', 'IndexController@index');
+    Route::any('/shop', 'ShopController@index');
+    Route::any('/shop/auth', 'ShopController@auth');
+    Route::any('/shop/live_data', 'ShopController@live_data');
+    //analyse
+    Route::get('/analyse', 'AnalyseController@index');
+    //item
+    Route::get('/item/itemlist', 'ItemController@index');
+    Route::any('/item/sell', 'ItemController@sell');
+    Route::get('/item/delete', 'ItemController@delete');
+    Route::get('/item/publish', 'ItemController@publish');
+    //sold
+    Route::any('/sold/itemlist', 'SoldController@itemlist');
 });
 
-Route::group(['namespace' => 'Account', 'prefix'=>'account'], function (){
-    Route::get('/login', 'LoginController@index');
-    Route::post('/login/check', 'LoginController@check');
-    Route::get('/logout', 'LogoutController@index');
-    Route::get('/register', 'RegisterController@index');
-    Route::post('register/save', 'RegisterController@save');
-    Route::any('/register/check', 'RegisterController@check');
+Route::group(['namespace'=>'Cart', 'prefix'=>'cart'], function (){
+    Route::any('/', 'IndexController@index');
 });
 
-
-//service
-Route::post('/service/upload/image', 'Service\UploadController@image');
-
-Route::group(['namespace' => 'Post'], function (){
-    Route::get('news', 'IndexController@index');
-
-    Route::group(['prefix'=>'post'], function (){
-        Route::get('/list', 'ListController@index');
-        Route::get('/detail/{aid}.html', 'DetailController@index');
-    });
+Route::group(['namespace'=>'Pages', 'prefix'=>'pages'], function (){
+    Route::get('/detail/{pageid}.html', 'DetailController@index');
 });
 
 //后台管理
@@ -74,10 +88,9 @@ Route::group(['namespace' => 'Admin','prefix'=>'admin'], function(){
         Route::any('/app', 'AppController@index');
         Route::any('/app/edit', 'AppController@edit');
         //用户管理
-        Route::get('/member', 'MemberController@index');
-        Route::post('member/delete', 'MemberController@delete');
-        Route::any('/member/archive', 'MemberController@archive');
-        Route::any('/membergroup', 'MemberGroupController@index');
+        Route::get('/user', 'UserController@index');
+        Route::post('user/edit', 'UserController@edit');
+        Route::any('/usergroup', 'UserGroupController@index');
         //菜单管理
         Route::any('/menu', 'MenuController@index');
         Route::any('/menu/itemlist', 'MenuController@itemlist');
@@ -118,11 +131,10 @@ Route::group(['namespace' => 'Admin','prefix'=>'admin'], function(){
 
         //页面管理
         Route::any('/pages', 'PagesController@index');
-        Route::any('/pages/publish', 'PagesController@publish');
+        Route::any('/pages/edit', 'PagesController@edit');
         Route::any('/pages/category', 'PagesController@category');
         //素材管理
-        Route::get('material', 'MaterialController@index');
-        Route::post('material/delete', 'MaterialController@delete');
+        Route::any('material', 'MaterialController@index');
         //区域管理
         Route::get('/district', 'DistrictController@index');
         Route::post('/district/save', 'DistrictController@save');
@@ -183,4 +195,47 @@ Route::group(['namespace'=>'Mobile', 'prefix'=>'mobile'], function (){
 
 Route::group(['namespace'=>'App', 'prefix'=>'app'], function (){
     Route::get('/post/detail/{aid}.html', 'PostController@detail');
+});
+
+Route::group(['namespace' => 'Member', 'middleware' => 'member.auth', 'prefix' => 'member'], function () {
+    Route::get('/', 'IndexController@index');
+    Route::any('/settings/userinfo', 'SettingsController@userinfo');
+    Route::any('/settings/security', 'SettingsController@security');
+    Route::any('/settings/verify', 'SettingsController@verify');
+    Route::any('/settings/set_avatar', 'SettingsController@set_avatar');
+
+    Route::any('/wallet', 'WalletController@index');
+    Route::any('/address', 'AddressController@index');
+    Route::any('/address/setdefault', 'AddressController@setdefault');
+    Route::any('/address/delete', 'AddressController@delete');
+    Route::any('/collection/delete', 'CollectionController@delete');
+    Route::any('/collection/{type}', 'CollectionController@index');
+    Route::any('/comment', 'CommentController@index');
+});
+
+Route::get('/avatar/{code}', 'Plugin\AvatarController@index');
+Route::group(['namespace'=>'Plugin', 'prefix'=>'plugin'], function (){
+    Route::get('/image', 'ImageController@index');
+});
+
+Route::group(['namespace' => 'Account', 'prefix'=>'account'], function (){
+    Route::get('/login', 'LoginController@index');
+    Route::post('/login/check', 'LoginController@check');
+    Route::get('/logout', 'LogoutController@index');
+    Route::get('/register', 'RegisterController@index');
+    Route::post('register/save', 'RegisterController@save');
+    Route::any('/register/check', 'RegisterController@check');
+});
+
+
+//service
+Route::post('/service/upload/image', 'Service\UploadController@image');
+
+Route::group(['namespace' => 'Post'], function (){
+    Route::get('news', 'IndexController@index');
+
+    Route::group(['prefix'=>'post'], function (){
+        Route::get('/list', 'ListController@index');
+        Route::get('/detail/{aid}.html', 'DetailController@index');
+    });
 });

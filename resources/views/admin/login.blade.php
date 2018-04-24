@@ -19,9 +19,9 @@
         .copyright{position:fixed; bottom:30px; width:100%; display:block; text-align:center;}
         .copyright,.copyright *,.copyright a{font:400 12px Arial; color:#fff;}
     </style>
-    <link rel="icon" href="{{asset('images/common/favicon.png')}}" />
-    <script type="text/javascript" src="{{asset('js/jquery.js')}}"></script>
-    <script type="text/javascript" src="{{asset('js/common.js')}}"></script>
+    <link href="{{asset('images/common/favicon.png')}}" rel="icon"/>
+    <script src="{{asset('js/jquery.js')}}" type="text/javascript"></script>
+    <script src="{{asset('js/common.js')}}" type="text/javascript"></script>
 </head>
 <body style="background:url(http://service.dsxcms.com/background.php);">
 <div class="login-wrap">
@@ -33,6 +33,7 @@
         <div class="item"><input type="password" name="password" id="password" class="input-text" placeholder="密码"></div>
         <div class="item"><div class="button" tabindex="1" id="loginButton">登录</div></div>
     </form>
+
 </div>
 <script type="text/javascript">
     (function(){
@@ -52,7 +53,7 @@
                 dataType:'json',
                 success:function(json){
                     if(json.errcode){
-                        $("#err").text('密码输入错误').show();
+                        $("#err").text(json.errmsg).show();
                     }else{
                         window.location.href = '/admin';
                     }

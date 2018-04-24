@@ -55,27 +55,14 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Material whereViewNum($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Material whereWidth($value)
  * @mixin \Eloquent
+ * @property string $source 存储路径
+ * @property int $views
+ * @property int $downloads
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Material whereDownloads($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Material whereSource($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Material whereViews($value)
  */
 	class Material extends \Eloquent {}
-}
-
-namespace App\Models{
-/**
- * App\Models\ItemDesc
- *
- * @property int $id
- * @property int $uid
- * @property int $itemid
- * @property string $content
- * @property string $update_time
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ItemDesc whereContent($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ItemDesc whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ItemDesc whereItemid($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ItemDesc whereUid($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ItemDesc whereUpdateTime($value)
- * @mixin \Eloquent
- */
-	class ItemDesc extends \Eloquent {}
 }
 
 namespace App\Models{
@@ -114,25 +101,10 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ItemImage whereThumb($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ItemImage whereUid($value)
  * @mixin \Eloquent
+ * @property int $displayorder
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ItemImage whereDisplayorder($value)
  */
 	class ItemImage extends \Eloquent {}
-}
-
-namespace App\Models{
-/**
- * App\Models\ShopDesc
- *
- * @property int $uid 店主ID
- * @property int $shop_id 店铺ID
- * @property string $content
- * @property string $update_time
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ShopDesc whereContent($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ShopDesc whereShopId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ShopDesc whereUid($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ShopDesc whereUpdateTime($value)
- * @mixin \Eloquent
- */
-	class ShopDesc extends \Eloquent {}
 }
 
 namespace App\Models{
@@ -158,8 +130,29 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Ad whereType($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Ad whereUid($value)
  * @mixin \Eloquent
+ * @property int $clicks
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Ad whereClicks($value)
  */
 	class Ad extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * App\Models\DeviceToken
+ *
+ * @property int $id
+ * @property int $uid
+ * @property string $ios_token
+ * @property string $android_token
+ * @property string $platform
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\DeviceToken whereAndroidToken($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\DeviceToken whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\DeviceToken whereIosToken($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\DeviceToken wherePlatform($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\DeviceToken whereUid($value)
+ * @mixin \Eloquent
+ */
+	class DeviceToken extends \Eloquent {}
 }
 
 namespace App\Models{
@@ -183,6 +176,8 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\OrderShipping whereShippingType($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\OrderShipping whereUid($value)
  * @mixin \Eloquent
+ * @property int $shipping_at 发货时间
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\OrderShipping whereShippingAt($value)
  */
 	class OrderShipping extends \Eloquent {}
 }
@@ -302,8 +297,33 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Cart whereTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Cart whereUid($value)
  * @mixin \Eloquent
+ * @property string $created_at
+ * @property string $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Cart whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Cart whereUpdatedAt($value)
  */
 	class Cart extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * App\Models\ItemContent
+ *
+ * @property int $id
+ * @property int $uid
+ * @property int $itemid
+ * @property string $content
+ * @property int $created_at
+ * @property int $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ItemContent whereContent($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ItemContent whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ItemContent whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ItemContent whereItemid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ItemContent whereUid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ItemContent whereUpdatedAt($value)
+ * @mixin \Eloquent
+ */
+	class ItemContent extends \Eloquent {}
 }
 
 namespace App\Models{
@@ -398,6 +418,20 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Order whereTotalFee($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Order whereTradeNo($value)
  * @mixin \Eloquent
+ * @property int $pay_at 付款时间
+ * @property int $shipping_at 发货时间
+ * @property int $created_at 创建时间
+ * @property int $updated_at
+ * @property int $deal_at 成交时间
+ * @property int $buyer_deleted 买家已删除
+ * @property int $seller_deleted 卖家已删除
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Order whereBuyerDeleted($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Order whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Order whereDealAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Order wherePayAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Order whereSellerDeleted($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Order whereShippingAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Order whereUpdatedAt($value)
  */
 	class Order extends \Eloquent {}
 }
@@ -475,6 +509,8 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Address whereStreet($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Address whereUid($value)
  * @mixin \Eloquent
+ * @property string $district
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Address whereDistrict($value)
  */
 	class Address extends \Eloquent {}
 }
@@ -537,6 +573,27 @@ namespace App\Models{
 
 namespace App\Models{
 /**
+ * App\Models\ScanLogin
+ *
+ * @property int $id
+ * @property int $uid
+ * @property string $code
+ * @property int $used
+ * @property int $created_at
+ * @property int $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ScanLogin whereCode($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ScanLogin whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ScanLogin whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ScanLogin whereUid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ScanLogin whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ScanLogin whereUsed($value)
+ * @mixin \Eloquent
+ */
+	class ScanLogin extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
  * App\Models\ItemPush
  *
  * @property int $push_id
@@ -550,6 +607,12 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ItemPush wherePushId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ItemPush whereUid($value)
  * @mixin \Eloquent
+ * @property int $id
+ * @property int $created_at
+ * @property int $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ItemPush whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ItemPush whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ItemPush whereUpdatedAt($value)
  */
 	class ItemPush extends \Eloquent {}
 }
@@ -597,7 +660,7 @@ namespace App\Models{
 
 namespace App\Models{
 /**
- * App\Models\Member
+ * App\Models\User
  *
  * @property int $uid
  * @property int $gid
@@ -616,26 +679,26 @@ namespace App\Models{
  * @property int $exp1
  * @property int $exp2
  * @property int $exp3
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Member whereAdmincp($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Member whereAdminid($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Member whereAvatarstatus($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Member whereEmail($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Member whereEmailstatus($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Member whereExp($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Member whereExp1($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Member whereExp2($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Member whereExp3($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Member whereFreeze($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Member whereGid($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Member whereMobile($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Member whereNewpm($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Member wherePassword($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Member whereStatus($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Member whereUid($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Member whereUsername($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereAdmincp($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereAdminid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereAvatarstatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereEmail($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereEmailstatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereExp($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereExp1($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereExp2($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereExp3($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereFreeze($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereGid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereMobile($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereNewpm($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User wherePassword($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereUid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereUsername($value)
  * @mixin \Eloquent
  */
-	class Member extends \Eloquent {}
+	class User extends \Eloquent {}
 }
 
 namespace App\Models{
@@ -697,31 +760,26 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Shop whereUsername($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Shop whereViewNum($value)
  * @mixin \Eloquent
+ * @property string $logo
+ * @property int $type 店铺类型，1=个人店铺，2=企业店铺
+ * @property string $district 所在县
+ * @property int $created_at 开店时间
+ * @property int $updated_at
+ * @property int $views 浏览次数
+ * @property int $collections 收藏数量
+ * @property int $subscribes 关注量
+ * @property string $description 店铺简介
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Shop whereCollections($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Shop whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Shop whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Shop whereDistrict($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Shop whereLogo($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Shop whereSubscribes($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Shop whereType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Shop whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Shop whereViews($value)
  */
 	class Shop extends \Eloquent {}
-}
-
-namespace App\Models{
-/**
- * App\Models\MemberStat
- *
- * @property int $uid
- * @property int $postnum
- * @property int $commentnum
- * @property int $albumnum
- * @property int $photonum
- * @property int $follower
- * @property int $following
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MemberStat whereAlbumnum($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MemberStat whereCommentnum($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MemberStat whereFollower($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MemberStat whereFollowing($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MemberStat wherePhotonum($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MemberStat wherePostnum($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MemberStat whereUid($value)
- * @mixin \Eloquent
- */
-	class MemberStat extends \Eloquent {}
 }
 
 namespace App\Models{
@@ -741,6 +799,29 @@ namespace App\Models{
 
 namespace App\Models{
 /**
+ * App\Models\UserStat
+ *
+ * @property int $uid
+ * @property int $posts
+ * @property int $comments
+ * @property int $albums
+ * @property int $photos
+ * @property int $follower
+ * @property int $following
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserStat whereAlbums($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserStat whereComments($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserStat whereFollower($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserStat whereFollowing($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserStat wherePhotos($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserStat wherePosts($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserStat whereUid($value)
+ * @mixin \Eloquent
+ */
+	class UserStat extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
  * App\Models\ItemPushGroup
  *
  * @property int $groupid
@@ -750,44 +831,6 @@ namespace App\Models{
  * @mixin \Eloquent
  */
 	class ItemPushGroup extends \Eloquent {}
-}
-
-namespace App\Models{
-/**
- * App\Models\MemberStatus
- *
- * @property int $uid
- * @property string $regdate
- * @property string $regip
- * @property string $lastvisit
- * @property string $lastvisitip
- * @property string $lastactive
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MemberStatus whereLastactive($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MemberStatus whereLastvisit($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MemberStatus whereLastvisitip($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MemberStatus whereRegdate($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MemberStatus whereRegip($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MemberStatus whereUid($value)
- * @mixin \Eloquent
- */
-	class MemberStatus extends \Eloquent {}
-}
-
-namespace App\Models{
-/**
- * App\Models\MemberSession
- *
- * @property int $uid
- * @property string $session_id
- * @property string $session_value
- * @property int $expires_in
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MemberSession whereExpiresIn($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MemberSession whereSessionId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MemberSession whereSessionValue($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MemberSession whereUid($value)
- * @mixin \Eloquent
- */
-	class MemberSession extends \Eloquent {}
 }
 
 namespace App\Models{
@@ -859,8 +902,57 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\PostItem whereUsername($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\PostItem whereViewNum($value)
  * @mixin \Eloquent
+ * @property int $collections 被收藏数
+ * @property int $comments 评论数
+ * @property int $views 浏览数
+ * @property int $likes 点赞数
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\PostItem whereCollections($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\PostItem whereComments($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\PostItem whereLikes($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\PostItem whereViews($value)
  */
 	class PostItem extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * App\Models\UserInfo
+ *
+ * @property int $uid
+ * @property int $gender
+ * @property string $birthday
+ * @property int $blood
+ * @property int $star
+ * @property string $country
+ * @property string $province
+ * @property string $city
+ * @property string $district
+ * @property string $town
+ * @property string $street
+ * @property string $introduction
+ * @property string $tags
+ * @property string $created_at
+ * @property string $updated_at
+ * @property int $locked
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserInfo whereBirthday($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserInfo whereBlood($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserInfo whereCity($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserInfo whereCountry($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserInfo whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserInfo whereDistrict($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserInfo whereGender($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserInfo whereIntroduction($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserInfo whereLocked($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserInfo whereProvince($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserInfo whereStar($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserInfo whereStreet($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserInfo whereTags($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserInfo whereTown($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserInfo whereUid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserInfo whereUpdatedAt($value)
+ * @mixin \Eloquent
+ */
+	class UserInfo extends \Eloquent {}
 }
 
 namespace App\Models{
@@ -909,45 +1001,25 @@ namespace App\Models{
 
 namespace App\Models{
 /**
- * App\Models\MemberInfo
+ * App\Models\UserLog
  *
+ * @property int $id
  * @property int $uid
- * @property int $usersex
- * @property string $birthday
- * @property int $blood
- * @property int $star
- * @property string $qq
- * @property string $weixin
- * @property string $country
- * @property string $province
- * @property string $city
- * @property string $county
- * @property string $town
- * @property string $street
- * @property string $introduction
- * @property string $tags
- * @property string $modified
- * @property int $locked
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MemberInfo whereBirthday($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MemberInfo whereBlood($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MemberInfo whereCity($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MemberInfo whereCountry($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MemberInfo whereCounty($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MemberInfo whereIntroduction($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MemberInfo whereLocked($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MemberInfo whereModified($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MemberInfo whereProvince($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MemberInfo whereQq($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MemberInfo whereStar($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MemberInfo whereStreet($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MemberInfo whereTags($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MemberInfo whereTown($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MemberInfo whereUid($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MemberInfo whereUsersex($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MemberInfo whereWeixin($value)
+ * @property string $username
+ * @property string $ip
+ * @property string $operate
+ * @property string $created_at
+ * @property string $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserLog whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserLog whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserLog whereIp($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserLog whereOperate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserLog whereUid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserLog whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserLog whereUsername($value)
  * @mixin \Eloquent
  */
-	class MemberInfo extends \Eloquent {}
+	class UserLog extends \Eloquent {}
 }
 
 namespace App\Models{
@@ -1033,6 +1105,12 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Album whereUid($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Album whereViewNum($value)
  * @mixin \Eloquent
+ * @property int $views
+ * @property string $created_at
+ * @property string $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Album whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Album whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Album whereViews($value)
  */
 	class Album extends \Eloquent {}
 }
@@ -1052,75 +1130,27 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\OrderClosed whereOrderId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\OrderClosed whereUid($value)
  * @mixin \Eloquent
+ * @property int $closed_at 关闭时间
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\OrderClosed whereClosedAt($value)
  */
 	class OrderClosed extends \Eloquent {}
 }
 
 namespace App\Models{
 /**
- * App\Models\MemberGroup
- *
- * @property int $gid
- * @property string $title
- * @property string $type
- * @property int $creditslower
- * @property int $creditshigher
- * @property string $perm
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MemberGroup whereCreditshigher($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MemberGroup whereCreditslower($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MemberGroup whereGid($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MemberGroup wherePerm($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MemberGroup whereTitle($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MemberGroup whereType($value)
- * @mixin \Eloquent
- */
-	class MemberGroup extends \Eloquent {}
-}
-
-namespace App\Models{
-/**
- * App\Models\MemberToken
- *
- * @property int $uid 用户ID
- * @property string $token 令牌
- * @property string $expire_time
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MemberToken whereExpireTime($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MemberToken whereToken($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MemberToken whereUid($value)
- * @mixin \Eloquent
- */
-	class MemberToken extends \Eloquent {}
-}
-
-namespace App\Models{
-/**
- * App\Models\MemberConnect
+ * App\Models\UserField
  *
  * @property int $id
- * @property int $uid 用户ID
- * @property string $platform 平台
- * @property string $openid 开放ID
- * @property string $nickname 昵称
- * @property int $sex 性别
- * @property string $city 城市
- * @property string $province 省，州
- * @property string $country 国籍
- * @property string $headimgurl 头像地址
- * @property string $dateline 登录时间
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MemberConnect whereCity($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MemberConnect whereCountry($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MemberConnect whereDateline($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MemberConnect whereHeadimgurl($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MemberConnect whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MemberConnect whereNickname($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MemberConnect whereOpenid($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MemberConnect wherePlatform($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MemberConnect whereProvince($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MemberConnect whereSex($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MemberConnect whereUid($value)
+ * @property int $uid
+ * @property string $name
+ * @property string $value
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserField whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserField whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserField whereUid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserField whereValue($value)
  * @mixin \Eloquent
  */
-	class MemberConnect extends \Eloquent {}
+	class UserField extends \Eloquent {}
 }
 
 namespace App\Models{
@@ -1174,8 +1204,53 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Item whereUpdateTime($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Item whereViewNum($value)
  * @mixin \Eloquent
+ * @property string $sn 商品编号
+ * @property int $views 浏览量
+ * @property int $collections 收藏数量
+ * @property int $reviews 评论数
+ * @property int $created_at
+ * @property int $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Item whereCollections($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Item whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Item whereReviews($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Item whereSn($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Item whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Item whereViews($value)
  */
 	class Item extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * App\Models\UserConnect
+ *
+ * @property int $id
+ * @property int $uid 用户ID
+ * @property string $platform 平台
+ * @property string $openid 开放ID
+ * @property string $nickname 昵称
+ * @property int $gender 性别
+ * @property string $city 城市
+ * @property string $province 省，州
+ * @property string $country 国籍
+ * @property string $headimg 头像地址
+ * @property int $created_at 登录时间
+ * @property int $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserConnect whereCity($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserConnect whereCountry($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserConnect whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserConnect whereGender($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserConnect whereHeadimg($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserConnect whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserConnect whereNickname($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserConnect whereOpenid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserConnect wherePlatform($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserConnect whereProvince($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserConnect whereUid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserConnect whereUpdatedAt($value)
+ * @mixin \Eloquent
+ */
+	class UserConnect extends \Eloquent {}
 }
 
 namespace App\Models{
@@ -1197,6 +1272,10 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Collection whereTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Collection whereUid($value)
  * @mixin \Eloquent
+ * @property int $created_at
+ * @property int $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Collection whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Collection whereUpdatedAt($value)
  */
 	class Collection extends \Eloquent {}
 }
@@ -1218,8 +1297,31 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\OrderAction whereUid($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\OrderAction whereUsername($value)
  * @mixin \Eloquent
+ * @property int $id
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\OrderAction whereId($value)
  */
 	class OrderAction extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * App\Models\UserStatus
+ *
+ * @property int $uid
+ * @property string $created_at
+ * @property string $created_ip
+ * @property string $lastvisit_at
+ * @property string $lastvisit_ip
+ * @property string $lastactive
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserStatus whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserStatus whereCreatedIp($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserStatus whereLastactive($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserStatus whereLastvisitAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserStatus whereLastvisitIp($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserStatus whereUid($value)
+ * @mixin \Eloquent
+ */
+	class UserStatus extends \Eloquent {}
 }
 
 namespace App\Models{
@@ -1239,6 +1341,24 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\PostMedia whereSource($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\PostMedia whereUid($value)
  * @mixin \Eloquent
+ * @property string $media_id
+ * @property string $media_from
+ * @property string $media_title
+ * @property string $media_thumb
+ * @property string $media_player
+ * @property string $media_link
+ * @property string $media_tags
+ * @property string $media_description
+ * @property string $media_source
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\PostMedia whereMediaDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\PostMedia whereMediaFrom($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\PostMedia whereMediaId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\PostMedia whereMediaLink($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\PostMedia whereMediaPlayer($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\PostMedia whereMediaSource($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\PostMedia whereMediaTags($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\PostMedia whereMediaThumb($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\PostMedia whereMediaTitle($value)
  */
 	class PostMedia extends \Eloquent {}
 }
@@ -1278,6 +1398,16 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ShopAuth whereUid($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ShopAuth whereUpdateTime($value)
  * @mixin \Eloquent
+ * @property string $other_pic 其它证件照片
+ * @property string $scope 经营范围
+ * @property string $status
+ * @property int $created_at
+ * @property int $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ShopAuth whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ShopAuth whereOtherPic($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ShopAuth whereScope($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ShopAuth whereStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ShopAuth whereUpdatedAt($value)
  */
 	class ShopAuth extends \Eloquent {}
 }
@@ -1299,31 +1429,14 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Verify whereSeccode($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Verify whereUsed($value)
  * @mixin \Eloquent
+ * @property string $code 验证码
+ * @property int $created_at 发送时间
+ * @property int $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Verify whereCode($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Verify whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Verify whereUpdatedAt($value)
  */
 	class Verify extends \Eloquent {}
-}
-
-namespace App\Models{
-/**
- * App\Models\MemberLog
- *
- * @property int $id
- * @property int $uid
- * @property string $ip
- * @property string $operate
- * @property string $created_at
- * @property string $updated_at
- * @property string $dateline
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MemberLog whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MemberLog whereDateline($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MemberLog whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MemberLog whereIp($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MemberLog whereOperate($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MemberLog whereUid($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MemberLog whereUpdatedAt($value)
- * @mixin \Eloquent
- */
-	class MemberLog extends \Eloquent {}
 }
 
 namespace App\Models{
@@ -1343,6 +1456,10 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Feedback whereUid($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Feedback whereUsername($value)
  * @mixin \Eloquent
+ * @property int $created_at
+ * @property int $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Feedback whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Feedback whereUpdatedAt($value)
  */
 	class Feedback extends \Eloquent {}
 }
@@ -1382,6 +1499,8 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\PostComment whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\PostComment whereUsername($value)
  * @mixin \Eloquent
+ * @property int $cid
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\PostComment whereCid($value)
  */
 	class PostComment extends \Eloquent {}
 }
@@ -1423,6 +1542,10 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\OrderRefund whereSellerUid($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\OrderRefund whereShopId($value)
  * @mixin \Eloquent
+ * @property int $refund_at
+ * @property string $seller_accept_at
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\OrderRefund whereRefundAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\OrderRefund whereSellerAcceptAt($value)
  */
 	class OrderRefund extends \Eloquent {}
 }
@@ -1462,25 +1585,31 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Trade whereTradeTime($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Trade whereTradeType($value)
  * @mixin \Eloquent
+ * @property int $pay_at 付款时间
+ * @property int $created_at 交易时间
+ * @property int $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Trade whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Trade wherePayAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Trade whereUpdatedAt($value)
  */
 	class Trade extends \Eloquent {}
 }
 
 namespace App\Models{
 /**
- * App\Models\MemberField
+ * App\Models\UserSession
  *
- * @property int $field_id
  * @property int $uid
- * @property string $field
- * @property string $value
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MemberField whereField($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MemberField whereFieldId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MemberField whereUid($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MemberField whereValue($value)
+ * @property string $session_id
+ * @property string $session_value
+ * @property int $expires_in
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserSession whereExpiresIn($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserSession whereSessionId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserSession whereSessionValue($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserSession whereUid($value)
  * @mixin \Eloquent
  */
-	class MemberField extends \Eloquent {}
+	class UserSession extends \Eloquent {}
 }
 
 namespace App\Models{
@@ -1572,8 +1701,31 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Pages whereType($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Pages whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property string $content
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Pages whereContent($value)
  */
 	class Pages extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * App\Models\UserGroup
+ *
+ * @property int $gid
+ * @property string $title
+ * @property string $type
+ * @property int $creditslower
+ * @property int $creditshigher
+ * @property string $perm
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserGroup whereCreditshigher($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserGroup whereCreditslower($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserGroup whereGid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserGroup wherePerm($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserGroup whereTitle($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserGroup whereType($value)
+ * @mixin \Eloquent
+ */
+	class UserGroup extends \Eloquent {}
 }
 
 namespace App\Models{
@@ -1583,6 +1735,21 @@ namespace App\Models{
  * @mixin \Eloquent
  */
 	class BaseModel extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * App\Models\UserToken
+ *
+ * @property int $uid 用户ID
+ * @property string $token 令牌
+ * @property int $expires_in
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserToken whereExpiresIn($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserToken whereToken($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserToken whereUid($value)
+ * @mixin \Eloquent
+ */
+	class UserToken extends \Eloquent {}
 }
 
 namespace App\Models{
@@ -1606,5 +1773,24 @@ namespace App\Models{
  * @mixin \Eloquent
  */
 	class PostLog extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * App\Models\ShopContent
+ *
+ * @property int $uid 店主ID
+ * @property int $shop_id 店铺ID
+ * @property string $content
+ * @property int $created_at
+ * @property int $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ShopContent whereContent($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ShopContent whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ShopContent whereShopId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ShopContent whereUid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ShopContent whereUpdatedAt($value)
+ * @mixin \Eloquent
+ */
+	class ShopContent extends \Eloquent {}
 }
 

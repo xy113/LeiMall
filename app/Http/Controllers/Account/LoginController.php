@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers\Account;
 
-use App\Models\Member;
-use App\Models\MemberStatus;
-use Illuminate\Http\Request;
+use App\Models\User;
+use App\Models\UserStatus;
 use Illuminate\Support\Facades\Cookie;
 
 class LoginController extends BaseController
@@ -25,24 +24,24 @@ class LoginController extends BaseController
     /**
      * 验证登录
      */
-    public function check(Request $request){
-        $account  = $request->post('account');
-        $password = $request->post('password');
+    public function check(){
+        $account  = $this->request->post('account');
+        $password = $this->request->post('password');
 
-        $member = Member::where('username', $account)->orWhere('email', $account)->orWhere('mobile', $account)->first();
-        if ($member) {
-            if ($member->password == encrypt_password($password)){
-                MemberStatus::where('uid', $member->uid)->update([
-                    'lastvisit'=>time(),
-                    'lastvisitip'=>getIp()
+        $user = User::where('username', $account)->orWhere('email', $account)->orWhere('mobile', $account)->first();
+        if ($user) {
+            if ($user->password == encrypt_password($password)){
+                UserStatus::where('uid', $user->uid)->update([
+                    'lastvisit_at'=>time(),
+                    'lastvisit_ip'=>$this->request->getClientIp()
                 ]);
-                return ajaxReturn()->withCookie(Cookie::forever('uid', $member->uid))
-                    ->withCookie(Cookie::forever('username', $member->username));
+                return ajaxReturn()->withCookie(Cookie::forever('uid', $user->uid))
+                    ->withCookie(Cookie::forever('username', $user->username));
             }else {
-                return ajaxError(1, trans('member.password incorrect'));
+                return ajaxError(1, trans('user.password incorrect'));
             }
         }else {
-            return ajaxError(2, trans('member.account does not exist'));
+            return ajaxError(2, trans('user.account does not exist'));
         }
     }
 

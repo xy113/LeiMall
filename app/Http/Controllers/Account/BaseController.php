@@ -12,7 +12,7 @@ class BaseController extends Controller
         parent::__construct($request);
         $this->middleware(function (Request $req, $next){
             if ($this->uid && $this->username) {
-                return redirect()->action('Member\IndexController@index');
+                return redirect()->to('/user');
             }
             return $next($req);
         });

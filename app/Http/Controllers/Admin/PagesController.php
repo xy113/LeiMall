@@ -3,13 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Pages;
-use Illuminate\Http\Request;
 
 class PagesController extends BaseController
 {
 
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Exception
      */
     public function index(){
         if ($this->isOnSubmit()){
@@ -55,11 +55,19 @@ class PagesController extends BaseController
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function publish(){
+    public function edit(){
         if ($this->isOnSubmit()){
             $pageid = $this->request->post('pageid');
             $newpage = $this->request->input('newpage');
-            return $this->save($newpage, $pageid);
+            if ($pageid) {
+                $newpage['updated_at'] = time();
+                Pages::where('pageid', $pageid)->update($newpage);
+            }else {
+                $newpage['type'] = 'page';
+                $newpage['created_at'] = time();
+                Pages::insert($newpage);
+            }
+            return $this->showSuccess(trans('ui.save_succeed'));
         }else {
             $pageid = $this->request->get('pageid');
             $this->assign([
@@ -87,32 +95,13 @@ class PagesController extends BaseController
                 $this->data['categorylist'][$c->pageid] = $c;
             });
 
-            return $this->view('admin.pages.publish');
+            return $this->view('admin.pages.edit');
         }
     }
 
     /**
-     * @param $newpage
-     * @param int $pageid
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function save($newpage, $pageid=0){
-        $newpage['type'] = 'page';
-        $newpage['updated_at'] = time();
-        if (!$newpage['title']) {
-            return $this->showError(trans('post.post title empty'));
-        }
-        if ($pageid) {
-            Pages::where('pageid', $pageid)->update($newpage);
-        }else {
-            $newpage['created_at'] = time();
-            Pages::insert($newpage);
-        }
-        return $this->showSuccess(trans('ui.save_succeed'));
-    }
-
-    /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Exception
      */
     public function category(){
         if ($this->isOnSubmit()){

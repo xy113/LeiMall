@@ -8,7 +8,7 @@
         <span>></span>
         <a>素材列表</a>
     </div>
-    <script src="/DatePicker/WdatePicker.js" type="text/javascript"></script>
+    <script src="{{asset('DatePicker/WdatePicker.js')}}" type="text/javascript"></script>
     <div class="search-container" id="search-container">
         <form method="get" id="searchFrom">
             <input type="hidden" name="type" value="{{$type}}">
@@ -50,13 +50,14 @@
     <div class="tabs-container">
         <div class="tabs">
             @foreach($material_types as $k=>$v)
-                <div class="tab @if($type==$k)on @endif"><a href="{{action('Admin\MaterialController@index',['type'=>$k])}}">{{$v}}</a><span>|</span></div>
+                <div class="tab @if($type==$k)on @endif"><a href="{{url('/admin/material?type='.$k)}}">{{$v}}</a><span>|</span></div>
             @endforeach
         </div>
     </div>
     <div class="content-div">
         <form method="post" autocomplete="off" id="listForm">
             {{csrf_field()}}
+            <input type="hidden" name="formsubmit" value="yes">
             <table width="100%" border="0" cellspacing="0" cellpadding="0" class="listtable">
                 <thead>
                 <tr>
@@ -71,7 +72,7 @@
                 <tbody>
                 @foreach($itemlist as $id=>$item)
                     <tr>
-                        <td class="center"><input type="checkbox" title="" class="checkbox checkmark itemCheckBox" name="materials[]" value="{{$id}}"></td>
+                        <td class="center"><input type="checkbox" title="" class="checkbox checkmark itemCheckBox" name="items[]" value="{{$id}}"></td>
                         <td>
                             @if($type === 'image')
                             <img src="{{image_url($item['thumb'])}}" width="50" height="50">
@@ -116,7 +117,6 @@
                 }
                 DSXUI.showConfirm('删除素材', '确认要删除所选素材吗?', function () {
                     $("#listForm").ajaxSubmit({
-                        url:"/admin/material/delete",
                         dataType:'json',
                         beforeSend:function () {
                             spinner = DSXUI.showSpinner();

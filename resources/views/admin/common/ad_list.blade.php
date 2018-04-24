@@ -33,7 +33,7 @@
                     <td>{{$item['type_name']}}</td>
                     <td>{{$item['begin_time']}}</td>
                     <td>{{$item['end_time']}}</td>
-                    <td class="align-center">{{$item['click_num']}}</td>
+                    <td class="align-center">{{$item['clicks']}}</td>
                     <td>@if($item['available'])可用@else已停用@endif</td>
                     <td><a href="{{action('Admin\AdController@edit', ['id'=>$id])}}">编辑</a></td>
                 </tr>

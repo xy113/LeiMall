@@ -495,6 +495,7 @@ function image_url($path){
     if (preg_match("/([http|https|ftp]\:\/\/)(.*?)/is", $path)){
         return $path;
     }
+
     if (is_file(storage_public_path($path))) {
         return storage_url($path);
     }else {
@@ -518,14 +519,6 @@ function avatar($uid, $size = 'big'){
  */
 function post_url($aid) {
     return action('Post\DetailController@index', ['aid'=>$aid]);
-}
-
-/**
- * @param $aid
- * @return string
- */
-function post_mobile_url($aid){
-    return action('Mobile\PostController@detail', ['aid'=>$aid]);
 }
 
 /**
@@ -652,4 +645,37 @@ function createOrderNo($uid, $type='6'){
  */
 function createReundNo(){
     return '4'.time().rand(100,999);
+}
+
+/**
+ * @param $shop_id
+ * @return string
+ */
+function shop_url($shop_id) {
+    return action('Shop\ViewShopController@index', ['shop_id'=>$shop_id]);
+}
+
+/**
+ * @param $itemid
+ * @return string
+ */
+function item_url($itemid) {
+    return action('Item\DetailController@index', ['itemid'=>$itemid]);
+}
+
+/**
+ * @param $catid
+ * @return string
+ */
+function item_catlog_url($catid) {
+    return action('Item\ListController@index', ['catid'=>$catid]);
+}
+
+
+/**
+ * @param $pageid
+ * @return string
+ */
+function page_url($pageid) {
+    return action('Pages\DetailController@index', ['pageid'=>$pageid]);
 }

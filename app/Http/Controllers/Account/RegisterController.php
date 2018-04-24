@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Account;
 
-use App\Models\Member;
-use App\Models\MemberGroup;
-use App\Models\MemberInfo;
-use App\Models\MemberStat;
-use App\Models\MemberStatus;
+use App\Models\User;
+use App\Models\UserGroup;
+use App\Models\UserInfo;
+use App\Models\UserStat;
+use App\Models\UserStatus;
 use Illuminate\Support\Facades\Cookie;
 
 class RegisterController extends BaseController
@@ -21,33 +21,32 @@ class RegisterController extends BaseController
 
     public function save(){
         $username = $this->request->post('username');
-        $mobile = $this->request->post('mobile');
+        $mobile   = $this->request->post('mobile');
         $password = $this->request->post('password');
 
-        $group = MemberGroup::where('type', 'member')->first();
-        $uid = Member::insertGetId([
+        $group = UserGroup::where('type', 'member')->first();
+        $uid = User::insertGetId([
             'gid'=>$group->gid,
             'username'=>$username,
             'mobile'=>$mobile,
             'password'=>encrypt_password($password)
         ]);
 
-        MemberStatus::insert([
+        UserStatus::insert([
             'uid'=>$uid,
-            'regdate'=>time(),
-            'regip'=>$this->request->getClientIp(),
-            'lastvisit'=>time(),
-            'lastvisitip'=>$this->request->getClientIp(),
+            'created_at'=>time(),
+            'created_ip'=>$this->request->getClientIp(),
+            'lastvisit_at'=>time(),
+            'lastvisit_ip'=>$this->request->getClientIp(),
             'lastactive'=>time()
         ]);
 
-        MemberInfo::insert(['uid'=>$uid]);
-        MemberStat::insert(['uid'=>$uid]);
+        UserInfo::insert(['uid'=>$uid]);
+        UserStat::insert(['uid'=>$uid]);
 
-        return ajaxReturn(['uid'=>$uid])->cookie(Cookie::forever('uid', $uid))
+        return ajaxReturn(['uid'=>$uid])
+            ->cookie(Cookie::forever('uid', $uid))
             ->cookie(Cookie::forever('username', $username));
-        //return $this->showSuccess(trans('member.register success'));
-
     }
 
     /**
@@ -58,19 +57,17 @@ class RegisterController extends BaseController
         $value = $this->request->input('value');
 
         if ($field === 'username'){
-            $check = Member::where('username', $value)->count();
-            if ($check) {
-                return ajaxError(1, trans('member.username be occupied'));
+            if (User::where('username', $value)->exists()){
+                return ajaxError(1, trans('user.username be occupied'));
             }
         }
 
         if ($field === 'mobile') {
-            $check = Member::where('mobile', $value)->count();
-            if ($check) {
-                return ajaxError(1, trans('member.mobile be occupied'));
+            if (User::where('mobile', $value)->exists()){
+                return ajaxError(2, trans('user.mobile be occupied'));
             }
         }
 
-        return ajaxReturn();
+        return ajaxReturn(['return_code'=>0]);
     }
 }

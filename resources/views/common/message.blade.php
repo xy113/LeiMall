@@ -1,4 +1,4 @@
-@extends('layouts.default')
+@extends('layouts.mall')
 
 @section('title')
     系统提示

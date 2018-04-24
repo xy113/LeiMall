@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Member;
-use App\Models\MemberInfo;
-use App\Models\MemberStatus;
+use App\Models\User;
+use App\Models\UserInfo;
+use App\Models\UserStatus;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -24,10 +24,10 @@ class Controller extends BaseController
     protected $data = [
         'uid'=>0,
         'username'=>'',
-        'member'=>[],
-        'member_info'=>[],
-        'member_status'=>[],
-        'islogined'=>0
+        'user'=>[],
+        'userinfo'=>[],
+        'userstatus'=>[],
+        'isloggedin'=>0
     ];
 
     protected $messageView = 'common.message';
@@ -48,33 +48,33 @@ class Controller extends BaseController
                 $this->assign([
                     'uid'=>$uid,
                     'username'=>$username,
-                    'islogined'=>true
+                    'isloggedin'=>true
                 ]);
                 try {
-                    $member = Session::get('member');
-                    if (!is_array($member)) {
-                        $member = Member::where('uid', $this->uid)->first();
-                        if ($member) {
-                            Session::flash('member', $member);
-                            $this->data['member'] = $member;
+                    $user = Session::get('member');
+                    if (!is_array($user)) {
+                        $user = User::where('uid', $this->uid)->first();
+                        if ($user) {
+                            Session::flash('user', $user);
+                            $this->data['user'] = $user;
                         }
                     }
 
-                    $memberInfo = Session::get('member_info');
-                    if (!is_array($memberInfo)) {
-                        $memberInfo = MemberInfo::where('uid', $this->uid)->first();
-                        if ($memberInfo) {
-                            Session::flash('member_info', $memberInfo);
-                            $this->data['member_info'] = $memberInfo;
+                    $userinfo = Session::get('userinfo');
+                    if (!is_array($userinfo)) {
+                        $userinfo = UserInfo::where('uid', $this->uid)->first();
+                        if ($userinfo) {
+                            Session::flash('userinfo', $userinfo);
+                            $this->data['userinfo'] = $userinfo;
                         }
                     }
 
-                    $memberStatus = Session::get('member_status');
-                    if (!is_array($memberStatus)) {
-                        $memberStatus = MemberStatus::where('uid', $this->uid)->first();
-                        if ($memberStatus) {
-                            Session::flash('member_status', $memberStatus);
-                            $this->data['member_status'] = $memberStatus;
+                    $userstatus = Session::get('userstatus');
+                    if (!is_array($userstatus)) {
+                        $userstatus = UserStatus::where('uid', $this->uid)->first();
+                        if ($userstatus) {
+                            Session::flash('userstatus', $userstatus);
+                            $this->data['userstatus'] = $userstatus;
                         }
                     }
                 }catch (\Exception $e){
@@ -158,6 +158,7 @@ class Controller extends BaseController
             $links = $newlinks;
         }
         $forward = $forward ? $forward : ($links ? $links[0]['url'] : URL::previous());
+        $msg = trans($msg) ? trans($msg) : $msg;
         $this->assign([
             'msg'=>$msg,
             'type'=>$type,
@@ -170,7 +171,7 @@ class Controller extends BaseController
     }
 
     /**
-     * @param $msg
+     * @param \Illuminate\Contracts\Translation\Translator|string|array|null $msg
      * @param string $forward
      * @param array $links
      * @param string $tips
@@ -182,7 +183,7 @@ class Controller extends BaseController
     }
 
     /**
-     * @param $msg
+     * @param \Illuminate\Contracts\Translation\Translator|string|array|null $msg
      * @param string $forward
      * @param array $links
      * @param string $tips
