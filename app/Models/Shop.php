@@ -83,4 +83,18 @@ class Shop extends BaseModel
 {
     protected $table = 'shop';
     protected $primaryKey = 'shop_id';
+
+    /**
+     * @param $shop_id
+     * @throws \Exception
+     */
+    public static function deleteData($shop_id){
+        Shop::where('shop_id', $shop_id)->delete();
+        ShopAuth::where('shop_id', $shop_id)->delete();
+        ShopContent::where('shop_id', $shop_id)->delete();
+        ShopRecord::where('shop_id', $shop_id)->delete();
+        Item::where('shop_id', $shop_id)->get()->map(function ($item){
+            Item::deleteItem($item->itemid);
+        });
+    }
 }

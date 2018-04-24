@@ -118,6 +118,22 @@ Route::group(['namespace' => 'Admin','prefix'=>'admin'], function(){
         Route::any('/postcatlog/delete', 'PostCatlogController@delete');
         Route::post('/postcatlog/seticon', 'PostCatlogController@seticon');
 
+        //店铺管理
+        Route::any('/shop', 'ShopController@index');
+        Route::any('/shop/pending', 'ShopController@pending');
+        Route::any('/shop/detail/{shopid}', 'ShopController@detail');
+        Route::any('/shop/auth', 'ShopController@auth');
+        //商品管理
+        Route::any('/item', 'ItemController@index');
+
+        Route::any('/itemcatlog', 'ItemCatlogController@index');
+        Route::any('/itemcatlog/edit', 'ItemCatlogController@edit');
+        Route::any('/itemcatlog/delete', 'ItemCatlogController@delete');
+        Route::any('/itemcatlog/merge', 'ItemCatlogController@merge');
+
+        //订单管理
+        Route::any('/order', 'OrderController@index');
+
         //微信管理
         Route::any('/weixin/menu', 'WeixinController@menu');
         Route::any('/weixin/apply_menu', 'WeixinController@apply_menu');
