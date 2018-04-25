@@ -89,6 +89,20 @@ class Order extends BaseModel
     protected $primaryKey = 'order_id';
 
     /**
+     * @param $order_id
+     * @throws \Exception
+     */
+    public static function deleteOrder($order_id){
+        $order = Order::where('order_id', $order_id)->get(['trade_no']);
+        Order::where('order_id', $order_id)->delete();
+        OrderItem::where('order_id', $order_id)->delete();
+        OrderShipping::where('order_id', $order_id)->delete();
+        OrderRefund::where('order_id', $order_id)->delete();
+        OrderAction::where('order_id', $order_id)->delete();
+        OrderClosed::where('order_id', $order_id)->delete();
+        Trade::where('trade_no', $order->trade_no)->delete();
+    }
+    /**
      * @return int
      */
     public function getTradeStatus(){

@@ -122,7 +122,6 @@
                 });
             });
             $("a[rel=delete]").on('click', function () {
-                var spinner = null;
                 var address_id = $(this).attr('data-id');
                 DSXUI.showConfirm('删除地址', '确认要删除此收货地址吗?', function () {
                     $.ajax({
@@ -130,12 +129,12 @@
                         data:{address_id:address_id},
                         dataType:'json',
                         beforeSend:function () {
-                            spinner = DSXUI.showSpinner();
+                            DSXUI.showSpinner();
                         },
                         success:function (response) {
                             setTimeout(function () {
-                                spinner.close();
-                                if (response.errcode === 0){
+                                DSXUI.hideSpinner();
+                                if (!response.errcode){
                                     $("#item-"+address_id).remove();
                                 }
                             }, 500);

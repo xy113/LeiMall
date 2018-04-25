@@ -133,6 +133,8 @@ Route::group(['namespace' => 'Admin','prefix'=>'admin'], function(){
 
         //订单管理
         Route::any('/order', 'OrderController@index');
+        Route::any('/order/detail', 'OrderController@detail');
+        Route::any('/trade', 'TradeController@index');
 
         //微信管理
         Route::any('/weixin/menu', 'WeixinController@menu');

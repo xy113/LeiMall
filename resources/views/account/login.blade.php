@@ -73,6 +73,8 @@
                 },
                 success:function (response) {
                     if (response.errcode === 0){
+                        DSXUI.error(response.errmsg);
+                    }else {
                         $("#loading").hide();
                         setTimeout(function () {
                             if ($("#J_refer").val()){
@@ -81,8 +83,6 @@
                                 DSXUtil.reFresh();
                             }
                         }, 1000);
-                    }else {
-                        DSXUI.error(response.errmsg);
                     }
                 }
             });
@@ -111,15 +111,15 @@
                     dataType:"json",
                     data:$("#loginForm").serializeArray(),
                     success: function(json){
-                        if(json.errcode === 0){
+                        if(json.errcode){
+                            $("#captchaImg").attr('src','{{captcha_src()}}&'+Math.random());
+                            $("#err-tips").text(json.errmsg).show();
+                        }else {
                             if ($("#J_refer").val()){
                                 window.location.href = $("#J_refer").val();
                             }else {
                                 DSXUtil.reFresh();
                             }
-                        }else {
-                            $("#captchaImg").attr('src','{{captcha_src()}}&'+Math.random());
-                            $("#err-tips").text(json.errmsg).show();
                         }
                     }
                 });

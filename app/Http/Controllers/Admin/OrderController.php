@@ -2,26 +2,30 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Order;
+use App\Models\OrderItem;
+use App\Models\Shop;
+
 class OrderController extends BaseController
 {
     /**
      * 订单列表
+     * @throws \Exception
      */
     public function index(){
 
         if ($this->isOnSubmit()){
-            $orders = $_GET['orders'];
+            $orders = $this->request->post('orders');
+            $eventType = $this->request->post('eventType');
             if ($orders && is_array($orders)){
-                if ($_GET['eventType'] == 'delete'){
+                if ($eventType == 'delete'){
                     foreach ($orders as $order_id){
-                        $order = $orderModel->where(array('order_id'=>$order_id))->getOne();
-                        (new TradeModel())->where(array('trade_no'=>$order['trade_no']))->delete();
-                        $orderModel->deleteAllData($order_id);
+                        Order::deleteOrder($order_id);
                     }
-                    $this->showAjaxReturn();
+                    return ajaxReturn(['return_code'=>0]);
                 }
             }else {
-                $this->showAjaxError(1, 'no_select');
+                return ajaxError(1, 'no select');
             }
         }else {
             $condition = $queryParams = [];
@@ -183,9 +187,28 @@ class OrderController extends BaseController
             }
 
             $orderlist = $orderIds = [];
+            $orders = Order::where($condition)->orderByDesc('order_id')->paginate(20);
+            $this->assign([
+                'pagination'=>$orders->appends($queryParams)->links()
+            ]);
 
+            $orders->map(function ($order) use (&$orderlist, &$orderIds){
+                $orderIds[] = $order->order_id;
+                $order->item = [];
+                $orderlist[$order->order_id] = $order;
+            });
 
-            return $this->view('admin.order.list');
+            if ($orderIds) {
+                OrderItem::whereIn('order_id', $orderIds)
+                    ->groupBy('order_id')->get()->map(function ($item) use (&$orderlist){
+                        $orderlist[$item->order_id]['item'] = $item;
+                    });
+            }
+            $this->assign([
+                'orderlist'=>$orderlist
+            ]);
+
+            return $this->view('admin.trade.order');
         }
     }
 
@@ -357,14 +380,16 @@ class OrderController extends BaseController
      * 订单详情
      */
     public function detail(){
-        global $_G,$_lang;
 
-        $order_id = intval($_GET['order_id']);
-        $order = (new OrderModel())->where(array('order_id'=>$order_id))->getOne();
-        $shop = (new ShopModel())->where(array('shop_id'=>$order['shop_id']))->getOne();
-        $itemlist = (new OrderItemModel())->where(array('order_id'=>$order_id))->select();
+        $order_id = intval($this->request->get('order_id'));
+        $order = Order::where('order_id', $order_id)->first();
+        $this->assign([
+            'order_id'=>$order_id,
+            'order'=>$order,
+            'shop'=>Shop::where('shop_id', $order->shop_id)->first(),
+            'itemlist'=>OrderItem::where('order_id', $order_id)->get()
+        ]);
 
-        $_G['title'] = '订单详情';
-        include template('trade/order_detail');
+        return $this->view('admin.trade.detail');
     }
 }

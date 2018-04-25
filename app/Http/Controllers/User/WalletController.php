@@ -62,9 +62,9 @@ class WalletController extends BaseController
             'itemlist'=>[]
         ]);
 
-        $trade_status = trans('user.trade_status');
-        $itemlist->map(function ($item) use ($trade_status){
-            $item->trade_status_name = $trade_status[$item->trade_status];
+        $pay_status = trans('mall.pay_status');
+        $itemlist->map(function ($item) use ($pay_status){
+            $item->trade_status_name = $pay_status[$item->pay_status];
             $this->data['itemlist'][$item->trade_id] = $item;
         });
 

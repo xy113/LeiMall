@@ -63,17 +63,21 @@ return [
     'shop_collection'=>'店铺收藏',
     'article_collection'=>'文章收藏',
 
-    'pay_types'=>array(
+    'pay_types'=> [
         '1'=>'在线支付',
         '2'=>'货到付款'
-    ),
+    ],
+    'pay_status'=>[
+        '0'=>'未支付',
+        '1'=>'已支付',
+    ],
     'order_not_exists'=>'订单不存在',
     'order_has_send'=>'订单已发货，不能重复发货',
     'order_send_success'=>'发货成功',
     'pay_failed'=>'支付失败',
 
     'shop_auth_success'=>'店铺认证成功',
-    'order_trade_status'=>array(
+    'order_trade_status'=> [
         '0'=>'交易关闭',
         '1'=>'等待买家付款',
         '2'=>'等待卖家发货',
@@ -84,7 +88,7 @@ return [
         '7'=>'退款完成',
         '8'=>'买家已提交需求',
         '9'=>'需求提交成功'
-    ),
+    ],
     'order_can_not_close'=>'当前订单状态不能关闭订单',
     'sign_error'=>'签名错误',
     'invalid_token'=>'无效的TOKEN值',

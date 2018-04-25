@@ -17,28 +17,25 @@
     </div>
     <div class="search-container">
         <form method="get" id="searchFrom">
-            <input type="hidden" name="m" value="{$_G[m]}">
-            <input type="hidden" name="c" value="{$_G[c]}">
-            <input type="hidden" name="a" value="{$_G[a]}" id="J_a">
             <div class="row">
                 <div class="cell">
                     <label>商品ID:</label>
-                    <div class="field"><input type="text" class="input-text" name="itemid" value="{$itemid}"></div>
+                    <div class="field"><input title="" type="text" class="input-text" name="itemid" value="{{$itemid}}"></div>
                 </div>
                 <div class="cell">
                     <label>订单编号:</label>
-                    <div class="field"><input type="text" class="input-text" name="order_no" value="{$order_no}"></div>
+                    <div class="field"><input title="" type="text" class="input-text" name="order_no" value="{{$order_no}}"></div>
                 </div>
                 <div class="cell">
                     <label>买家昵称:</label>
-                    <div class="field"><input type="text" class="input-text" name="buyer_name" value="{$buyer_name}"></div>
+                    <div class="field"><input title="" type="text" class="input-text" name="buyer_name" value="{{$buyer_name}}"></div>
                 </div>
             </div>
             <div class="row">
                 <div class="cell">
                     <label>订单状态:</label>
                     <div class="field">
-                        <select class="select" name="order_status">
+                        <select title="" class="select" name="order_status">
                             <option value="0">全部</option>
                             <option value="1"{if $order_status==1} selected{/if}>等待买家付款</option>
                             <option value="2"{if $order_status==2} selected{/if}>买家已付款</option>
@@ -53,7 +50,7 @@
                 <div class="cell">
                     <label>支付方式:</label>
                     <div class="field">
-                        <select class="select" name="pay_type">
+                        <select title="" class="select" name="pay_type">
                             <option value="0">全部</option>
                             <option value="1"{if $pay_type==1} selected{/if}>在线支付</option>
                             <option value="2"{if $pay_type==2} selected{/if}>货到付款</option>
@@ -63,7 +60,7 @@
                 <div class="cell">
                     <label>物流状态:</label>
                     <div class="field">
-                        <select class="select" name="wuliu_status">
+                        <select title="" class="select" name="wuliu_status">
                             <option value="0">全部</option>
                             <option value="1"{if $wuliu_status==1} selected{/if}>未发货</option>
                             <option value="2"{if $wuliu_status==2} selected{/if}>已发货</option>
@@ -75,13 +72,13 @@
             <div class="row">
                 <div class="cell">
                     <label>宝贝名称:</label>
-                    <div class="field"><input type="text" class="input-text" name="title"></div>
+                    <div class="field"><input title="" type="text" class="input-text" name="title" value="{{$title}}"></div>
                 </div>
                 <div class="cell" style="width: auto;">
                     <label>交易时间:</label>
                     <div class="field">
-                        <input type="text" class="input-text" name="time_begin" onclick="WdatePicker()" value="{$time_begin}"> -
-                        <input type="text" class="input-text" name="time_end" onclick="WdatePicker()" value="{$time_end}">
+                        <input title="" type="text" class="input-text" name="time_begin" onclick="WdatePicker()" value="{{$time_begin}}"> -
+                        <input title="" type="text" class="input-text" name="time_end" onclick="WdatePicker()" value="{{$time_end}}">
                     </div>
                 </div>
             </div>
@@ -98,20 +95,20 @@
     </div>
     <div class="tabs-container">
         <div class="tabs">
-            <div class="tab{if $tab=='all'} on{/if}"><a href="{U:('c=order&a=itemlist&tab=all')}">全部订单</a><span>|</span></div>
-            <div class="tab{if $tab=='waitPay'} on{/if}"><a href="{U:('c=order&a=itemlist&tab=waitPay')}">等待买家付款</a><span>|</span></div>
-            <div class="tab{if $tab=='waitSend'} on{/if}"><a href="{U:('c=order&a=itemlist&tab=waitSend')}">等待卖家发货</a><span>|</span></div>
-            <div class="tab{if $tab=='send'} on{/if}"><a href="{U:('c=order&a=itemlist&tab=send')}">卖家已发货</a><span>|</span></div>
-            <div class="tab{if $tab=='received'} on{/if}"><a href="{U:('c=order&a=itemlist&tab=received')}">买家已收货</a><span>|</span></div>
-            <div class="tab{if $tab=='reviewed'} on{/if}"><a href="{U:('c=order&a=itemlist&tab=reviewed')}">买家已评价</a><span>|</span></div>
-            <div class="tab{if $tab=='refunding'} on{/if}"><a href="{U:('c=order&a=itemlist&tab=refunding')}">退款中</a></div>
-            <div class="tab{if $tab=='closed'} on{/if}"><a href="{U:('c=order&a=itemlist&tab=closed')}">已关闭的订单</a></div>
+            <div @if($tab==='all')class="tab on" @else class="tab"@endif><a href="{{url('/admin/order?tab=all')}}">全部订单</a><span>|</span></div>
+            <div @if($tab==='waitPay')class="tab on" @else class="tab"@endif><a href="{{url('/admin/order?tab=waitPay')}}">等待买家付款</a><span>|</span></div>
+            <div @if($tab==='waitSend')class="tab on" @else class="tab"@endif><a href="{{url('/admin/order?tab=waitSend')}}">等待卖家发货</a><span>|</span></div>
+            <div @if($tab==='send')class="tab on" @else class="tab"@endif><a href="{{url('/admin/order?tab=send')}}">卖家已发货</a><span>|</span></div>
+            <div @if($tab==='received')class="tab on" @else class="tab"@endif><a href="{{url('/admin/order?tab=received')}}">买家已收货</a><span>|</span></div>
+            <div @if($tab==='reviewed')class="tab on" @else class="tab"@endif><a href="{{url('/admin/order?tab=reviewed')}}">买家已评价</a><span>|</span></div>
+            <div @if($tab==='refunding')class="tab on" @else class="tab"@endif><a href="{{url('/admin/order?tab=refunding')}}">退款中</a></div>
+            <div @if($tab==='closed')class="tab on" @else class="tab"@endif><a href="{{url('/admin/order?tab=closed')}}">已关闭的订单</a></div>
         </div>
     </div>
     <div class="content-div">
         <form method="post" id="listForm">
+            {{csrf_field()}}
             <input type="hidden" name="formsubmit" value="yes" />
-            <input type="hidden" name="formhash" value="{FORMHASH}">
             <input type="hidden" name="eventType" value="" id="J_eventType">
             <table width="100%" border="0" cellspacing="0" cellpadding="0" class="listtable">
                 <thead>
@@ -127,30 +124,30 @@
                 </tr>
                 </thead>
                 <tbody>
-                {loop $order_list $order_id $order}
+                @foreach($orderlist as $order_id=>$order)
                 <tr>
-                    <td class="center"><input type="checkbox" class="checkbox checkmark" name="orders[]" value="{$order_id}"></td>
-                    <td><img src="{img $order[thumb]}" width="50" height="50"></td>
+                    <td class="center"><input title="" type="checkbox" class="checkbox checkmark" name="orders[]" value="{{$order_id}}"></td>
+                    <td><img src="{{image_url($order['item']['thumb'])}}" width="50" height="50"></td>
                     <td>
-                        <h3 class="title"><a href="{U:('m=item&c=item&itemid='.$order[itemid])}" target="_blank">{$order[title]}</a></h3>
+                        <h3 class="title"><a href="{{item_url($order['item']['itemid'])}}" target="_blank">{{$order['item']['title']}}</a></h3>
                         <p class="subtitle">
-                            <span>{$order[order_no]} |</span>
-                            <a href="{U:('m=shop&c=viewshop&shop_id='.$order[shop_id])}" target="_blank">{$order[seller_name]}</a>
+                            <span>{{$order['order_no']}} |</span>
+                            <a href="{{shop_url($order['shop_id'])}}" target="_blank">{{$order['seller_name']}}</a>
                         </p>
                     </td>
-                    <td>{$order[buyer_name]}</td>
-                    <td>{echo formatAmount($order[order_fee])}</td>
-                    <td>{date:$order[create_time]|'Y-m-d H:i:s'}</td>
+                    <td>{{$order['buyer_name']}}</td>
+                    <td>{{$order['order_fee']}}</td>
+                    <td>{{@date('Y-m-d H:i:s', $order['created_at'])}}</td>
                     <td>{$order[order_status]}</td>
-                    <td><a href="{U:('c=order&a=detail&order_id='.$order[order_id])}" target="_blank">查看</a></td>
+                    <td><a href="{{url('/admin/order/detail?order_id='.$order_id)}}" target="_blank">查看</a></td>
                 </tr>
-                {/loop}
+                @endforeach
                 </tbody>
                 <tfoot>
                 <tr>
                     <td colspan="15">
-                        <div class="pagination float-right">{$pages}</div>
-                        <label><input type="checkbox" class="checkbox checkall"> {$_lang[selectall]}</label>
+                        <div class="pagination float-right">{{$pagination}}</div>
+                        <label><input type="checkbox" class="checkbox checkall"> 全选</label>
                         <label><button type="button" class="btn" id="deleteOrderButton">删除订单</button></label>
                         <label><button type="button" class="btn" onclick="DSXUtil.reFresh()">刷新</button></label>
                     </td>
