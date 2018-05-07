@@ -1,6 +1,11 @@
 /* CSS Document */
-@import url(common.css);
-.button{border-radius: 1px;}
+@import "boot.css";
+.btn{border-radius: 2px; padding: 6px 12px;}
+.btn-sm, .btn-group-sm > .btn {
+    padding: 4px 10px !important;
+}
+.breadcrumb li{line-height: 1;}
+.form-control{height: 32px;}
 /**==导航==**/
 .navigation{padding: 10px; border: 1px #DDD solid; font-size: 12px; color: #666; display: block; margin-bottom: 15px; background-color: #fafafa;}
 .navigation span{margin: 0 5px; color: #999;}
@@ -9,9 +14,19 @@
 
 .search-container .row{clear: both; margin: 10px 0;}
 .search-container .row .cell{width: 33.3333%; float: left;}
-.search-container .row .cell label{width: 90px; text-align: center; font-size: 12px; float: left; height: 28px; line-height: 28px;}
+.search-container .row .cell .label{
+    width: 90px;
+    text-align: center;
+    font-size: 12px;
+    float: left;
+    height: 28px;
+    line-height: 28px;
+    color: #666;
+    font-weight: normal;
+}
 .search-container .row .cell .field{margin-left: 91px;}
 .search-container .row .cell .button{border-radius: 3px; margin-right: 10px;}
+.search-container .row .cell .seperator{padding: 5px 3px;}
 
 .tabs-container{display: block; clear: both; margin: 16px 0; border-bottom: 2px solid #e8e8e8; position: relative;}
 .tabs-container .tabs{position: relative; bottom: -2px;}
@@ -74,7 +89,11 @@
     margin-top: 5px; border-left: 3px #86B6E2 solid; padding-left: 6px; float: left;
 }
 
-.listtable{border: 1px #e1e6eb solid; border-radius: 2px;}
+.listtable{
+    border: 1px #e1e6eb solid;
+    border-radius: 2px;
+    border-collapse: inherit;
+}
 .listtable td,.listtable th{text-align:left; font-size:12px; word-break: break-all; word-wrap: break-word;}
 .listtable td .title{font-size:12px; font-weight:400; line-height:1.1;}
 .listtable td .info{font-size:10px; color:#999; display:block; margin-top:5px;}
@@ -85,14 +104,6 @@
 .listtable tbody tr:hover td,.listtable tbody tr:hover th{background-color:#FeFeF0;}
 .listtable tfoot td,
 .listtable tfoot th{background-color:#f5f6fa; border-top:1px #e1e6eb solid; padding: 12px 8px;}
-.listtable tfoot .button{margin-right: 7px;}
-.listtable tfoot .btn{
-    border: 1px #DDD solid; height: 24px; line-height: 22px; text-align: center; font-size: 12px;
-    padding: 0 10px; border-radius: 2px; display: inline-block; background-color: #fff;
-}
-.listtable tfoot .btn:hover{
-    background-color: #f5f5f5; color: #222; border-color: #999;
-}
 .listtable .head-first{padding-left:10px;}
 .listtable .first{padding-left:10px;}
 .listtable .avatar{border-radius: 50%;}
@@ -118,12 +129,35 @@
     padding-left: 32px;
 }
 
+.listtable .actions a{
+    margin-right: 5px;
+}
+.listtable label{
+    margin: 0 3px 0 0;
+}
+
 .formtable{}
-.formtable td,.formtable th{padding:10px 0; font-size:12px; text-align:left;}
-.formtable .cell-name{text-align:right; padding-right:10px; font-weight: 500;}
-.formtable .cell-tips{padding: 10px; color: #666;}
-.formtable .input-text,.formtable .select,.formtable .textarea{width: 300px;}
-.formtable th, .formtable td{padding:8px 0; text-align:left; font-size:12px; vertical-align: top;}
+.formtable td,.formtable th{
+    padding:10px 0;
+    font-size:12px;
+    text-align:left;
+    vertical-align: middle;
+}
+.formtable .cell-label{
+    text-align:right;
+    padding-right:10px;
+    font-weight: 500;
+}
+.formtable .cell-input{
+
+}
+.formtable .cell-content{
+
+}
+.formtable .cell-tips{
+    padding-left: 10px;
+    color: #666;
+}
 .formtable .a-bind-link{color:#008FBF;}
 .formtable .a-bind-link:hover{text-decoration:underline;}
 .formtable .img-upload-box{

@@ -20,7 +20,7 @@ class UploadController extends Controller
      */
     public function image(){
         if ($file = $this->request->file('file')) {
-            $data = [
+            $image = [
                 'uid'=>$this->uid,
                 'username'=>$this->username,
                 'type'=>'image',
@@ -31,20 +31,24 @@ class UploadController extends Controller
                 'name'=>$file->getClientOriginalName()
             ];
 
-            $image = $file->store('image/'.date('Y').'/'.date('m'));
-            $img = Image::make(storage_public_path($image));
+            $imagePath = $file->store('image/'.date('Y').'/'.date('m'));
+            $img = Image::make(storage_public_path($imagePath));
 
-            $data['width'] = $img->width();
-            $data['height'] = $img->height();
-            $data['thumb'] = str_replace('image/', 'thumb/', $image);
-            $img->resize(320, 480)->save(storage_public_path($data['thumb']));
+            $image['source'] = $imagePath;
+            $image['width']  = $img->width();
+            $image['height'] = $img->height();
+            $image['thumb']  = str_replace('image/', 'thumb/', $imagePath);
 
-            $data['id'] = Material::insertGetId($data);
-            $data['image'] = $image;
-            $data['imageurl'] = image_url($image);
-            $data['thumburl'] = image_url($data['thumb']);
+            @mkdir(dirname(storage_public_path($image['thumb'])), 0777, true);
+            $img->resize(320, 480)->save(storage_public_path($image['thumb']));
 
-            return ajaxReturn(['image'=>$data]);
+            $image['id'] = Material::insertGetId($image);
+            $image['image'] = $imagePath;
+            $image['imageurl'] = image_url($imagePath);
+            $image['thumburl'] = image_url($image['thumb']);
+
+            unset($image['source']);
+            return ajaxReturn(['image'=>$image]);
         }else {
             return ajaxError(1, 'upload image fail');
         }

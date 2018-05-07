@@ -2,13 +2,12 @@
 
 @section('content')
     <div class="console-title">
-        <a href="{{url('/admin/postcatlog')}}" class="button float-right">返回列表</a>
+        <a href="{{url('/admin/postcatlog')}}" class="btn btn-primary float-right">返回列表</a>
         <h2>文章管理 > 合并分类</h2>
     </div>
     <div class="content-div">
         <form method="post">
-            {{csrf_field()}}
-            <input type="hidden" name="formsubmit" value="yes">
+            {{form_verify_field()}}
             <table cellpadding="0" cellspacing="0" width="100%" class="formtable">
                 <tbody>
                 <tr>
@@ -18,7 +17,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <select name="source[]" size="10" class="select" multiple="multiple" title="" style="height:300px;">
+                        <select name="source[]" size="10" class="form-control w300" multiple="multiple" title="" style="height:300px;">
                             @if(isset($catloglist[0]))
                                 @foreach($catloglist[0] as $catid1=>$cat1)
                                     <option value="{{$catid1}}">{{$cat1['name']}}</option>
@@ -38,7 +37,7 @@
                     </td>
                     <td class="align-center" style="vertical-align: middle;">>></td>
                     <td>
-                        <select name="target" size="10" class="select" title="" style="width:300px; height:300px;">
+                        <select name="target" size="10" class="form-control w300" title="" style="width:300px; height:300px;">
                             @if(isset($catloglist[0]))
                                 @foreach($catloglist[0] as $catid1=>$cat1)
                                     <option value="{{$catid1}}">{{$cat1['name']}}</option>
@@ -61,7 +60,7 @@
                 <tfoot>
                 <tr>
                     <td>
-                        <input type="submit" class="button" value="确认合并">
+                        <label><input type="submit" class="btn btn-primary" value="确认合并"></label>
                     </td>
                 </tr>
                 </tfoot>

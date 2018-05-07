@@ -3,26 +3,26 @@
 @section('content')
     <div class="console-title">
         <div class="float-right">
-            <a href="{{url('/admin/postcatlog')}}" class="button">分类管理</a>
-            <a href="{{url('/admin/post/index')}}" class="button">返回列表</a>
+            <a href="{{url('/admin/postcatlog')}}" class="btn btn-primary">分类管理</a>
+            <a href="{{url('/admin/post')}}" class="btn btn-primary">返回列表</a>
         </div>
         <h2>发布文章</h2>
     </div>
     <div class="content-div">
-        <form method="post" id="postForm" action="/admin/post/save" autocomplete="off">
+        <form method="post" id="Form" autocomplete="off" action="{{url('/admin/post/save')}}">
             {{csrf_field()}}
             <input type="hidden" name="aid" value="{{$aid}}">
             <table width="100%" border="0" cellspacing="0" cellpadding="0" class="formtable">
                 <tr>
                     <td width="80">文章标题</td>
-                    <td><input type="text" class="input-text" placeholder="在这里输入标题" name="newpost[title]" value="{{$item['title'] or ''}}" id="title" style="width: 760px;"></td>
+                    <td><input type="text" class="form-control" placeholder="在这里输入标题" name="newpost[title]" value="{{$item['title'] or ''}}" id="title" style="width: 760px;"></td>
                 </tr>
             </table>
             <table width="100%" border="0" cellspacing="0" cellpadding="0" class="formtable">
                 <tr>
                     <td width="80">目录分类</td>
                     <td width="380">
-                        <select name="newpost[catid]" class="select" title="">
+                        <select name="newpost[catid]" class="form-control w300" title="">
                             @foreach($catloglist[0] as $catid1=>$cat1)
                                 <option value="{{$catid1}}"@if($catid==$catid1) selected="selected"@endif>{{$cat1['name']}}</option>
                                 @if(isset($catloglist[$catid1]))
@@ -39,48 +39,48 @@
                         </select>
                     </td>
                     <td width="80">文章来源</td>
-                    <td><input type="text" title="" class="input-text" name="newpost[from]" value="{{$item['from'] or ''}}"></td>
+                    <td><input type="text" title="" class="form-control w300" name="newpost[from]" value="{{$item['from'] or ''}}"></td>
                     <td rowspan="5" width="160">
-                        <input type="hidden" id="post_image" name="newpost[image]" value="{{$item['image'] or ''}}">
+                        <input type="hidden" id="postImage" name="newpost[image]" value="{{$item['image'] or ''}}">
                         <div class="post-image-box" title="点击更换图片">
-                            <div class="bg-cover" id="post_image_preview" style="width: 140px; height: 140px; background-color: #f5f5f5; display: block; background-image: url({{image_url($item['image'])}})">
+                            <div class="bg-cover" id="postImagePreview" style="width: 140px; height: 140px; background-color: #f5f5f5; display: block; background-image: url({{image_url($item['image'])}})">
                             </div>
                         </div>
                     </td>
                 </tr>
                 <tr>
                     <td>文章别名</td>
-                    <td><input type="text" title="" class="input-text" name="newpost[alias]" value="{{$item['alias'] or ''}}"></td>
+                    <td><input type="text" title="" class="form-control w300" name="newpost[alias]" value="{{$item['alias'] or ''}}"></td>
                     <td>来源地址</td>
-                    <td><input type="text" title="" class="input-text" name="newpost[fromurl]" value="{{$item['fromurl'] or ''}}"></td>
+                    <td><input type="text" title="" class="form-control w300" name="newpost[fromurl]" value="{{$item['fromurl'] or ''}}"></td>
                 </tr>
                 <tr>
                     <td>评论设置</td>
-                    <td><label><input type="checkbox" class="checkbox" name="newpost[allowcomment]" value="1"@if($item['allowcomment']) checked="checked"@endif> 允许评论</label></td>
+                    <td><label><input type="checkbox" name="newpost[allowcomment]" value="1"@if($item['allowcomment']) checked="checked"@endif> 允许评论</label></td>
                     <td>文章标签</td>
-                    <td><input type="text" title="" class="input-text" name="newpost[tags]" value="{{$item['tags'] or ''}}"></td>
+                    <td><input type="text" title="" class="form-control w300" name="newpost[tags]" value="{{$item['tags'] or ''}}"></td>
                 </tr>
                 <tr>
                     <td>文章作者</td>
-                    <td><input type="text" title="" class="input-text" name="newpost[author]" value="{{$item['author'] or ''}}"></td>
+                    <td><input type="text" title="" class="form-control w300" name="newpost[author]" value="{{$item['author'] or ''}}"></td>
                     <td>文章形式</td>
                     <td>
-                        <label><input type="radio" class="radio" name="newpost[type]" onclick="switchContent('article')" value="article"@if($type=='article') checked="checked"@endif> 文章</label>
-                        <label><input type="radio" class="radio" name="newpost[type]" onclick="switchContent('image')" value="image"@if($type=='image') checked="checked"@endif> 相册</label>
-                        <label><input type="radio" class="radio" name="newpost[type]" onclick="switchContent('video')" value="video"@if($type=='video') checked="checked"@endif> 视频</label>
+                        <label><input type="radio" name="newpost[type]" onclick="switchContent('article')" value="article"@if($type=='article') checked="checked"@endif> 文章</label>
+                        <label><input type="radio" name="newpost[type]" onclick="switchContent('image')" value="image"@if($type=='image') checked="checked"@endif> 相册</label>
+                        <label><input type="radio" name="newpost[type]" onclick="switchContent('video')" value="video"@if($type=='video') checked="checked"@endif> 视频</label>
                     </td>
                 </tr>
                 <tr>
                     <td>阅读价格</td>
-                    <td><input type="text" title="" class="input-text" name="newpost[price]" value="{{$item['price'] or ''}}"></td>
+                    <td><input type="text" title="" class="form-control w300" name="newpost[price]" value="{{$item['price'] or ''}}"></td>
                     <td>发布时间</td>
-                    <td><input type="text" title="" class="input-text" name="newpost[created_at]" value="{{$item['created_at'] or ''}}"></td>
+                    <td><input type="text" title="" class="form-control w300" name="newpost[created_at]" value="{{$item['created_at'] or ''}}"></td>
                 </tr>
             </table>
             <table width="100%" border="0" cellspacing="0" cellpadding="0" class="formtable">
                 <tr>
                     <td width="80">内容摘要</td>
-                    <td><textarea title="" style="width:100%;" name="newpost[summary]">{{$item['summary'] or ''}}</textarea></td>
+                    <td><textarea title="" class="form-control" name="newpost[summary]" style="height: 100px;">{{$item['summary'] or ''}}</textarea></td>
                 </tr>
             </table>
             <!--文章内容部分-->
@@ -104,15 +104,15 @@
                         <td>
                             <div id="post-gallery" class="post-gallery">
                                 @if(isset($gallery))
-                                @foreach($gallery as $img)
-                                <div class="row">
-                                    <input type="hidden" name="gallery[{{$img['id']}}][thumb]" value="{{$img['thumb']}}">
-                                    <input type="hidden" name="gallery[{{$img['id']}}][image]" value="{{$img['image']}}">
-                                    <div class="img bg-cover" style="background-image: url({{image($img['thumb'])}})"></div>
-                                    <div class="con"><textarea name="gallery[{{$img['id']}}][description]" class="textarea" title="">{{$img['description']}}</textarea></div>
-                                    <a class="delete" onclick="removeItem(this)">&times;</a>
-                                </div>
-                                @endforeach
+                                    @foreach($gallery as $img)
+                                    <div class="row">
+                                        <input type="hidden" name="gallery[{{$img['id']}}][thumb]" value="{{$img['thumb']}}">
+                                        <input type="hidden" name="gallery[{{$img['id']}}][image]" value="{{$img['image']}}">
+                                        <div class="img bg-cover" style="background-image: url({{image_url($img['thumb'])}})"></div>
+                                        <div class="con"><textarea name="gallery[{{$img['id']}}][description]" class="form-control w500" title="" style="height: 100px;">{{$img['description']}}</textarea></div>
+                                        <a class="delete" onclick="removeItem(this)">&times;</a>
+                                    </div>
+                                    @endforeach
                                 @endif
                             </div>
                             <p><a id="addNewImg"><i class="iconfont icon-roundadd"></i><span>添加图片</span></a></p>
@@ -126,7 +126,7 @@
                         <td width="80">视频地址</td>
                         <td>
                             <input type="hidden" name="source_url">
-                            <input title="" type="text" class="input-text input-title" name="original_url" value="{{$media['original_url'] or ''}}" style="width:100%;">
+                            <input title="" type="text" class="form-control" name="original_url" value="{{$media['original_url'] or ''}}" style="width:100%;">
                             <p>请输入QQ视频，优酷网、酷6网、56网的视频播放页链接</p>
                         </td>
                     </tr>
@@ -135,7 +135,10 @@
             <table width="100%" border="0" cellspacing="0" cellpadding="0" class="formtable">
                 <tr>
                     <td width="80"></td>
-                    <td><input type="submit" class="button button-long" value="发布"></td>
+                    <td>
+                        <label><input type="submit" class="btn btn-primary" value="发布"></label>
+                        <label><input type="reset" class="btn btn-default" value="重置"></label>
+                    </td>
                 </tr>
             </table>
         </form>
@@ -154,15 +157,15 @@
             });
         }
 
-        $("#post_image_preview").click(function(e) {
+        $("#postImagePreview").click(function(e) {
             DSXUI.showImagePicker(function (data) {
-                $("#post_image_preview").css('background-image', 'url('+data.imageurl+')');
-                $("#post_image").val(data.image);
+                $("#postImagePreview").css('background-image', 'url('+data.imageurl+')');
+                $("#postImage").val(data.image);
             });
         });
 
         ;$(function(){
-            $("#postForm").on('submit',function(e) {
+            $("#Form").on('submit',function(e) {
                 var title = $.trim($("#title").val());
                 if(!title){
                     DSXUI.error("{{trans('post.post title empty')}}");
@@ -176,7 +179,7 @@
                         '<input type="hidden" name="gallery['+k+'][thumb]" value="'+data.thumb+'">' +
                         '<input type="hidden" name="gallery['+k+'][image]" value="'+data.image+'">' +
                         '<div class="img bg-cover" style="background-image: url('+data.thumburl+')"></div>' +
-                        '<div class="con"><textarea class="textarea" name="gallery['+k+'][description]" placeholder="图片说明文字"></textarea></div>' +
+                        '<div class="con"><textarea class="form-control w500" name="gallery['+k+'][description]" placeholder="图片说明文字" style="height: 100px;"></textarea></div>' +
                         '<a class="delete" onclick="removeItem(this)">&times;</a></div>');
                 });
                 k--;

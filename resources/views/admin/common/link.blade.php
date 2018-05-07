@@ -5,12 +5,12 @@
         <h2>链接管理</h2>
     </div>
     <div class="content-div">
-        <form method="post" action="/admin/link/save">
-            {{csrf_field()}}
+        <form method="post">
+            {{form_verify_field()}}
             <table width="100%" border="0" cellspacing="0" cellpadding="0" class="listtable">
                 <thead>
                 <tr>
-                    <th width="20">删?</th>
+                    <th width="40">删?</th>
                     <th width="40">图片</th>
                     <th>名称</th>
                     <th width="60">显示顺序</th>
@@ -20,24 +20,24 @@
                 @foreach($categorylist as $catid=>$cat)
                 <tbody id="tbcontent_$catid">
                 <tr>
-                    <td><input type="checkbox" title="" class="checkbox checkmark" name="delete[]" value="{{$catid}}" /></td>
+                    <td><input type="checkbox" title="" class="checkmark" name="delete[]" value="{{$catid}}" /></td>
                     <td></td>
-                    <td><input type="text" title="" class="input-text" name="itemlist[{{$catid}}][title]" value="{{$cat['title']}}" maxlength="10"></td>
-                    <td><input type="text" title="" class="input-text w60" name="itemlist[{{$catid}}][displayorder]" value="{{$cat['displayorder']}}" maxlength="4"></td>
+                    <td><input type="text" title="" class="form-control w200" name="itemlist[{{$catid}}][title]" value="{{$cat['title']}}" maxlength="10"></td>
+                    <td><input type="text" title="" class="form-control w60" name="itemlist[{{$catid}}][displayorder]" value="{{$cat['displayorder']}}" maxlength="4"></td>
                     <td></td>
                 </tr>
                 @if(isset($itemlist[$catid]))
                 @foreach($itemlist[$catid] as $id=>$item)
                 <tr>
-                    <td><input type="checkbox" title="" class="checkbox checkmark" name="delete[]" value="{{$id}}" /></td>
+                    <td><input type="checkbox" title="" class="checkmark" name="delete[]" value="{{$id}}" /></td>
                     <td><img src="{{image_url($item['image'])}}" width="40" height="40" rel="pickimg" data-id="{{$id}}"></td>
                     <td>
                         <div class="catlog">
-                            <input type="text" title="" class="input-text" name="itemlist[{{$id}}][title]" value="{{$item['title']}}" maxlength="10">
+                            <input type="text" title="" class="form-control w200" name="itemlist[{{$id}}][title]" value="{{$item['title']}}" maxlength="10">
                         </div>
                     </td>
-                    <td><input type="text" title="" class="input-text w60" name="itemlist[{{$id}}][displayorder]" value="{{$item['displayorder']}}" maxlength="4"></td>
-                    <td><input type="text" title="" class="input-text w300" name="itemlist[{{$id}}][url]" value="{{$item['url']}}"></td>
+                    <td><input type="text" title="" class="form-control w60" name="itemlist[{{$id}}][displayorder]" value="{{$item['displayorder']}}" maxlength="4"></td>
+                    <td><input type="text" title="" class="form-control w300" name="itemlist[{{$id}}][url]" value="{{$item['url']}}"></td>
                 </tr>
                 @endforeach
                 @endif
@@ -66,8 +66,10 @@
                 <tfoot>
                 <tr>
                     <td colspan="5">
-                        <label><input type="submit" class="button" value="提交" /></label>
-                        <label><input type="button" class="button button-cancel" value="刷新" onclick="DSXUtil.reFresh()" /></label>
+                        <div class="btn-group-sm">
+                            <label><input type="submit" class="btn btn-primary" value="提交" /></label>
+                            <label><input type="button" class="btn btn-default" value="刷新" data-action="refresh" /></label>
+                        </div>
                     </td>
                 </tr>
                 </tfoot>
@@ -81,8 +83,8 @@
                 $("#newCategory").append('<tr>' +
                     '        <td><input type="hidden" name="itemlist['+k+'][type]" value="category" /></td>' +
                     '        <td></td>' +
-                    '        <td><input type="text" title="" class="input-text" name="itemlist['+k+'][title]" value="新分类" maxlength="10"></td>' +
-                    '        <td><input type="text" title="" class="input-text w60" name="itemlist['+k+'][displayorder]" value="0" maxlength="4"></td>' +
+                    '        <td><input type="text" title="" class="form-control w200" name="itemlist['+k+'][title]" value="新分类" maxlength="10"></td>' +
+                    '        <td><input type="text" title="" class="form-control w60" name="itemlist['+k+'][displayorder]" value="0" maxlength="4"></td>' +
                     '        <td></td>' +
                     '    </tr>');
                 k--;
@@ -93,9 +95,9 @@
                 $("#newItem_"+catid).append('<tr>' +
                     '        <td><input type="hidden" name="itemlist['+k+'][catid]" value="'+catid+'" /></td>\n' +
                     '        <td><input type="hidden" name="itemlist['+k+'][type]" value="item" /></td>\n' +
-                    '        <td><div class="catlog"><input type="text" class="input-text" name="itemlist['+k+'][title]" value="新链接" maxlength="10"></div></td>\n' +
-                    '        <td><input type="text" class="input-text w60" name="itemlist['+k+'][displayorder]" value="0" maxlength="4"></td>\n' +
-                    '        <td><input type="text" class="input-text w300" name="itemlist['+k+'][url]" value=""></td>\n' +
+                    '        <td><div class="catlog"><input type="text" class="form-control w200" name="itemlist['+k+'][title]" value="新链接" maxlength="10"></div></td>\n' +
+                    '        <td><input type="text" class="form-control w60" name="itemlist['+k+'][displayorder]" value="0" maxlength="4"></td>\n' +
+                    '        <td><input type="text" class="form-control w300" name="itemlist['+k+'][url]" value=""></td>\n' +
                     '    </tr>');
                 k--;
             });

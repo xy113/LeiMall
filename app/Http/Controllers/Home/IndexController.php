@@ -49,4 +49,9 @@ class IndexController extends Controller
 
         return $this->view('home.index');
     }
+
+    public function vue(){
+
+        return $this->view('home.vue');
+    }
 }

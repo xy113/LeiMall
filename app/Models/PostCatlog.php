@@ -47,7 +47,7 @@ class PostCatlog extends BaseModel
      */
     public static function updateCache(){
         $catloglist = array();
-        foreach (PostCatlog::where('available', 1)->orderBy('displayorder', 'ASC')->orderBy('catid', 'ASC')->get() as $catlog){
+        foreach (PostCatlog::where('available', 1)->orderBy('displayorder')->orderBy('catid')->get() as $catlog){
             $catloglist[$catlog->catid] = $catlog->toArray();
         }
         Cache::forever('post_catlog', $catloglist);
@@ -168,5 +168,19 @@ class PostCatlog extends BaseModel
             }
         }
         return $parents;
+    }
+
+    /**
+     * @param $catid
+     * @throws \Exception
+     */
+    public static function deepDelete($catid) {
+        PostCatlog::where('catid', $catid)->delete();
+        $catloglist = PostCatlog::where('fid', $catid)->get(['catid']);
+        if ($catloglist->count() > 0) {
+            $catloglist->map(function ($catlog){
+                PostCatlog::deepDelete($catlog->catid);
+            });
+        }
     }
 }

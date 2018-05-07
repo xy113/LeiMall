@@ -7,7 +7,10 @@
 
 require('./bootstrap');
 
+window.axios = require('axios');
+
 window.Vue = require('vue');
+window.Vue.prototype.$http = window.axios;
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -18,5 +21,11 @@ window.Vue = require('vue');
 Vue.component('example-component', require('./components/ExampleComponent.vue'));
 
 const app = new Vue({
-    el: '#app'
+    el: '#app',
+    data:{
+        msg:'<example-component/>'
+    },
+    mounted(){
+
+    }
 });

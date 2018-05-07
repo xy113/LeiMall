@@ -6,8 +6,7 @@
     </div>
     <div class="table-wrap">
         <form method="post" id="menuForm" autocomplete="off">
-            {{csrf_field()}}
-            <input type="hidden" name="formsubmit" value="yes">
+            {{form_verify_field()}}
             <table cellpadding="0" cellspacing="0" width="100%" class="listtable border-none">
                 <thead>
                 <tr>
@@ -22,8 +21,8 @@
                 <table cellpadding="0" cellspacing="0" width="100%" class="listtable border-none">
                     <tbody>
                     <tr>
-                        <td width="20"><input title="" type="checkbox" class="checkbox checkmark" name="delete[]" value="{{$id}}"></td>
-                        <td width="220"><input title="" type="text" name="menulist[{{$id}}][name]" class="input-text" value="{{$menu['name']}}"></td>
+                        <td width="20"><input title="" type="checkbox" class="checkmark" name="delete[]" value="{{$id}}"></td>
+                        <td width="220"><input title="" type="text" class="form-control w200" name="menulist[{{$id}}][name]" value="{{$menu['name']}}"></td>
                         <td><a href="{{action('Admin\MenuController@itemlist', ['menuid'=>$id])}}">管理菜单项</a></td>
                     </tr>
                     </tbody>
@@ -41,8 +40,8 @@
                 </tr>
                 <tr>
                     <td>
-                        <input type="submit" class="button" value="提交">
-                        <input type="button" class="button button-cancel" value="刷新" onclick="window.location.reload()">
+                        <input type="submit" class="btn btn-primary" value="提交">
+                        <input type="button" class="btn btn-default" value="刷新" data-action="refresh">
                     </td>
                 </tr>
                 </tfoot>

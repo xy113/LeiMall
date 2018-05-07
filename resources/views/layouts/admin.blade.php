@@ -7,11 +7,13 @@
     <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="icon" href="{{asset('images/common/favicon.png')}}">
-    <link rel="stylesheet" type="text/css" href="{{asset('css/admin.css')}}">
+    <link href="{{asset('images/common/favicon.png')}}" rel="icon">
+    <link href="{{asset('bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{asset('css/admin.css?t='.time())}}" rel="stylesheet">
     @yield('styles')
     <script src="{{asset('js/jquery.js')}}" type="text/javascript"></script>
     <script src="{{asset('js/common.js')}}" type="text/javascript"></script>
+    <script src="{{asset('bootstrap/js/bootstrap.min.js')}}"></script>
     @yield('scripts')
     <script type="text/javascript">
         $.ajaxSetup({

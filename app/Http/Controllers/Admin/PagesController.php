@@ -48,17 +48,17 @@ class PagesController extends BaseController
                 $this->data['pagelist'][$page->pageid] = $page;
             });
 
-            return $this->view('admin.pages.list');
+            return $this->view('admin.pages.pages');
         }
     }
 
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function edit(){
+    public function newpage(){
         if ($this->isOnSubmit()){
-            $pageid = $this->request->post('pageid');
-            $newpage = $this->request->input('newpage');
+            $pageid = $this->request->input('pageid');
+            $newpage = $this->request->post('newpage');
             if ($pageid) {
                 $newpage['updated_at'] = time();
                 Pages::where('pageid', $pageid)->update($newpage);
@@ -78,7 +78,7 @@ class PagesController extends BaseController
                     'alias'=>'',
                     'template'=>'',
                     'summary'=>'',
-                    'body'=>''
+                    'content'=>''
                 ],
                 'categorylist'=>[]
             ]);
@@ -95,7 +95,7 @@ class PagesController extends BaseController
                 $this->data['categorylist'][$c->pageid] = $c;
             });
 
-            return $this->view('admin.pages.edit');
+            return $this->view('admin.pages.newpage');
         }
     }
 

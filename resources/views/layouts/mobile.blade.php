@@ -14,7 +14,6 @@
     @yield('styles')
     <script src="{{asset('js/jquery.js')}}" type="text/javascript"></script>
     <script src="{{asset('js/common.js')}}" type="text/javascript"></script>
-    <script src="{{asset('js/angular.min.js')}}" type="text/javascript"></script>
     <script src="{{asset('js/jquery.mobile.touch.min.js')}}" type="text/javascript"></script>
     @yield('scripts')
 </head>

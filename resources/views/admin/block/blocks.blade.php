@@ -2,17 +2,16 @@
 
 @section('content')
     <div class="console-title">
-        <a href="javascript:;" class="button float-right" id="add_block">添加板块</a>
+        <a href="javascript:;" class="btn btn-primary float-right" id="add_block">添加板块</a>
         <h2>内容板块管理</h2>
     </div>
     <div class="content-div">
         <form method="post" id="listForm" autocomplete="off">
-            {{csrf_field()}}
-            <input type="hidden" name="formsubmit" value="yes">
+            {{form_verify_field()}}
             <table width="100%" border="0" cellspacing="0" cellpadding="0" class="listtable">
                 <thead>
                 <tr>
-                    <th width="50"><label><input type="checkbox" class="checkbox checkall checkmark"></label></th>
+                    <th width="50"><label><input type="checkbox" class="checkmark" data-action="checkall"></label></th>
                     <th width="60">ID</th>
                     <th width="300">名称</th>
                     <th>说明</th>
@@ -22,11 +21,11 @@
                 <tbody>
                 @foreach($itemlist as $block_id=>$item)
                 <tr>
-                    <td><input title="" type="checkbox" class="checkbox checkmark itemCheckBox" name="blocks[]" value="{{$block_id}}"></td>
+                    <td><input title="" type="checkbox" class="checkmark itemCheckBox" name="blocks[]" value="{{$block_id}}"></td>
                     <td>{{$block_id}}</td>
                     <td><a rel="edit" data-id="{{$block_id}}">{{$item['block_name']}}</a></td>
                     <td>{{$item['block_desc']}}</td>
-                    <td><a href="{{action('Admin\BlockController@itemlist', ['block_id'=>$block_id])}}">内容管理</a></td>
+                    <td><a href="{{url('/admin/block/itemlist?block_id='.$block_id)}}">内容管理</a></td>
                 </tr>
                 @endforeach
                 </tbody>
@@ -34,9 +33,11 @@
                 <tr>
                     <td colspan="10">
                         <div class="float-right">{!! $pagination !!}</div>
-                        <label><input type="checkbox" class="checkbox checkall checkmark"> 全选</label>
-                        <label><button type="button" class="btn" id="deleteButton">删除</button></label>
-                        <label><button type="button" class="btn" data-action="refresh">刷新</button></label>
+                        <div class="btn-group-sm">
+                            <label><input type="checkbox" class="checkmark" data-action="checkall"> 全选</label>
+                            <label><button type="button" class="btn btn-default" id="delete" disabled="disabled">删除</button></label>
+                            <label><button type="button" class="btn btn-default" data-action="refresh">刷新</button></label>
+                        </div>
                     </td>
                 </tr>
                 </tfoot>
@@ -46,18 +47,17 @@
     <script type="text/template" id="blockFormTpl">
         <div style="padding: 10px 20px;">
             <form method="post" id="J_Frmblock" action="{{url('/admin/block/edit')}}">
-                {{csrf_field()}}
+                {{form_verify_field()}}
                 <input type="hidden" name="block_id" value="{block.block_id}">
-                <input type="hidden" name="formsubmit" value="yes">
                 <table width="100%" border="0" cellspacing="0" cellpadding="0" class="formtable">
                     <tbody>
                     <tr>
                         <td class="cell-name">板块名称</td>
-                        <td><input title="" type="text" class="input-text w300" name="block[block_name]" value="{block.block_name}" id="J_block_name"></td>
+                        <td><input title="" type="text" class="form-control w300" name="block[block_name]" value="{block.block_name}" id="J_block_name"></td>
                     </tr>
                     <tr>
                         <td class="cell-name">板块说明</td>
-                        <td><textarea title="" class="textarea" name="block[block_desc]" id="J_block_desc" style="height: 100px;">{block.block_desc}</textarea></td>
+                        <td><textarea title="" class="form-control w300" name="block[block_desc]" id="J_block_desc" style="height: 100px;">{block.block_desc}</textarea></td>
                     </tr>
                     </tbody>
                 </table>
@@ -66,6 +66,13 @@
     </script>
     <script type="text/javascript">
         $(function () {
+            $(document).on('click', function () {
+                if ($(".checkmark:checked").length > 0) {
+                    $("#delete").enable();
+                } else {
+                    $("#delete").disable();
+                }
+            });
             $("#add_block").on('click', function (e) {
                 var html = $("#blockFormTpl").html().replace(/\{block\.(.*?)\}/g, function () {
                     return '';
@@ -100,7 +107,7 @@
                     dataType:'json',
                     success:function (responsedata) {
                         var html = $("#blockFormTpl").html().replace(/\{block\.(.*?)\}/g, function (s, k) {
-                            return responsedata.data[k];
+                            return responsedata.block[k];
                         });
                         DSXUI.dialog({
                             title:'编辑板块',
@@ -126,21 +133,16 @@
                 });
             });
 
-            $("#deleteButton").on('click', function () {
-                if ($(".itemCheckBox:checked").length === 0){
-                    DSXUI.error('请选择选项');
-                    return false;
-                }
-                var spinner = null;
+            $("#delete").on('click', function () {
                 DSXUI.showConfirm('删除板块', '确认删除所选板块吗?', function () {
                     $("#listForm").ajaxSubmit({
                         dataType:'json',
                         beforeSend:function () {
-                            spinner = DSXUI.showSpinner();
+                            DSXUI.showSpinner();
                         },success:function (response) {
                             setTimeout(function () {
-                                spinner.close();
-                                if (response.errcode === 0){
+                                DSXUI.hideSpinner();
+                                if (response.errcode){
                                     DSXUI.error(response.errmsg);
                                 }else {
                                     DSXUtil.reFresh();

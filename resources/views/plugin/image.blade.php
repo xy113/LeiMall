@@ -4,7 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>图片选择器</title>
     <link href="{{asset('images/common/favicon.png')}}" rel="icon">
-    <link href="{{asset('css/image_plugin.css')}}" rel="stylesheet" type="text/css">
+    <link href="{{asset('css/image_plugin.css?v=1.0')}}" rel="stylesheet" type="text/css">
     <script src="{{asset('js/jquery.js')}}" type="text/javascript"></script>
     <script src="{{asset('js/common.js')}}" type="text/javascript"></script>
 </head>

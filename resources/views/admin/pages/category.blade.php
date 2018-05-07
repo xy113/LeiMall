@@ -2,13 +2,12 @@
 
 @section('content')
     <div class="console-title">
-        <a href="{{url('/admin/page/add')}}" class="button float-right">添加页面</a>
+        <a href="{{url('/admin/pages')}}" class="btn btn-primary float-right">页面管理</a>
         <h2>页面分类</h2>
     </div>
     <div class="content-div">
-        <form method="post" action="">
-            {{csrf_field()}}
-            <input type="hidden" name="formsubmit" value="yes">
+        <form method="post" id="listForm">
+            {{form_verify_field()}}
             <table width="100%" border="0" cellspacing="0" cellpadding="0" class="listtable">
                 <thead>
                 <tr>
@@ -20,22 +19,24 @@
                 <tbody id="newCategory">
                 @foreach($categorylist as $pageid=>$catgory)
                 <tr>
-                    <td><input type="checkbox" title="" class="checkbox checkmark" name="delete[]" value="{{$pageid}}" /></td>
-                    <td><input type="text" title="" class="input-text w60" name="categorylist[{{$pageid}}][displayorder]" value="{{$catgory['displayorder']}}" maxlength="4"></td>
-                    <td><input type="text" title="" class="input-text w200" name="categorylist[{{$pageid}}][title]" value="{{$catgory['title']}}" maxlength="10"> </td>
+                    <td><input type="checkbox" title="" class="checkmark" name="delete[]" value="{{$pageid}}" /></td>
+                    <td><input type="text" title="" class="form-control w60" name="categorylist[{{$pageid}}][displayorder]" value="{{$catgory['displayorder']}}" maxlength="4"></td>
+                    <td><input type="text" title="" class="form-control w200" name="categorylist[{{$pageid}}][title]" value="{{$catgory['title']}}" maxlength="10"> </td>
                 </tr>
                 @endforeach
                 </tbody>
                 <tfoot>
                 <tr>
                     <td colspan="5">
-                        <label><input type="checkbox" class="checkbox checkall" name="delete[]" value="0" /> 全选</label>
+                        <label><input type="checkbox" name="delete[]" data-action="checkall" /> 全选</label>
                         <a href="javascript:;" onclick="addClass()"><i class="iconfont icon-roundadd"></i>添加分类</a></td>
                 </tr>
                 <tr>
                     <td colspan="5">
-                        <input type="submit" class="button" value="提交" />
-                        <input type="button" class="button button-cancel" value="刷新" onclick="DSXUtil.reFresh()" />
+                        <div class="btn-group-sm">
+                            <label><input type="button" class="btn btn-primary" value="提交" id="SubmitButton" /></label>
+                            <label><input type="button" class="btn btn-default" value="刷新" data-action="refresh" /></label>
+                        </div>
                     </td>
                 </tr>
                 </tfoot>
@@ -45,8 +46,8 @@
     <script type="text/template" id="J-category-tpl">
         <tr class="white">
             <td></td>
-            <td><input type="text" title="" class="input-text w60" name="categorylist[#k#][displayorder]" value="0" maxlength="4"></td>
-            <td><input type="text" title="" class="input-text w200" name="categorylist[#k#][title]" value="" maxlength="10"></td>
+            <td><input type="text" title="" class="form-control w60" name="categorylist[#k#][displayorder]" value="0" maxlength="4"></td>
+            <td><input type="text" title="" class="form-control w200" name="categorylist[#k#][title]" value="" maxlength="10"></td>
         </tr>
     </script>
     <script type="text/javascript">
@@ -56,5 +57,15 @@
             var html = $("#J-category-tpl").html().replace(/#k#/g, k);
             $("#newCategory").append(html);
         }
+
+        $("#SubmitButton").on('click', function () {
+            if ($(".checkmark:checked").length > 0) {
+                DSXUI.showConfirm('删除确认','你确认要删除所选页面吗?', function () {
+                    $("#listForm").submit();
+                });
+            } else {
+                $("#listForm").submit();
+            }
+        });
     </script>
 @stop

@@ -2,13 +2,12 @@
 
 @section('content')
     <div class="console-title">
-        <a href="{{url('/admin/member')}}" class="button float-right">用户列表</a>
+        <a href="{{url('/admin/user')}}" class="btn btn-primary float-right">用户列表</a>
         <h2>用户分组管理</h2>
     </div>
     <div class="content-div">
         <form method="post" autocomplete="off">
-            {{csrf_field()}}
-            <input type="hidden" name="formsubmit" value="yes">
+            {{form_verify_field()}}
             <table width="100%" border="0" cellspacing="0" cellpadding="0" class="listtable">
                 <thead>
                 <tr>
@@ -25,9 +24,9 @@
                     <tr>
                         <td><input type="checkbox" class="checkbox" title="" name="delete[]" value="{{$gid}}" /></td>
                         <td>{{$gid}}</td>
-                        <td><input type="text" title="" class="input-text w100" name="grouplist[{{$gid}}][title]" value="{{$group['title']}}" maxlength="10"></td>
-                        <td><input type="text" title="" class="input-text w100" name="grouplist[{{$gid}}][creditslower]" value="{{$group['creditslower']}}" maxlength="10"></td>
-                        <td><input type="text" title="" class="input-text w100" name="grouplist[{{$gid}}][creditshigher]" value="{{$group['creditshigher']}}" maxlength="10"></td>
+                        <td><input type="text" title="" class="form-control w100" name="grouplist[{{$gid}}][title]" value="{{$group['title']}}" maxlength="10"></td>
+                        <td><input type="text" title="" class="form-control w100" name="grouplist[{{$gid}}][creditslower]" value="{{$group['creditslower']}}" maxlength="10"></td>
+                        <td><input type="text" title="" class="form-control w100" name="grouplist[{{$gid}}][creditshigher]" value="{{$group['creditshigher']}}" maxlength="10"></td>
                     </tr>
                 @endforeach
                 </tbody>
@@ -37,9 +36,9 @@
                     <tr>
                         <td><input type="checkbox" class="checkbox" title="" name="delete[]" value="{{$gid}}" /></td>
                         <td>{{$gid}}</td>
-                        <td><input type="text" title="" class="input-text w100" name="grouplist[{{$gid}}][title]" value="{{$group['title']}}" maxlength="10"></td>
-                        <td><input type="text" title="" class="input-text w100" name="grouplist[{{$gid}}][creditslower]" value="{{$group['creditslower']}}" maxlength="10"></td>
-                        <td><input type="text" title="" class="input-text w100" name="grouplist[{{$gid}}][creditshigher]" value="{{$group['creditshigher']}}" maxlength="10"></td>
+                        <td><input type="text" title="" class="form-control w100" name="grouplist[{{$gid}}][title]" value="{{$group['title']}}" maxlength="10"></td>
+                        <td><input type="text" title="" class="form-control w100" name="grouplist[{{$gid}}][creditslower]" value="{{$group['creditslower']}}" maxlength="10"></td>
+                        <td><input type="text" title="" class="form-control w100" name="grouplist[{{$gid}}][creditshigher]" value="{{$group['creditshigher']}}" maxlength="10"></td>
                     </tr>
                 @endforeach
                 </tbody>
@@ -50,8 +49,8 @@
                 </tr>
                 <tr>
                     <td colspan="10">
-                        <input type="submit" class="button" value="提交" />
-                        <input type="button" class="button button-cancel" value="刷新" onclick="DSXUtil.reFresh()" />
+                        <input type="submit" class="btn btn-primary" value="提交" />
+                        <input type="button" class="btn btn-default" value="刷新" data-action="refresh" />
                     </td>
                 </tr>
                 </tfoot>

@@ -8,6 +8,7 @@ class AdController extends BaseController
 {
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\JsonResponse|\Illuminate\View\View
+     * @throws \Exception
      */
     public function index(){
         if ($this->isOnSubmit()) {

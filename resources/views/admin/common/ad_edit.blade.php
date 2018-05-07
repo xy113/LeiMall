@@ -1,37 +1,38 @@
 @extends('layouts.admin')
 
+@section('scripts')
+    <script src="{{asset('DatePicker/WdatePicker.js')}}"></script>
+@stop
+
 @section('content')
-    <script src="/DatePicker/WdatePicker.js"></script>
     <div class="console-title">
         <a href="{{url('/admin/ad')}}" class="button float-right">返回列表</a>
         <h2>添加广告</h2>
     </div>
     <div class="content-div">
         <form method="post" id="adForm">
-            {{csrf_field()}}
-            <input type="hidden" name="formsubmit" value="yes">
-            <input type="hidden" name="id" value="{{$id}}">
+            {{form_verify_field()}}
             <table width="100%" border="0" cellspacing="0" cellpadding="0" class="formtable">
                 <tbody>
                 <tr>
                     <td width="80">广告名称</td>
-                    <td width="320"><input title="" type="text" class="input-text w300" name="adnew[title]" value="{{$ad['title']}}" id="title"></td>
+                    <td width="320"><input title="" type="text" class="form-control w300" name="adnew[title]" value="{{$ad['title']}}" id="title"></td>
                     <td class="tips">区分不同广告位的名称</td>
                 </tr>
                 <tr>
                     <td>开始时间</td>
-                    <td><input title="" type="text" class="input-text w300" name="adnew[begin_time]" value="{{$ad['begin_time']}}" onclick="WdatePicker()"></td>
+                    <td><input title="" type="text" class="form-control w300" name="adnew[begin_time]" value="{{$ad['begin_time']}}" onclick="WdatePicker()"></td>
                     <td class="tips">广告开始有效时间</td>
                 </tr>
                 <tr>
                     <td>结束时间</td>
-                    <td><input title="" type="text" class="input-text w300" name="adnew[end_time]" value="{{$ad['end_time']}}" onclick="WdatePicker()"></td>
+                    <td><input title="" type="text" class="form-control w300" name="adnew[end_time]" value="{{$ad['end_time']}}" onclick="WdatePicker()"></td>
                     <td class="tips">广告失效时间</td>
                 </tr>
                 <tr>
                     <td>广告类型</td>
                     <td>
-                        <select title="" name="adnew[type]" class="select w300" onChange="changeType(this.value)">
+                        <select title="" name="adnew[type]" class="form-control w300" onChange="changeType(this.value)">
                             @foreach($ad_types as $k=>$v)
                             <option value="{{$k}}"@if($ad['type']==$k) selected="selected"@endif>{{$v}}</option>
                             @endforeach
@@ -43,12 +44,12 @@
                 <tbody id="adtext" class="adtype" style="display:none;">
                 <tr>
                     <td>文字</td>
-                    <td><input title="" type="text" class="input-text w300" name="addata[text][text]" value="{{$addata['text']['text']}}"></td>
+                    <td><input title="" type="text" class="form-control w300" name="addata[text][text]" value="{{$addata['text']['text']}}"></td>
                     <td class="tips"></td>
                 </tr>
                 <tr>
                     <td>链接</td>
-                    <td><input title="" type="text" class="input-text w300" name="addata[text][link]" value="{{$addata['text']['link']}}"></td>
+                    <td><input title="" type="text" class="form-control w300" name="addata[text][link]" value="{{$addata['text']['link']}}"></td>
                     <td class="tips"></td>
                 </tr>
                 </tbody>
@@ -64,24 +65,24 @@
                 </tr>
                 <tr>
                     <td>宽度(可选)</td>
-                    <td><input title="" type="text" class="input-text w300" name="addata[image][width]" value="{{$addata['image']['width']}}"></td>
+                    <td><input title="" type="text" class="form-control w300" name="addata[image][width]" value="{{$addata['image']['width']}}"></td>
                     <td class="tips">图片显示宽度</td>
                 </tr>
                 <tr>
                     <td>高度(可选)</td>
-                    <td><input title="" type="text" class="input-text w300" name="addata[image][height]" value="{{$addata['image']['height']}}"></td>
+                    <td><input title="" type="text" class="form-control w300" name="addata[image][height]" value="{{$addata['image']['height']}}"></td>
                     <td class="tips">图片显示高度</td>
                 </tr>
                 <tr>
                     <td>链接</td>
-                    <td><input title="" type="text" class="input-text w300" name="addata[image][link]" value="{{$addata['image']['link']}}"></td>
+                    <td><input title="" type="text" class="form-control w300" name="addata[image][link]" value="{{$addata['image']['link']}}"></td>
                     <td class="tips">图片链接</td>
                 </tr>
                 </tbody>
                 <tbody id="adcode" class="adtype" style="display:none;">
                 <tr>
                     <td>广告代码</td>
-                    <td><textarea title="" class="textarea w300" name="addata[code]">{{$addata['code']}}</textarea></td>
+                    <td><textarea title="" class="form-control w300" name="addata[code]" style="height: 200px;">{{$addata['code']}}</textarea></td>
                     <td class="tips">广告HTML代码</td>
                 </tr>
                 </tbody>
@@ -89,8 +90,8 @@
                 <tr>
                     <td></td>
                     <td colspan="2">
-                        <input type="submit" class="button" value="提交">
-                        <input type="button" class="button button-cancel" value="刷新" data-action="refresh">
+                        <input type="submit" class="btn btn-primary" value="提交">
+                        <input type="button" class="btn btn-default" value="刷新" data-action="refresh">
                     </td>
                 </tr>
                 </tfoot>

@@ -23,6 +23,6 @@
     -ms-behavior: url(../images/common/backgroundsize.min.htc);
     behavior: url(../images/common/backgroundsize.min.htc);
 }
-.main-frame .action-bar{height: 40px; display: block;}
-.main-frame .action-bar .pagination{padding-top: 7px; text-align: center;}
+.main-frame .action-bar{height: 40px; display: block; margin-top: 15px; text-align: center;}
+.main-frame .action-bar .pagination{text-align: center;}
 .ui-overlayer{background-color: #CCC;}

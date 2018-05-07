@@ -19,10 +19,10 @@ class ImageController extends Controller
         foreach ($imageList as $image){
             $data['imagelist'][$image->id] = [
                 'id'=>$image->id,
-                'image'=>$image->path,
+                'image'=>$image->source,
                 'thumb'=>$image->thumb,
-                'imageurl'=>storage_url($image->path),
-                'thumburl'=>storage_url($image->thumb)
+                'imageurl'=>image_url($image->source),
+                'thumburl'=>image_url($image->thumb)
             ];
         }
         $this->assign($data);

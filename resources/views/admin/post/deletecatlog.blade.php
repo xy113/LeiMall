@@ -2,13 +2,12 @@
 
 @section('content')
     <div class="console-title">
-        <a href="{{url('/admin/postcatlog')}}" class="button float-right">返回列表</a>
-        <h2>文章管理 > 删除分类</h2>
+        <a href="{{url('/admin/postcatlog')}}" class="btn btn-primary float-right">返回列表</a>
+        <h2>文章管理 > 分类管理 > 删除分类</h2>
     </div>
     <div class="content-div">
-        <form method="post" id="J_deleteForm" autocomplete="off">
-            {{csrf_field()}}
-            <input type="hidden" name="formsubmit" value="yes">
+        <form method="post" id="Form" autocomplete="off">
+            {{form_verify_field()}}
             <table width="100%" border="0" cellspacing="0" cellpadding="0" class="formtable">
                 <tbody>
                 <tr>
@@ -19,15 +18,15 @@
                 <tr>
                     <td>删除子分类及文章</td>
                     <td>
-                        <label><input type="radio" class="radio" name="deleteChilds" value="1"> 是 </label>
-                        <label><input type="radio" class="radio" name="deleteChilds" value="0" checked> 否</label>
+                        <label><input type="radio" name="deleteChilds" value="1"> 是 </label>
+                        <label><input type="radio" name="deleteChilds" value="0" checked> 否</label>
                     </td>
                     <td class="tips">选择是否删除子分类</td>
                 </tr>
                 <tr>
                     <td>移入分类</td>
                     <td>
-                        <select name="moveto" id="moveto" class="w300" title="" size="10" style="height: 200px;">
+                        <select name="moveto" id="moveto" class="form-control w300" title="" size="10" style="height: 200px;">
                             @if(isset($catloglist[0]))
                                 @foreach($catloglist[0] as $catid1=>$cat1)
                                     <option value="{{$catid1}}"@if($catid1==$catid) disabled="disabled"@endif>{{$cat1['name']}}</option>
@@ -52,7 +51,7 @@
                 <tr>
                     <td></td>
                     <td colspan="5">
-                        <label><input type="submit" class="button button-long" value="确认删除"></label>
+                        <label><input type="submit" class="btn btn-primary" value="确认删除"></label>
                     </td>
                 </tr>
                 </tfoot>
@@ -60,7 +59,7 @@
         </form>
     </div>
     <script type="text/javascript">
-        $("#J_deleteForm").on('submit', function () {
+        $("#Form").on('submit', function () {
             if ($("[name=deleteChilds]:checked").val() === '0'){
                 if (!$("#moveto").val()){
                     DSXUI.error('请选择文章移入分类');

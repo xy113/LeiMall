@@ -8,49 +8,47 @@ class LinkController extends BaseController
 {
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Exception
      */
     public function index(){
 
-        $this->assign([
-            'categorylist'=>[],
-            'itemlist'=>[]
-        ]);
-
-        Link::where('type', 'category')->get()->map(function ($c){
-            $this->data['categorylist'][$c->id] = $c;
-        });
-
-        Link::where('type', 'item')->get()->map(function ($c){
-            $this->data['itemlist'][$c->catid][$c->id] = $c;
-        });
-
-        return $this->view('admin.common.link');
-    }
-
-    /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function save(){
-        $delete = $this->request->input('delete');
-        if ($delete && is_array($delete)){
-            foreach ($delete as $id){
-                Link::where('id', $id)->delete();
+        if ($this->isOnSubmit()) {
+            $delete = $this->request->input('delete');
+            if ($delete && is_array($delete)){
+                foreach ($delete as $id){
+                    Link::where('id', $id)->delete();
+                }
             }
-        }
 
-        $itemlist = $this->request->input('itemlist');
-        if ($itemlist && is_array($itemlist)) {
-            foreach ($itemlist as $id=>$item){
-                if ($item['title']) {
-                    if ($id > 0){
-                        Link::where('id', $id)->update($item);
-                    }else {
-                        Link::insert($item);
+            $itemlist = $this->request->input('itemlist');
+            if ($itemlist && is_array($itemlist)) {
+                foreach ($itemlist as $id=>$item){
+                    if ($item['title']) {
+                        if ($id > 0){
+                            Link::where('id', $id)->update($item);
+                        }else {
+                            Link::insert($item);
+                        }
                     }
                 }
             }
+            return $this->showSuccess(trans('ui.save_succeed'));
+        }else {
+            $this->assign([
+                'categorylist'=>[],
+                'itemlist'=>[]
+            ]);
+
+            Link::where('type', 'category')->get()->map(function ($c){
+                $this->data['categorylist'][$c->id] = $c;
+            });
+
+            Link::where('type', 'item')->get()->map(function ($c){
+                $this->data['itemlist'][$c->catid][$c->id] = $c;
+            });
+
+            return $this->view('admin.common.link');
         }
-        return $this->showSuccess(trans('ui.save_succeed'));
     }
 
     /**

@@ -28,27 +28,7 @@
         }
     });
     $(".sortable").sortable();
-    //显示模态框
-    $("[data-toggle=modalbox]").on('click', function () {
-        var target = $(this).attr('data-target');
-        if (target) {
-            var bg = $("<div/>").addClass('dsxui-modal-bg').appendTo(document.body).show();
-            $(target).show().dragable({hanler:'.dialog-title'});
-            $(target).find('[data-dismiss=modalbox]').on('click', function () {
-                $(target).hide();
-                bg.remove();
-            });
-        }
-    });
     $("[data-action=refresh]").on('click', function () {
         DSXUtil.reFresh();
-    });
-    //全选
-    $(".checkall").on('click',function(e) {
-        var target = $(this).attr('toggle-target');
-        if(typeof(target) === 'undefined'){
-            target = 'input.checkmark';
-        }
-        $(target).prop('checked', $(this).is(":checked"));
     });
 });

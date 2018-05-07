@@ -9,6 +9,7 @@ class BlockController extends BaseController
 {
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\JsonResponse|\Illuminate\View\View
+     * @throws \Exception
      */
     public function index() {
         if ($this->isOnSubmit()) {
@@ -50,12 +51,13 @@ class BlockController extends BaseController
             return ajaxReturn();
         }else {
             $block = Block::where('block_id', $block_id)->first()->toArray();
-            return ajaxReturn($block);
+            return ajaxReturn(['block'=>$block]);
         }
     }
 
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Exception
      */
     public function itemlist() {
         $block_id = $this->request->input('block_id');
@@ -93,7 +95,7 @@ class BlockController extends BaseController
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function edit_item(){
+    public function newitem(){
         $id = $this->request->input('id');
         $block_id = $this->request->input('block_id');
         if ($this->isOnSubmit()) {
@@ -129,7 +131,7 @@ class BlockController extends BaseController
                 }
             }
 
-            return $this->view('admin.block.edit_item');
+            return $this->view('admin.block.newitem');
         }
     }
 

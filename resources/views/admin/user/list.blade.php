@@ -5,55 +5,55 @@
 @stop
 
 @section('content')
-    <div class="navigation">
-        <a>后台管理</a>
-        <span>></span>
-        <a>会员管理</a>
-        <span>></span>
-        <a>会员列表</a>
-    </div>
+    <ol class="breadcrumb">
+        <li>后台管理</li>
+        <li>用户管理</li>
+        <li>用户列表</li>
+    </ol>
     <div class="search-container">
         <form method="get" id="searchFrom">
             <div class="row">
                 <div class="cell">
-                    <label>用户名:</label>
-                    <div class="field"><input type="text" title="" class="input-text" name="username" value="{{$username or ''}}"></div>
+                    <div class="label">用户名:</div>
+                    <div class="field"><input type="text" title="" class="form-control w200" name="username" value="{{$username or ''}}"></div>
                 </div>
                 <div class="cell">
-                    <label>手机号:</label>
-                    <div class="field"><input type="text" title="" class="input-text" name="mobile" value="{{$mobile}}"></div>
+                    <div class="label">手机号:</div>
+                    <div class="field"><input type="text" title="" class="form-control w200" name="mobile" value="{{$mobile}}"></div>
                 </div>
                 <div class="cell">
-                    <label>邮箱:</label>
-                    <div class="field"><input type="text" title="" class="input-text" name="email" value="{{$email}}"></div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="cell">
-                    <label>会员ID:</label>
-                    <div class="field"><input type="text" title="" class="input-text" name="uid" value="{{$uid}}"></div>
-                </div>
-                <div class="cell">
-                    <label>注册日期:</label>
-                    <div class="field">
-                        <input type="text" title="" class="input-text" name="reg_time_begin" onclick="WdatePicker()" value="{{$reg_time_begin}}" style="width: 100px;"> -
-                        <input type="text" title="" class="input-text" name="reg_time_end" onclick="WdatePicker()" value="{{$reg_time_end}}" style="width: 100px;">
-                    </div>
-                </div>
-                <div class="cell">
-                    <label>最后登录:</label>
-                    <div class="field">
-                        <input type="text" title="" class="input-text" name="last_visit_begin" onclick="WdatePicker()" value="{{$last_visit_begin}}" style="width: 100px;"> -
-                        <input type="text" title="" class="input-text" name="last_visit_end" onclick="WdatePicker()" value="{{$last_visit_end}}" style="width: 100px;">
-                    </div>
+                    <div class="label">邮箱:</div>
+                    <div class="field"><input type="text" title="" class="form-control w200" name="email" value="{{$email}}"></div>
                 </div>
             </div>
             <div class="row">
                 <div class="cell">
-                    <label></label>
+                    <div class="label">会员ID:</div>
+                    <div class="field"><input type="text" title="" class="form-control w200" name="uid" value="{{$uid}}"></div>
+                </div>
+                <div class="cell">
+                    <div class="label">注册日期:</div>
                     <div class="field">
-                        <button type="submit" class="button" id="btn-search">搜索</button>
-                        <button type="button" class="button button-cancel" id="btn-export">重置</button>
+                        <label><input type="text" title="" class="form-control" name="reg_time_begin" onclick="WdatePicker()" value="{{$reg_time_begin}}" style="width: 100px;"></label>
+                        <label class="seperator"> - </label>
+                        <label><input type="text" title="" class="form-control" name="reg_time_end" onclick="WdatePicker()" value="{{$reg_time_end}}" style="width: 100px;"></label>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="label">最后登录:</div>
+                    <div class="field">
+                        <label><input type="text" title="" class="form-control" name="last_visit_begin" onclick="WdatePicker()" value="{{$last_visit_begin}}" style="width: 100px;"></label>
+                        <label class="seperator">-</label>
+                        <label><input type="text" title="" class="form-control" name="last_visit_end" onclick="WdatePicker()" value="{{$last_visit_end}}" style="width: 100px;"></label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="cell">
+                    <div class="label"></div>
+                    <div class="field">
+                        <button type="submit" class="btn btn-primary" id="btn-search">搜索</button>
+                        <button type="button" class="btn btn-default" id="btn-export">重置</button>
                     </div>
                 </div>
             </div>
@@ -61,8 +61,9 @@
     </div>
 
     <div class="content-div">
-        <form method="post" id="listForm" action="">
-            {{csrf_field()}}
+        <form method="post" id="listForm">
+            {{form_verify_field()}}
+            <input type="hidden" id="eventType" name="eventType" value="">
             <table width="100%" border="0" cellspacing="0" cellpadding="0" class="listtable">
                 <thead>
                 <tr>
@@ -80,26 +81,29 @@
                 <tbody id="members">
                 @foreach($itemlist as $uid=>$user)
                 <tr>
-                    <td><input title="" type="checkbox" class="checkbox checkmark" name="members[]" value="{{$uid}}" /></td>
+                    <td><input title="" type="checkbox" class="checkmark" name="items[]" value="{{$uid}}" /></td>
                     <td><img src="{{avatar($uid, 'small')}}" width="30" height="30" style="border-radius:100%;"></td>
-                    <th><a>{{$user->username}}</a></th>
-                    <td>{{$user->mobile}}</td>
-                    <td>{{$user->email}}</td>
-                    <td>{{$user->grouptitle}}</td>
-                    <td><a href="http://ip.taobao.com/?ip={{$user->created_ip}}" target="_blank">{{date('Y-m-d H:i:s', $user->created_at)}}</a></td>
-                    <td><a href="http://ip.taobao.com/?ip={{$user->lastvisit_ip}}" target="_blank">{{@date('Y-m-d H:i:s', $user->lastvisit_at)}}</a></td>
-                    <td>{{$user_status[$user->status]}}</td>
+                    <th><a>{{$user['username']}}</a></th>
+                    <td>{{$user['mobile']}}</td>
+                    <td>{{$user['email']}}</td>
+                    <td>{{$user['grouptitle']}}</td>
+                    <td><a href="http://ip.taobao.com/?ip={{$user['created_ip']}}" target="_blank">{{date('Y-m-d H:i:s', $user['created_at'])}}</a></td>
+                    <td><a href="http://ip.taobao.com/?ip={{$user['lastvisit_ip']}}" target="_blank">{{@date('Y-m-d H:i:s', $user['lastvisit_at'])}}</a></td>
+                    <td>{{$user_status[$user['status']]}}</td>
                 </tr>
                 @endforeach
                 </tbody>
                 <tfoot>
                 <tr>
                     <td colspan="12">
-                        <div class="pagination float-right">{{$pagination}}</div>
-                        <label><input type="checkbox" class="checkbox checkall" /> 全选</label>
-                        <label><button type="button" class="btn btn-action" data-action="delete">删除</button></label>
-                        <label><button type="button" class="btn btn-action" data-action="allow">允许登录</button></label>
-                        <label><button type="button" class="btn btn-action" data-action="forbiden">禁止登录</button></label>
+                        <div class="float-right">{{$pagination}}</div>
+                        <div class="btn-group-sm">
+                            <label><input type="checkbox" data-action="checkall" /> 全选</label>
+                            <label><button type="button" class="btn btn-default" id="delete" disabled="disabled">删除</button></label>
+                            <label><button type="button" class="btn btn-default" id="allow" disabled="disabled">允许登录</button></label>
+                            <label><button type="button" class="btn btn-default" id="forbiden" disabled="disabled">禁止登录</button></label>
+                            <label><button type="button" class="btn btn-default" data-action="refresh">刷新</button></label>
+                        </div>
                     </td>
                 </tr>
                 </tfoot>
@@ -108,37 +112,45 @@
     </div>
     <script type="text/javascript">
         $(function () {
-            $(".btn-action").on('click', function () {
-                if ($(".checkmark:checked").length === 0){
-                    DSXUI.error('请选择选项');
-                    return false;
+            $(document).on('click', function () {
+                if ($(".checkmark:checked").length > 0){
+                    $("#delete,#allow,#forbiden").enable();
+                } else {
+                    $("#delete,#allow,#forbiden").disable();
                 }
-                var spinner = null;
-                var action = $(this).attr('data-action');
-                var $form = $("#listForm");
-                var submitForm = function () {
-                    $form.ajaxSubmit({
-                        dataType:'json',
-                        beforeSend:function () {
-                            spinner = DSXUI.showSpinner();
-                        },success:function (response) {
-                            setTimeout(function () {
-                                spinner.close();
-                                if (response.errcode === 0){
-                                    DSXUI.error(response.errmsg);
-                                }else {
-                                    DSXUtil.reFresh();
-                                }
-                            }, 500);
-                        }
-                    });
-                }
-                if (action === 'delete'){
-                    DSXUI.showConfirm('删除会员', '确认要删除所选会员吗?', function () {
-                        $form.attr('action','{{url('/admin/member/delete')}}');
-                        submitForm();
-                    });
-                }
+            });
+
+            function submitForm(){
+                $("#listForm").ajaxSubmit({
+                    dataType:'json',
+                    beforeSend:function () {
+                        DSXUI.showSpinner();
+                    },success:function (response) {
+                        setTimeout(function () {
+                            DSXUI.hideSpinner();
+                            if (response.errcode){
+                                DSXUI.error(response.errmsg);
+                            }else {
+                                DSXUtil.reFresh();
+                            }
+                        }, 500);
+                    }
+                });
+            }
+
+            $("#delete").on('click', function () {
+                $("#eventType").val('delete');
+                DSXUI.showConfirm('删除确认', '确认要删除所选用户吗?', function () {
+                    submitForm();
+                });
+            });
+            $("#allow").on('click', function () {
+                $("#eventType").val('allow');
+                submitForm();
+            });
+            $("#forbiden").on('click', function () {
+                $("#eventType").val('forbiden');
+                submitForm();
             });
         });
     </script>

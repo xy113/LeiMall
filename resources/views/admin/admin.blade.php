@@ -36,6 +36,7 @@
                             <li><a rel="item" data-action="{{url('admin/settings/water')}}">图片水印</a></li>
                             <li><a rel="item" data-action="{{url('admin/settings/weixin')}}">微信设置</a></li>
                             <li><a rel="item" data-action="{{url('admin/settings/sms')}}">短息平台设置</a></li>
+                            <li><a rel="item" data-action="{{url('admin/attribute')}}">分类选项管理</a></li>
                             <li><a rel="item" data-action="{{url('admin/app')}}">应用管理</a></li>
                         </ul>
                     </dt>
@@ -94,7 +95,7 @@
                     <dd><a><i class="iconfont icon-newsfill"></i>文章管理</a></dd>
                     <dt>
                         <ul>
-                            <li><a rel="item" data-action="{{url('admin/post/edit')}}">发布文章</a></li>
+                            <li><a rel="item" data-action="{{url('admin/post/newpost')}}">发布文章</a></li>
                             <li><a rel="item" data-action="{{url('admin/post')}}">文章列表</a></li>
                             <li><a rel="item" data-action="{{url('admin/postcatlog')}}">分类管理</a></li>
                             <li><a rel="item" data-action="{{url('admin/postcatlog/merge')}}">合并分类</a></li>
@@ -117,7 +118,7 @@
                     <dd><a><i class="iconfont icon-babyfill"></i>页面管理</a></dd>
                     <dt>
                         <ul>
-                            <li><a rel="item" data-action="{{url('admin/pages/edit')}}">新建页面</a></li>
+                            <li><a rel="item" data-action="{{url('admin/pages/newpage')}}">新建页面</a></li>
                             <li><a rel="item" data-action="{{url('admin/pages')}}">页面列表</a></li>
                             <li><a rel="item" data-action="{{url('admin/pages/category')}}">页面分类</a></li>
                         </ul>

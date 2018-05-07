@@ -149,5 +149,18 @@ return [
     'invalid_user_id'=>'无效的用户ID',
     'invalid_token'=>'无效的token',
     'block_manage'=>'内容板块管理',
-    'block_item_manage'=>'板块内容管理'
+    'block_item_manage'=>'板块内容管理',
+
+    'attribute_option_types'=>[
+        'text'=>'文本',
+        'textarea'=>'文本域',
+        'select'=>'选择',
+        'mutiselect'=>'批量选择',
+        'radio'=>'单选',
+        'checkbox'=>'多选',
+        'number'=>'数字',
+        'money'=>'货币',
+        'image'=>'图片',
+        'calendar'=>'日历'
+    ]
 ];

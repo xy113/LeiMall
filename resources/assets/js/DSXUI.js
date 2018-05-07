@@ -22,7 +22,7 @@ var DSXUI = {
         $("#dsxui-message-box").remove();
         var div = $('<div/>').addClass('dsxui-message-box').attr('id','dsxui-message-box');
         var con = $('<div/>').addClass('message-div message-'+opt.type).html('<div class="iconfont message-icon">'+icon+'</div><div class="message-text">'+opt.text+'</div>');
-        div.html(con).appendTo(document.body).fadeIn('fast').center();
+        div.html(con).appendTo(document.body).fadeIn('fast').center().css('top', '20%');
         if(opt.afterShow) opt.afterShow(div);
         setTimeout(function(){div.remove(); if(opt.afterClose) opt.afterClose(div);},2000);
     },
@@ -55,10 +55,10 @@ var DSXUI = {
             that.isShow = false;
             that.indicator.remove();
             that.overlayer.remove();
-        }
+        };
         that.hide = function () {
             that.close();
-        }
+        };
         return that;
     },
     hideloading : function () {
@@ -77,10 +77,10 @@ var DSXUI = {
             that.isShow = false;
             that.indicator.remove();
             that.overlayer.remove();
-        }
+        };
         that.hide = function () {
             that.close();
-        }
+        };
         return that;
     },
     hideSpinner : function () {
@@ -104,7 +104,7 @@ var DSXUI = {
             that.isShow = false;
             that.container.remove();
             if (callback) callback();
-        }
+        };
         setTimeout(that.hide, duration);
     },
     hideToast : function () {
@@ -117,8 +117,9 @@ var DSXUI = {
         if (!title) title = '删除确认';
         if (!text) text = '确认要删除此项目吗?';
         DSXUI.dialog({
-            width:350,
-            dragable:false,
+            style:{
+                width:'400px'
+            },
             title:title,
             content:'<div style="font-size: 14px;">'+text+'</div>',
             onConfirm:function(dlg){
@@ -134,11 +135,14 @@ var DSXUI = {
     //图片选择器 新版
     showImagePicker:function (callback) {
         DSXUI.dialog({
-            width:'780px',
-            height:'520px',
+            style:{
+                width:'780px',
+            },
+            top:'10%',
             title:'图片空间',
-            hideFooter:true,
-            iframe:'/plugin/image',
+            showFooter:false,
+            content:'<div style="height: 510px; position: relative;">' +
+            '<iframe src="/plugin/image" frameborder="0" style="width: 100%; height: 100%; position: absolute;"></div>',
             afterShow:function (dlg) {
                 window.onPickedImage = function (response) {
                     dlg.close();
@@ -150,4 +154,4 @@ var DSXUI = {
             }
         });
     }
-}
+};

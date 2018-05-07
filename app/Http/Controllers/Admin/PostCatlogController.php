@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helpers\Pinyin;
 use App\Models\PostCatlog;
 use App\Models\PostItem;
 
@@ -13,26 +14,44 @@ class PostCatlogController extends BaseController
      */
     public function index(){
 
-        $this->data['catloglist'] = PostCatlog::getTree();
-        return $this->view('admin.post.catlog_list');
+        if ($this->isOnSubmit()) {
+            $catloglist = $this->request->input('catloglist');
+            if ($catloglist) {
+                $pinyin = new Pinyin();
+                foreach ($catloglist as $catid=>$catlog) {
+                    if ($catlog['name']) {
+                        if (!$catlog['identifier']) {
+                            $catlog['identifier'] = $pinyin->getPinyin($catlog['name']);
+                        }
+                        PostCatlog::where('catid', $catid)->update($catlog);
+                    }
+                }
+                PostCatlog::updateCache();
+            }
+            return $this->showSuccess(trans('ui.save_succeed'));
+        }else {
+            $this->data['catloglist'] = PostCatlog::getTree(false);
+            return $this->view('admin.post.catlogs');
+        }
     }
 
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      * @throws \Exception
      */
-    public function edit(){
+    public function newcatlog(){
+
+        $catid = $this->request->input('catid');
         if ($this->isOnSubmit()){
-            $catid = $this->request->post('catid');
             $catlog = $this->request->post('catlog');
             if ($catid) {
                 PostCatlog::where('catid', $catid)->update($catlog);
             }else {
                 PostCatlog::insert($catlog);
             }
+            PostCatlog::updateCache();
             return $this->showSuccess(trans('ui.save_succeed'));
         }else {
-            $catid = $this->request->get('catid');
             $this->assign([
                 'catid'=>$catid,
                 'catlog'=>[
@@ -49,12 +68,14 @@ class PostCatlogController extends BaseController
             ]);
 
             if ($catid) {
-                $this->data['catlog'] = PostCatlog::where('catid', $catid)->first();
+                $this->assign([
+                    'catlog'=>PostCatlog::where('catid', $catid)->first()
+                ]);
             }
 
             $this->data['catloglist'] = PostCatlog::getTree();
 
-            return $this->view('admin.post.catlog_edit');
+            return $this->view('admin.post.newcatlog');
         }
     }
 
@@ -70,25 +91,22 @@ class PostCatlogController extends BaseController
 
             if ($moveto || $deleteChilds) {
                 $childIds = PostCatlog::getAllChildIds($catid);
-                if (PostCatlog::where('catid', $catid)->delete()){
-                    if ($deleteChilds) {
-                        foreach ($childIds as $catid){
-                            PostCatlog::where('catid', $catid)->delete();
-                        }
-
-                        foreach (PostItem::whereIn('catid', $childIds)->get(['aid']) as $item){
-                            PostItem::deleteAll($item->aid);
-                        }
-                    }else {
-                        foreach (PostCatlog::where('fid', $catid)->get() as $catlog){
-                            PostCatlog::where('catid', $catlog->catid)->update(['fid'=>$moveto]);
-                        }
-                        PostItem::where('catid', $catid)->update(['catid'=>$moveto]);
-                    }
-                    PostCatlog::updateCache();
+                foreach ($childIds as $catid){
+                    PostCatlog::where('catid', $catid)->delete();
                 }
+
+                foreach (PostItem::whereIn('catid', $childIds)->get(['aid']) as $item){
+                    PostItem::deleteAll($item->aid);
+                }
+            }else {
+
+                $childIds = PostCatlog::getAllChildIds($catid);
+                PostItem::whereIn('catid', $childIds)->update(['catid'=>$moveto]);
+
+                PostCatlog::where('catid', $catid)->delete();
             }
 
+            PostCatlog::updateCache();
             return $this->showSuccess(trans('ui.update_succeed'));
         }else {
 
@@ -98,7 +116,7 @@ class PostCatlogController extends BaseController
                 'catloglist'=>PostCatlog::getTree(false)
             ]);
 
-            return $this->view('admin.post.catlog_delete');
+            return $this->view('admin.post.deletecatlog');
         }
     }
 
@@ -123,7 +141,7 @@ class PostCatlogController extends BaseController
         }else {
 
             $this->data['catloglist'] = PostCatlog::getTree(false);
-            return $this->view('admin.post.catlog_merge');
+            return $this->view('admin.post.merge');
         }
     }
 
@@ -135,6 +153,7 @@ class PostCatlogController extends BaseController
         $icon = $this->request->post('icon');
         if ($catid && $icon){
             PostCatlog::where('catid', $catid)->update(['icon'=>$icon]);
+            PostCatlog::updateCache();
         }
         return ajaxReturn();
     }

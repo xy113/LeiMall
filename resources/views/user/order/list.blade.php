@@ -5,17 +5,17 @@
 @section('content')
     <div class="console-title">
         <div class="float-right">
-            <form method="get" action="/">
+            <form method="get">
                 <input type="text" name="q" value="{{$q or ''}}" class="input-text" placeholder="订单号">
                 <input type="submit" class="button" value="搜索">
             </form>
         </div>
         <ul class="tab">
-            <li><a href="{{url('/user/order?tab=all')}}">全部订单</a></li>
-            <li><a href="{{url('/user/order?tab=waitPay')}}">待付款</a></li>
-            <li><a href="{{url('/user/order?tab=waitSend')}}">待发货</a></li>
-            <li><a href="{{url('/user/order?tab=waitConfirm')}}">待收货</a></li>
-            <li><a href="{{url('/user/order?tab=waitRate')}}">待评价</a></li>
+            <li @if($tab=='all') class="tab on"@else class="tab"@endif><a href="{{url('/user/order?tab=all')}}">全部订单</a></li>
+            <li @if($tab=='waitPay') class="tab on"@else class="tab"@endif><a href="{{url('/user/order?tab=waitPay')}}">待付款</a></li>
+            <li @if($tab=='waitSend') class="tab on"@else class="tab"@endif><a href="{{url('/user/order?tab=waitSend')}}">待发货</a></li>
+            <li @if($tab=='waitConfirm') class="tab on"@else class="tab"@endif><a href="{{url('/user/order?tab=waitConfirm')}}">待收货</a></li>
+            <li @if($tab=='waitRate') class="tab on"@else class="tab"@endif><a href="{{url('/user/order?tab=waitRate')}}">待评价</a></li>
         </ul>
     </div>
 

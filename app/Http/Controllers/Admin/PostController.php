@@ -10,7 +10,6 @@ use App\Models\PostItem;
 use App\Models\PostLog;
 use App\Models\PostMedia;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\URL;
 
 class PostController extends BaseController
 {
@@ -20,109 +19,126 @@ class PostController extends BaseController
      */
     public function index(){
 
-        $condition = $queryParams = [];
-        $searchType = intval($this->request->input('searchType'));
-        $queryParams['searchType'] = $searchType;
-        $this->assign([
-            'searchType'=>$searchType,
-            'title'=>'',
-            'username'=>'',
-            'catid'=>0,
-            'status'=>'',
-            'type'=>'',
-            'time_begin'=>'',
-            'time_end'=>'',
-            'q'=>'',
-            'post_types'=>trans('post.post_types'),
-            'post_status'=>trans('post.post_status'),
-            'catloglist'=>PostCatlog::getTree(),
-            'itemlist'=>[]
-        ]);
-
-        if ($searchType) {
-            $title = $this->request->input('title');
-            if ($title) {
-                $condition[] = ['i.title', 'LIKE', "%$title%"];
-                $queryParams['title'] = $title;
-                $this->data['title'] = $title;
+        if ($this->isOnSubmit()) {
+            $items = $this->request->input('items');
+            $eventType = $this->request->input('eventType');
+            if ($eventType === 'delete') {
+                foreach ($items as $aid) {
+                    PostItem::deleteAll($aid);
+                }
             }
 
-            $username = $this->request->input('username');
-            if ($username) {
-                $condition[] = ['i.username', '=', $username];
-                $queryParams['username'] = $username;
-                $this->data['username'] = $username;
+            if ($eventType === 'move') {
+                $target = intval($this->request->input('target'));
+                foreach ($items as $aid) {
+                    PostItem::where('aid', $aid)->update(['catid'=>$target]);
+                }
             }
 
-            $catid = $this->request->input('catid');
-            if ($catid) {
-                $condition[] = ['i.catid', '=', $catid];
-                $queryParams['catid'] = $catid;
-                $this->data['catid'] = $catid;
+            if ($eventType === 'resove') {
+                foreach ($items as $aid) {
+                    PostItem::where('aid', $aid)->update(['status'=>1]);
+                }
             }
 
-            $status = $this->request->input('status');
-            if ($status != '') {
-                $condition[] = ['i.status', '=', $status];
-                $queryParams['status'] = $status;
-                $this->data['status'] = $status;
+            if ($eventType === 'reject') {
+                foreach ($items as $aid) {
+                    PostItem::where('aid', $aid)->update(['status'=>-1]);
+                }
             }
-
-            $type = $this->request->input('type');
-            if ($type) {
-                $condition[] = ['i.type', '=', $type];
-                $queryParams['type'] = $type;
-                $this->data['type'] = $type;
-            }
-
-            $time_begin = $this->request->input('time_begin');
-            if ($time_begin) {
-                $condition[] = ['i.create_at', '>', strtotime($time_begin)];
-                $queryParams['time_begin'] = $time_begin;
-                $this->data['time_begin'] = $time_begin;
-            }
-
-            $time_end = $this->request->input('time_end');
-            if ($time_end) {
-                $condition[] = ['i.create_at', '<', strtotime($time_end)];
-                $queryParams['time_end'] = $time_end;
-                $this->data['time_end'] = $time_end;
-            }
-
+            return ajaxReturn();
         }else {
-            $q = $this->request->input('q');
-            if ($q) {
-                $condition[] = ['i.title', 'LIKE', "%$q%"];
-                $queryParams['q'] = $q;
-                $this->data['q'] = $q;
+            $condition = $queryParams = [];
+            $searchType = intval($this->request->input('searchType'));
+            $queryParams['searchType'] = $searchType;
+            $this->assign([
+                'searchType'=>$searchType,
+                'title'=>'',
+                'username'=>'',
+                'catid'=>0,
+                'status'=>'',
+                'type'=>'',
+                'time_begin'=>'',
+                'time_end'=>'',
+                'q'=>'',
+                'post_types'=>trans('post.post_types'),
+                'post_status'=>trans('post.post_status'),
+                'catloglist'=>PostCatlog::getTree(),
+                'itemlist'=>[]
+            ]);
+
+            if ($searchType) {
+                $title = $this->request->input('title');
+                if ($title) {
+                    $condition[] = ['i.title', 'LIKE', "%$title%"];
+                    $queryParams['title'] = $title;
+                    $this->data['title'] = $title;
+                }
+
+                $username = $this->request->input('username');
+                if ($username) {
+                    $condition[] = ['i.username', '=', $username];
+                    $queryParams['username'] = $username;
+                    $this->data['username'] = $username;
+                }
+
+                $catid = $this->request->input('catid');
+                if ($catid) {
+                    $condition[] = ['i.catid', '=', $catid];
+                    $queryParams['catid'] = $catid;
+                    $this->data['catid'] = $catid;
+                }
+
+                $status = $this->request->input('status');
+                if ($status != '') {
+                    $condition[] = ['i.status', '=', $status];
+                    $queryParams['status'] = $status;
+                    $this->data['status'] = $status;
+                }
+
+                $type = $this->request->input('type');
+                if ($type) {
+                    $condition[] = ['i.type', '=', $type];
+                    $queryParams['type'] = $type;
+                    $this->data['type'] = $type;
+                }
+
+                $time_begin = $this->request->input('time_begin');
+                if ($time_begin) {
+                    $condition[] = ['i.create_at', '>', strtotime($time_begin)];
+                    $queryParams['time_begin'] = $time_begin;
+                    $this->data['time_begin'] = $time_begin;
+                }
+
+                $time_end = $this->request->input('time_end');
+                if ($time_end) {
+                    $condition[] = ['i.create_at', '<', strtotime($time_end)];
+                    $queryParams['time_end'] = $time_end;
+                    $this->data['time_end'] = $time_end;
+                }
+
+            }else {
+                $q = $this->request->input('q');
+                if ($q) {
+                    $condition[] = ['i.title', 'LIKE', "%$q%"];
+                    $queryParams['q'] = $q;
+                    $this->data['q'] = $q;
+                }
             }
+
+            $items = DB::table('post_item as i')
+                ->leftJoin('post_catlog as c', 'c.catid', '=', 'i.catid')
+                ->where($condition)
+                ->select('i.*', 'c.name as cat_name')
+                ->orderBy('i.aid','DESC')
+                ->paginate(20);
+            $this->data['pagination'] = $items->appends($queryParams)->links();
+            $items->map(function ($item){
+                $this->data['itemlist'][$item->aid] = get_object_vars($item);
+            });
+
+            return $this->view('admin.post.list');
         }
-
-        $items = DB::table('post_item as i')
-            ->leftJoin('post_catlog as c', 'c.catid', '=', 'i.catid')
-            ->where($condition)
-            ->select('i.*', 'c.name as cat_name')
-            ->orderBy('i.aid','DESC')
-            ->paginate(20);
-        $this->data['pagination'] = $items->appends($queryParams)->links();
-        $items->map(function ($item){
-            $this->data['itemlist'][$item->aid] = get_object_vars($item);
-        });
-
-        return $this->view('admin.post.list');
-    }
-
-    /**
-     * 删除文章
-     */
-    public function delete(){
-        $items = $this->request->input('items');
-        if ($items && is_array($items)){
-            foreach ($items as $aid){
-                PostItem::deleteAll($aid);
-            }
-        }
-        return ajaxReturn();
     }
 
     /**
@@ -141,22 +157,6 @@ class PostController extends BaseController
     }
 
     /**
-     * 审核文章
-     */
-    public function review(){
-        $event = $this->request->input('event');
-        $status = $event === 'pass' ? 1 : 0;
-
-        $items = $this->request->post('items');
-        if ($items) {
-            foreach ($items as $aid){
-                PostItem::where('aid', $aid)->update(['status'=>$status]);
-            }
-        }
-        return ajaxReturn();
-    }
-
-    /**
      * 设置文章图片
      */
     public function setimage(){
@@ -164,7 +164,7 @@ class PostController extends BaseController
         $image = $this->request->input('image');
         if ($aid && $image){
             PostItem::where('aid', $aid)->update(['image'=>$image]);
-            return ajaxReturn(['aid'=>$aid,'image'=>$image]);
+            return ajaxReturn();
         }else {
             return ajaxError(1, 'invalid parameter');
         }
@@ -175,12 +175,12 @@ class PostController extends BaseController
      * @throws \Exception
      * @throws \Psr\SimpleCache\InvalidArgumentException
      */
-    public function publish(){
+    public function newpost(){
 
-        $aid = $this->request->get('aid');
+        $aid   = $this->request->get('aid');
         $catid = $this->request->get('catid');
-        $type = $this->request->input('type');
-        $type = in_array($type, array('image','video', 'voice')) ? $type : 'article';
+        $type  = $this->request->input('type');
+        $type  = in_array($type, array('image','video', 'voice')) ? $type : 'article';
         $this->assign([
             'aid'=>$aid,
             'catid'=>$catid,
@@ -212,26 +212,28 @@ class PostController extends BaseController
         ]);
 
         if ($aid) {
-            $item = PostItem::where('aid', $aid)->first()->toArray();
-            $item['created_at'] = $item['created_at'] ? @date('Y-m-d H:i:s', $item['created_at']) : @date('Y-m-d H:i:s');
-            $item['type'] = in_array($item['type'], array('image','video')) ? $item['type'] : 'article';
-            $this->assign([
-                'type'=>$item['type'],
-                'catid'=>$item['catid'],
-                'item'=>$item
-            ]);
+            $item = PostItem::where('aid', $aid)->first();
+            if ($item) {
+                $item->created_at = $item->created_at ? @date('Y-m-d H:i:s', $item->created_at) : @date('Y-m-d H:i:s');
+                $item->type = in_array($item->type, ['image','video']) ? $item->type : 'article';
+                $this->assign([
+                    'type'=>$item->type,
+                    'catid'=>$item->catid,
+                    'item'=>$item
+                ]);
+            }
 
             $this->data['content'] = PostContent::where('aid',$aid)->first();
 
             //相册列表
-            $this->data['gallery'] = PostImage::where('aid', $aid)->orderBy('displayorder', 'ASC')->orderBy('id', 'ASC')->get();
+            $this->data['gallery'] = PostImage::where('aid', $aid)->orderBy('displayorder')->orderBy('id')->get();
 
             //获取媒体信息
             $this->data['media'] = PostMedia::where('aid', $aid)->first();
 
         }
         $this->data['catloglist'] = PostCatlog::getTree();
-        return $this->view('admin.post.publish');
+        return $this->view('admin.post.newpost');
     }
 
     /**
@@ -271,8 +273,8 @@ class PostController extends BaseController
             //发布时间设置
             $newpost['created_at'] = $newpost['created_at'] ? strtotime($newpost['created_at']) : time();
 
-            $eventType = $aid ? 'edit' : 'add';
-            if ($eventType == 'edit') {
+            $eventType = $aid ? 'update' : 'insert';
+            if ($eventType == 'update') {
                 //修改文章
                 $newpost['updated_at'] = time();
                 PostItem::where('aid',$aid)->update($newpost);
@@ -305,7 +307,7 @@ class PostController extends BaseController
             }
 
             //保存文章内容
-            if (PostContent::where('aid', $aid)->count()){
+            if (PostContent::where('aid', $aid)->exists()){
                 PostContent::where('aid', $aid)->update([
                     'content'=>$content,
                     'updated_at'=>time()
@@ -320,10 +322,10 @@ class PostController extends BaseController
 
             //添加相册
             $gallery = $this->request->post('gallery');
-            if ($gallery) {
-                $imageList = array();
-                if ($eventType == 'edit') {
-                    foreach (PostImage::where('aid',$aid)->orderBy('displayorder','ASC')->get() as $img){
+            if (is_array($gallery)) {
+                $imageList = [];
+                if ($eventType == 'update') {
+                    foreach (PostImage::where('aid',$aid)->orderBy('displayorder')->get() as $img){
                         $imageList[$img['id']]['mark'] = 'delete';
                         $imageList[$img['id']]['img'] = $img;
                     }
@@ -374,40 +376,38 @@ class PostController extends BaseController
                 }
             }
 
-            if ($eventType == 'edit'){
-                $links = array (
-                    array (
+            if ($eventType == 'update'){
+                return $this->showSuccess(trans('post.post update success'), null, [
+                    [
                         'text' => trans('common.reedit'),
-                        'url' => URL::action('Admin\PostController@publish', ['aid'=>$aid])
-                    ),
-                    array (
+                        'url' => url('/admin/post/newpost?aid='.$aid)
+                    ],
+                    [
                         'text'=>trans('common.view'),
                         'url'=>post_url($aid),
                         'target'=>'_blank'
-                    ),
-                    array(
+                    ],
+                    [
                         'text'=>trans('common.back_list'),
-                        'url'=>url('/admin/post/index')
-                    )
-                );
-                return $this->showSuccess(trans('post.post update success'), null, $links, null,false);
+                        'url'=>url('/admin/post')
+                    ]
+                ], null,false);
             }else {
-                $links = array (
-                    array (
+                return $this->showSuccess(trans('post.post save success'), null, [
+                    [
                         'text' => trans('common.continue_publish'),
-                        'url' => URL::action('Admin\PostController@publish', ['type'=>$newpost['type'],'catid'=>$newpost['catid']])
-                    ),
-                    array (
+                        'url' => url('/admin/post/newpost?type='.$newpost['type'].'&catid='.$newpost['catid'])
+                    ],
+                    [
                         'text'=>trans('common.view'),
                         'url'=>post_url($aid),
                         'target'=>'_blank'
-                    ),
-                    array(
+                    ],
+                    [
                         'text'=>trans('common.back_list'),
-                        'url'=>url('/admin/post/index')
-                    )
-                );
-                return $this->showSuccess(trans('post.post save success'), null, $links, null,true);
+                        'url'=>url('/admin/post')
+                    ]
+                ], null,true);
             }
 
         } else {

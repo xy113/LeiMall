@@ -1,5 +1,9 @@
 @extends('layouts.admin')
 
+@section('scripts')
+    <script src="{{asset('DatePicker/WdatePicker.js')}}" type="text/javascript"></script>
+@stop
+
 @section('content')
     <div class="navigation">
         <a>后台管理</a>
@@ -8,39 +12,40 @@
         <span>></span>
         <a>素材列表</a>
     </div>
-    <script src="{{asset('DatePicker/WdatePicker.js')}}" type="text/javascript"></script>
+
     <div class="search-container" id="search-container">
         <form method="get" id="searchFrom">
             <input type="hidden" name="type" value="{{$type}}">
             <div class="row">
                 <div class="cell">
-                    <label>用户ID:</label>
-                    <div class="field"><input type="text" title="" class="input-text" name="uid" value="{{$uid}}"></div>
+                    <div class="label">用户ID:</div>
+                    <div class="field"><input type="text" title="" class="form-control w200" name="uid" value="{{$uid}}"></div>
                 </div>
                 <div class="cell">
-                    <label>用户名:</label>
-                    <div class="field"><input type="text" title="" class="input-text" name="username" value="{{$username}}"></div>
+                    <div class="label">用户名:</div>
+                    <div class="field"><input type="text" title="" class="form-control w200" name="username" value="{{$username}}"></div>
                 </div>
                 <div class="cell">
-                    <label>名称:</label>
-                    <div class="field"><input type="text" title="" class="input-text" name="name" value="{{$name}}"></div>
+                    <div class="label">名称:</div>
+                    <div class="field"><input type="text" title="" class="form-control w200" name="name" value="{{$name}}"></div>
                 </div>
             </div>
             <div class="row">
                 <div class="cell">
-                    <label>上传时间:</label>
+                    <div class="label">上传时间:</div>
                     <div class="field">
-                        <input type="text" title="" class="input-text" name="time_begin" value="{{$time_begin}}" onclick="WdatePicker()" style="width: 100px;"> -
-                        <input type="text" title="" class="input-text" name="time_end" value="{{$time_end}}" onclick="WdatePicker()" style="width: 100px;">
+                        <label><input type="text" title="" class="form-control w100" name="time_begin" value="{{$time_begin}}" onclick="WdatePicker()"></label>
+                        <label class="seperator"> - </label>
+                        <label><input type="text" title="" class="form-control w100" name="time_end" value="{{$time_end}}" onclick="WdatePicker()"></label>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="cell">
-                    <label></label>
+                    <div class="label"></div>
                     <div class="field">
-                        <button type="submit" class="button">搜索</button>
-                        <button type="button" class="button button-cancel" id="addMaterial">添加素材</button>
+                        <button type="submit" class="btn btn-primary">搜索</button>
+                        <button type="button" class="btn btn-default" id="addMaterial">添加素材</button>
                     </div>
                 </div>
             </div>
@@ -56,8 +61,7 @@
     </div>
     <div class="content-div">
         <form method="post" autocomplete="off" id="listForm">
-            {{csrf_field()}}
-            <input type="hidden" name="formsubmit" value="yes">
+            {{form_verify_field()}}
             <table width="100%" border="0" cellspacing="0" cellpadding="0" class="listtable">
                 <thead>
                 <tr>
@@ -72,7 +76,9 @@
                 <tbody>
                 @foreach($itemlist as $id=>$item)
                     <tr>
-                        <td class="center"><input type="checkbox" title="" class="checkbox checkmark itemCheckBox" name="items[]" value="{{$id}}"></td>
+                        <td class="center">
+                            <input type="checkbox" title="" class="checkmark" name="items[]" value="{{$id}}">
+                        </td>
                         <td>
                             @if($type === 'image')
                             <img src="{{image_url($item['thumb'])}}" width="50" height="50">
@@ -97,9 +103,11 @@
                 <tr>
                     <td colspan="10">
                         <span class="float-right">{!! $pagination !!}</span>
-                        <label><input type="checkbox" class="checkbox checkall"> {{trans('common.selectall')}}</label>
-                        <label><button type="button" class="btn" id="deleteButton">删除</button></label>
-                        <label><button type="button" class="btn" onclick="DSXUtil.reFresh()">刷新</button></label>
+                        <div class="btn-group-sm">
+                            <label><input type="checkbox" class="checkmark" data-action="checkall"> {{trans('common.selectall')}}</label>
+                            <label><button type="button" class="btn btn-default" id="delete" disabled="disabled">删除</button></label>
+                            <label><button type="button" class="btn btn-default" data-action="refresh">刷新</button></label>
+                        </div>
                     </td>
                 </tr>
                 </tfoot>
@@ -108,21 +116,24 @@
     </div>
 
     <script type="text/javascript">
-        var spinner;
         $(function () {
-            $("#deleteButton").on('click', function () {
-                if ($(".itemCheckBox:checked").length === 0){
-                    DSXUI.error('请选择项目');
-                    return false;
+            $(document).on('click', function () {
+                if ($(".checkmark:checked").length > 0) {
+                    $("#delete").enable();
+                } else {
+                    $("#delete").disable();
                 }
+            });
+
+            $("#delete").on('click', function () {
                 DSXUI.showConfirm('删除素材', '确认要删除所选素材吗?', function () {
                     $("#listForm").ajaxSubmit({
                         dataType:'json',
                         beforeSend:function () {
-                            spinner = DSXUI.showSpinner();
+                            DSXUI.showSpinner();
                         },success:function (response) {
                             setTimeout(function () {
-                                spinner.close();
+                                DSXUI.hideSpinner();
                                 if (response.errcode){
                                     DSXUI.error('删除失败');
                                 }else {

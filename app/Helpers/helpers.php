@@ -12,6 +12,7 @@
  */
 
 use App\Models\Settings;
+use Illuminate\Support\HtmlString;
 
 /**
  * 后台配置操作函数
@@ -452,7 +453,7 @@ function ajaxReturn($data = []){
     if ($data) {
         return response()->json($data);
     }else {
-        return response()->json([]);
+        return response()->json(['return_code'=>0, 'return_msg'=>'SUCCESS']);
     }
 }
 
@@ -469,6 +470,13 @@ function ajaxError($errcode, $errmsg, $data = []){
     ];
     if (!is_null($data)) $return['data'] = $data;
     return response()->json($return);
+}
+
+/**
+ * @return HtmlString
+ */
+function form_verify_field(){
+    return new HtmlString('<input type="hidden" name="_token" value="'.csrf_token().'"><input type="hidden" name="formsubmit" value="yes">');
 }
 
 /**

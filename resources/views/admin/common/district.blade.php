@@ -7,31 +7,37 @@
                 <input type="hidden" name="province" value="{{$province}}" id="J_province">
                 <input type="hidden" name="city" value="{{$city}}" id="J_city">
                 <input type="hidden" name="district" value="{{$district}}" id="J_district">
-                <select title="" id="province" class="select" style="width: auto;">
-                    <option>--省份--</option>
-                    @foreach($provincelist as $id=>$p)
-                    <option value="{{$id}}"@if($id==$province) selected="selected"@endif>{{$p['name']}}</option>
-                    @endforeach
-                </select>
-                <select title="" id="city" class="select" style="width: auto;">
-                    <option value="0">--城市--</option>
-                    @foreach($citylist as $id=>$c)
-                        <option value="{{$id}}"@if($id==$city) selected="selected"@endif>{{$c['name']}}</option>
-                    @endforeach
-                </select>
-                <select title="" id="district" class="select" style="width: auto;">
-                    <option value="0">--州县--</option>
-                    @foreach($districtlist as $id=>$d)
-                        <option value="{{$id}}"@if($id==$district) selected="selected"@endif>{{$d['name']}}</option>
-                    @endforeach
-                </select>
+                <label>
+                    <select title="" id="province" class="form-control" style="width: auto;">
+                        <option>--省份--</option>
+                        @foreach($provincelist as $id=>$p)
+                            <option value="{{$id}}"@if($id==$province) selected="selected"@endif>{{$p['name']}}</option>
+                        @endforeach
+                    </select>
+                </label>
+                <label>
+                    <select title="" id="city" class="form-control" style="width: auto;">
+                        <option value="0">--城市--</option>
+                        @foreach($citylist as $id=>$c)
+                            <option value="{{$id}}"@if($id==$city) selected="selected"@endif>{{$c['name']}}</option>
+                        @endforeach
+                    </select>
+                </label>
+                <label>
+                    <select title="" id="district" class="form-control" style="width: auto;">
+                        <option value="0">--州县--</option>
+                        @foreach($districtlist as $id=>$d)
+                            <option value="{{$id}}"@if($id==$district) selected="selected"@endif>{{$d['name']}}</option>
+                        @endforeach
+                    </select>
+                </label>
             </form>
         </div>
         <h2>区域管理</h2>
     </div>
     <div class="content-div">
-        <form method="post" id="listForm" action="/admin/district/save">
-            {{csrf_field()}}
+        <form method="post" id="listForm">
+            {{form_verify_field()}}
             <table width="100%" border="0" cellspacing="0" cellpadding="0" class="listtable">
                 <thead>
                 <tr>
@@ -48,14 +54,14 @@
                 <tbody>
                 @foreach($itemlist as $id=>$item)
                 <tr>
-                    <td><input title="" type="checkbox" class="checkbox checkmark" name="delete[]" value="{{$id}}" /></td>
-                    <td><input title="" type="text" class="input-text" name="itemlist[{{$id}}][name]" value="{{$item['name']}}"></td>
-                    <td><input title="" type="text" class="input-text" name="itemlist[{{$id}}][pinyin]" value="{{$item['pinyin']}}"></td>
-                    <td><input title="" type="text" class="input-text" name="itemlist[{{$id}}][letter]" value="{{$item['letter']}}" style="width: 40px;"></td>
-                    <td><input title="" type="text" class="input-text" name="itemlist[{{$id}}][zone_code]" value="{{$item['zone_code']}}" style="width: 100px;"></td>
-                    <td><input title="" type="text" class="input-text" name="itemlist[{{$id}}][lng]" value="{{$item['lng']}}" style="width: 100px;"></td>
-                    <td><input title="" type="text" class="input-text" name="itemlist[{{$id}}][lat]" value="{{$item['lat']}}" style="width: 100px;"></td>
-                    <td><input title="" type="text" class="input-text" name="itemlist[{{$id}}][displayorder]" value="{{$item['displayorder']}}" style="width: 60px;"></td>
+                    <td><input title="" type="checkbox" class="checkmark" name="delete[]" value="{{$id}}" /></td>
+                    <td><input title="" type="text" class="form-control w200" name="itemlist[{{$id}}][name]" value="{{$item['name']}}"></td>
+                    <td><input title="" type="text" class="form-control w200" name="itemlist[{{$id}}][pinyin]" value="{{$item['pinyin']}}"></td>
+                    <td><input title="" type="text" class="form-control" name="itemlist[{{$id}}][letter]" value="{{$item['letter']}}" style="width: 40px;"></td>
+                    <td><input title="" type="text" class="form-control" name="itemlist[{{$id}}][zone_code]" value="{{$item['zone_code']}}" style="width: 100px;"></td>
+                    <td><input title="" type="text" class="form-control" name="itemlist[{{$id}}][lng]" value="{{$item['lng']}}" style="width: 100px;"></td>
+                    <td><input title="" type="text" class="form-control" name="itemlist[{{$id}}][lat]" value="{{$item['lat']}}" style="width: 100px;"></td>
+                    <td><input title="" type="text" class="form-control" name="itemlist[{{$id}}][displayorder]" value="{{$item['displayorder']}}" style="width: 60px;"></td>
                 </tr>
                 @endforeach
                 </tbody>
@@ -69,8 +75,8 @@
                 </tr>
                 <tr>
                     <td colspan="10">
-                        <input type="submit" class="button" value="提交" />
-                        <input type="button" class="button button-cancel" value="刷新" data-action="refresh" />
+                        <label><input type="submit" class="btn btn-primary" value="提交" /></label>
+                        <label><input type="button" class="btn btn-default" value="刷新" data-action="refresh" /></label>
                     </td>
                 </tr>
                 </tfoot>
@@ -81,13 +87,13 @@
     <script type="text/template" id="tplDistrict">
         <tr>
             <td></td>
-            <td><input title="" type="text" class="input-text" name="itemlist[#keynum#][name]" value=""></td>
-            <td><input title="" type="text" class="input-text" name="itemlist[#keynum#][pinyin]" value=""></td>
-            <td><input title="" type="text" class="input-text" name="itemlist[#keynum#][letter]" value="" style="width: 40px;"></td>
-            <td><input title="" type="text" class="input-text" name="itemlist[#keynum#][zone_code]" value="" style="width: 100px;"></td>
-            <td><input title="" type="text" class="input-text" name="itemlist[#keynum#][lng]" value="" style="width: 100px;"></td>
-            <td><input title="" type="text" class="input-text" name="itemlist[#keynum#][lat]" value="" style="width: 100px;"></td>
-            <td><input title="" type="text" class="input-text" name="itemlist[#keynum#][displayorder]" value="" style="width: 60px;"></td>
+            <td><input title="" type="text" class="form-control w200" name="itemlist[#keynum#][name]" value=""></td>
+            <td><input title="" type="text" class="form-control w200" name="itemlist[#keynum#][pinyin]" value=""></td>
+            <td><input title="" type="text" class="form-control" name="itemlist[#keynum#][letter]" value="" style="width: 40px;"></td>
+            <td><input title="" type="text" class="form-control" name="itemlist[#keynum#][zone_code]" value="" style="width: 100px;"></td>
+            <td><input title="" type="text" class="form-control" name="itemlist[#keynum#][lng]" value="" style="width: 100px;"></td>
+            <td><input title="" type="text" class="form-control" name="itemlist[#keynum#][lat]" value="" style="width: 100px;"></td>
+            <td><input title="" type="text" class="form-control" name="itemlist[#keynum#][displayorder]" value="" style="width: 60px;"></td>
         </tr>
     </script>
     <script type="text/javascript">

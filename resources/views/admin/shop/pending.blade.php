@@ -5,22 +5,21 @@
 @section('content')
     <div class="console-title">
         <div class="float-right">
-            <form name="search" action="/?">
-                <input type="text" class="input-text" name="q" value="{{$q or ''}}" placeholder="店铺名称">
-                <input type="submit" class="button" value="搜索">
+            <form name="search">
+                <label><input type="text" class="form-control w200" name="q" value="{{$q or ''}}" placeholder="店铺名称"></label>
+                <label><input type="submit" class="btn btn-primary" value="搜索"></label>
             </form>
         </div>
         <h2>店铺管理->等待审核的店铺</h2>
     </div>
     <div class="content-div">
         <form method="post" id="listForm" autocomplete="off">
-            {{csrf_field()}}
-            <input type="hidden" name="formsubmit" value="yes">
-            <input type="hidden" name="eventType" value="" id="J_eventType">
+            {{form_verify_field()}}
+            <input type="hidden" name="eventType" value="" id="eventType">
             <table cellpadding="0" cellspacing="0" border="0" width="100%" class="listtable">
                 <thead>
                 <tr>
-                    <th width="20"><input title="" type="checkbox" class="checkbox checkall checkmark"></th>
+                    <th width="20"><input title="" type="checkbox" class="checkmark" data-action="checkall"></th>
                     <th width="70">LOGO</th>
                     <th>店铺名称</th>
                     <th>店主账号</th>
@@ -33,7 +32,7 @@
                 <tbody>
                 @foreach($shoplist as $shop)
                 <tr>
-                    <td><input title="" type="checkbox" class="checkbox checkmark itemCheckBox" name="shops[]" value="{{$shop['shop_id']}}"></td>
+                    <td><input title="" type="checkbox" class="checkmark" name="shops[]" value="{{$shop['shop_id']}}"></td>
                     <td>
                         <a href="{{shop_url($shop['shop_id'])}}" target="_blank">
                             <div class="bg-cover lazyload" data-original="{{image_url($shop['logo'])}}" style="width: 50px; height: 50px;"></div>
@@ -57,12 +56,14 @@
                 <tfoot>
                 <tr>
                     <td colspan="20">
-                        <div class="pagination float-right">{{$pagination}}</div>
-                        <label><input type="checkbox" class="checkbox checkall checkmark"> 全选</label>
-                        <label><button type="button" class="btn btn-action" data-action="delete">删除</button></label>
-                        <label><button type="button" class="btn btn-action" data-action="accept">审核通过</button></label>
-                        <label><button type="button" class="btn btn-action" data-action="refuse">审核不过</button></label>
-                        <label><button type="button" class="btn" data-action="refresh">刷新</button></label>
+                        <div class="float-right">{{$pagination}}</div>
+                        <div class="btn-group-sm">
+                            <label><input type="checkbox" class="checkmark"> 全选</label>
+                            <label><button type="button" class="btn btn-default btn-action" data-action="delete">删除</button></label>
+                            <label><button type="button" class="btn btn-default btn-action" data-action="accept">审核通过</button></label>
+                            <label><button type="button" class="btn btn-default btn-action" data-action="refuse">审核不过</button></label>
+                            <label><button type="button" class="btn btn-default" data-action="refresh">刷新</button></label>
+                        </div>
                     </td>
                 </tr>
                 </tfoot>

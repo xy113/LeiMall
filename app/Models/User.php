@@ -45,4 +45,23 @@ class User extends BaseModel
 {
     protected $table = 'user';
     protected $primaryKey = 'uid';
+
+    /**
+     * @param $uid
+     * @throws \Exception
+     */
+    public static function deleteUser($uid) {
+        $condition = ['uid'=>$uid];
+
+        User::where($condition)->delete();
+        UserInfo::where($condition)->delete();
+        UserStat::where($condition)->delete();
+        UserStatus::where($condition)->delete();
+        UserSession::where($condition)->delete();
+        UserConnect::where($condition)->delete();
+        UserField::where($condition)->delete();
+        UserLog::where($condition)->delete();
+        UserToken::where($condition)->delete();
+        Wallet::where($condition)->delete();
+    }
 }

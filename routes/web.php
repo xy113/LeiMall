@@ -14,6 +14,9 @@
 Route::group(['namespace' => 'Home'], function () {
     Route::get('/', 'IndexController@index');
     Route::get('/youxuan', 'YouxuanController@index');
+    Route::get('/vue', 'IndexController@vue');
+    Route::get('/search', 'SearchController@index');
+    Route::get('/search/shop', 'SearchController@shop');
 });
 
 Route::group(['namespace' => 'Shop', 'prefix'=>'shop'], function (){
@@ -84,12 +87,18 @@ Route::group(['namespace' => 'Admin','prefix'=>'admin'], function(){
         //系统设置
         Route::get('/settings/{type}', 'SettingsController@index');
         Route::post('/settings/save', 'SettingsController@save');
+        //属性管理
+        Route::any('/attribute', 'AttributeController@index');
+        Route::any('/attribute/savetype', 'AttributeController@savetype');
+        Route::any('/attribute/option', 'AttributeController@option');
+        Route::any('/attribute/newoption', 'AttributeController@newoption');
+        Route::any('/attribute/fetchrules', 'AttributeController@fetchrules');
         //应用管理
         Route::any('/app', 'AppController@index');
         Route::any('/app/edit', 'AppController@edit');
         //用户管理
-        Route::get('/user', 'UserController@index');
-        Route::post('user/edit', 'UserController@edit');
+        Route::any('/user', 'UserController@index');
+        Route::any('/user/newuser', 'UserController@newuser');
         Route::any('/usergroup', 'UserGroupController@index');
         //菜单管理
         Route::any('/menu', 'MenuController@index');
@@ -101,19 +110,17 @@ Route::group(['namespace' => 'Admin','prefix'=>'admin'], function(){
         Route::any('/block', 'BlockController@index');
         Route::any('/block/edit', 'BlockController@edit');
         Route::any('/block/itemlist', 'BlockController@itemlist');
-        Route::any('/block/edit_item', 'BlockController@edit_item');
+        Route::any('/block/newitem', 'BlockController@newitem');
         Route::any('/block/setimage', 'BlockController@setimage');
 
         //文章管理
-        Route::get('/post/index', 'PostController@index');
-        Route::get('/post/publish', 'PostController@publish');
+        Route::any('/post', 'PostController@index');
+        Route::get('/post/newpost', 'PostController@newpost');
         Route::post('/post/save', 'PostController@save');
-        Route::post('/post/delete', 'PostController@delete');
         Route::post('/post/setimage', 'PostController@setimage');
-        Route::post('/post/review', 'PostController@review');
 
         Route::any('/postcatlog', 'PostCatlogController@index');
-        Route::any('/postcatlog/edit', 'PostCatlogController@edit');
+        Route::any('/postcatlog/newcatlog', 'PostCatlogController@newcatlog');
         Route::any('/postcatlog/merge', 'PostCatlogController@merge');
         Route::any('/postcatlog/delete', 'PostCatlogController@delete');
         Route::post('/postcatlog/seticon', 'PostCatlogController@seticon');
@@ -149,29 +156,18 @@ Route::group(['namespace' => 'Admin','prefix'=>'admin'], function(){
 
         //页面管理
         Route::any('/pages', 'PagesController@index');
-        Route::any('/pages/edit', 'PagesController@edit');
+        Route::any('/pages/newpage', 'PagesController@newpage');
         Route::any('/pages/category', 'PagesController@category');
         //素材管理
         Route::any('material', 'MaterialController@index');
         //区域管理
-        Route::get('/district', 'DistrictController@index');
-        Route::post('/district/save', 'DistrictController@save');
+        Route::any('/district', 'DistrictController@index');
         //快递管理
-        Route::get('/express', 'ExpressController@index');
-        Route::post('/express/save', 'ExpressController@save');
+        Route::any('/express', 'ExpressController@index');
 
         //友情链接
-        Route::get('/link', 'LinkController@index');
-        Route::post('/link/save', 'LinkController@save');
+        Route::any('/link', 'LinkController@index');
         Route::post('/link/setimage', 'LinkController@setimage');
-
-        //企业管理
-        Route::any('/company', 'CompanyController@index');
-        Route::any('/company/add', 'CompanyController@add');
-        //职位
-        Route::any('/job', 'JobController@index');
-        Route::any('/job/publish', 'JobController@publish');
-        Route::any('/resume', 'ResumeController@index');
     });
 });
 
