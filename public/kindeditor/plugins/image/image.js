@@ -187,13 +187,13 @@ KindEditor.plugin('image', function(K) {
 			fieldName : filePostName,
 			form : K('.ke-form', div),
 			target : target,
-			width: 80,
+			width: 60,
 			afterUpload : function(data) {
 				dialog.hideLoading();
 				if (data.error === 0) {
 					var url = data.url;
 					if (formatUploadUrl) {
-						//url = K.formatUrl(url, 'absolute');
+						url = K.formatUrl(url, 'absolute');
 					}
 					if (self.afterUpload) {
 						self.afterUpload.call(self, url, data, name);
